@@ -15,7 +15,13 @@ USE_CYTHON = bool(shutil.which('cython'))
 
 ext = '.pyx' if USE_CYTHON else '.cpp'
 
-extensions = [Extension("example", ["example"+ext])]
+extensions = [
+    Extension("reducto_ext", ["reducto/ext/line"+ext])
+]
+
+if USE_CYTHON:
+    from Cython.Build import cythonize
+    extensions = cythonize(extensions)
 
 
 about = {}
@@ -43,6 +49,7 @@ setup(
     # install_requires=requires,
     license=about['__license__'],
     zip_safe=False,
+    ext_modukes=extensions
     # classifiers=[]
     # cmdclass={'test': PyTest},
     # tests_require=test_requirements
