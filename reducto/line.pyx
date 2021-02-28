@@ -7,7 +7,7 @@ from line cimport Line
 
 
 cdef class PyLine:
-    cdef PyLine* thisptr
+    cdef Line* thisptr
 
     def __cinit__(self, const string& line):
         self.thisptr = new Line(line)
