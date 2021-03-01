@@ -23,7 +23,6 @@ namespace Reducto {
 	std::string group_or(std::string token1, std::string token2);
 
 
-
 	class Line {
 
 		public:

@@ -1,5 +1,5 @@
 
-#include "line.h"
+#include "_line.h"
 
 
 
@@ -27,7 +27,7 @@ namespace Reducto {
 		return "(" + token1 + "|" + token2 + ")";
 	}
 
-	// Keep the refference to patterns to avoid instantiating on each method.
+	// Keep the reference to patterns to avoid instantiating on each method.
 	//const Patterns patterns;
 
 	struct Tokens {
@@ -152,7 +152,7 @@ namespace Reducto {
 	static const std::regex DOCSTRINGS_END(toks.docs_end, std::regex::optimize);
 
 
-	Patterns patterns;
+	//Patterns patterns;
 
 	Line::Line(const string& l): line(l) {}
 

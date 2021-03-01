@@ -2,30 +2,55 @@
 # -*- coding: utf-8 -*-
 
 import os
-import shutil
 from setuptools import Extension, setup
+
+from setuptools import setup# Command, Distribution as _Distribution, Extension as _Extension
+from setuptools.command.build_ext import build_ext as _build_ext
 
 here = os.path.abspath(os.path.dirname(__file__))
 
 # Deal with extension if Cython is found.
 # http://docs.cython.org/en/latest/src/userguide/source_files_and_compilation.html#distributing-cython-modules
-# Check if cython command is found, then use it.
-# https://stackoverflow.com/questions/11210104/check-if-a-program-exists-from-a-python-script
-USE_CYTHON = bool(shutil.which('cython'))
 
-ext = '.pyx' if USE_CYTHON else '.cpp'
-
-extensions = [
-    Extension("reducto_ext", ["reducto/ext/line"+ext])
-]
-
-if USE_CYTHON:
+# ext = '.pyx' if USE_CYTHON else '.cpp'
+USE_CYTHON = False
+try:
     from Cython.Build import cythonize
+    from Cython.Distutils.extension import Extension as _Extension
+    from Cython.Distutils import build_ext as _build_ext
+    USE_CYTHON = True
+    # ext = '.pyx'
+    extensions = [
+        Extension(
+            "reducto_ext",
+            ["reducto/ext/line_wrap.pyx", "reducto/ext/_line.cpp"],
+            include_dirs=[".", r"reducto/ext"],
+            # depends=["reducto/ext/_line.h"]
+        )
+    ]
     extensions = cythonize(extensions)
+except ModuleNotFoundError:
+    raise NotImplementedError
+    ext = '.cpp'
+    extensions = [
+        Extension(
+            "reducto_ext",
+            [r"reducto/ext/_line" + ext],
+            include_dirs=[".", r"reducto/ext"],
+            # depends=["reducto/ext/_line.h"]
+        )
+    ]
+
+
+# Distribute wheels? (https://github.com/yaml/pyyaml/blob/master/setup.py)
+try:
+    from wheel.bdist_wheel import bdist_wheel
+except ImportError:
+    bdist_wheel = None
 
 
 about = {}
-with open(os.path.join(here, 'reducto', '__version__.py'), 'r') as f:
+with open(os.path.join(here, 'reducto', '_version.py'), 'r') as f:
     exec(f.read(), about)
 
 with open('README.md', 'r') as f:
@@ -49,7 +74,8 @@ setup(
     # install_requires=requires,
     license=about['__license__'],
     zip_safe=False,
-    ext_modukes=extensions
+    ext_modules=extensions,
+    cmdclass={'build_ext': _build_ext}
     # classifiers=[]
     # cmdclass={'test': PyTest},
     # tests_require=test_requirements
