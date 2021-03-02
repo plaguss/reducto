@@ -5,10 +5,13 @@
 
 from cython.operator cimport dereference as deref
 from libcpp.string cimport string
-from libcpp cimport bool
+from libcpp.vector cimport vector
 
 
 cdef extern from "_pyfile.h" namespace "Reducto":
+
+    cdef cppclass FileStats:
+        FileStats() except +
 
     cdef cppclass PyFileCpp:
         PyFileCpp() except +
@@ -25,6 +28,8 @@ cdef extern from "_pyfile.h" namespace "Reducto":
         # void print_functions_info()
 
         # FileStats stats();  # TODO: Y este?
+
+# cdef
 
 
 cdef class PyFile:
@@ -69,4 +74,5 @@ cdef class PyFile:
         # TODO: Ayuda con FileStats
         # Tendría que ser un cpdef para devolver Python/Cpp!
         # https://groups.google.com/g/cython-users/c/39Nwqsksdto
-        pass
+        cdef FileStats _stats = self._thisptr.stats()
+        # TODO: acceder a la info internamente y devolver dict
