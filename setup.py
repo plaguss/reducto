@@ -3,43 +3,39 @@
 
 import os
 from setuptools import Extension, setup
+from setuptools.command.build_ext import build_ext
 
 from setuptools import setup# Command, Distribution as _Distribution, Extension as _Extension
-from setuptools.command.build_ext import build_ext as _build_ext
 
 here = os.path.abspath(os.path.dirname(__file__))
 
-# Deal with extension if Cython is found.
-# http://docs.cython.org/en/latest/src/userguide/source_files_and_compilation.html#distributing-cython-modules
+# install_requires =
 
-# ext = '.pyx' if USE_CYTHON else '.cpp'
-USE_CYTHON = False
 try:
-    from Cython.Build import cythonize
-    from Cython.Distutils.extension import Extension as _Extension
-    from Cython.Distutils import build_ext as _build_ext
+    # Deal with extension if Cython is found.
+    # http://docs.cython.org/en/latest/src/userguide/source_files_and_compilation.html#distributing-cython-modules
+    from Cython.Distutils.extension import Extension
+    from Cython.Distutils import build_ext
     USE_CYTHON = True
-    # ext = '.pyx'
-    extensions = [
-        Extension(
-            "reducto_ext",
-            ["reducto/ext/line_wrap.pyx", "reducto/ext/_line.cpp"],
-            include_dirs=[".", r"reducto/ext"],
-            # depends=["reducto/ext/_line.h"]
-        )
-    ]
-    extensions = cythonize(extensions)
+    ext = '.pyx'
 except ModuleNotFoundError:
-    raise NotImplementedError
+    USE_CYTHON = False
     ext = '.cpp'
-    extensions = [
-        Extension(
-            "reducto_ext",
-            [r"reducto/ext/_line" + ext],
-            include_dirs=[".", r"reducto/ext"],
-            # depends=["reducto/ext/_line.h"]
-        )
-    ]
+
+
+cmdclass = {'build_ext': build_ext}
+
+extensions = [
+    Extension(
+        "line_ext",
+        ["reducto/_ext/line_wrap" + ext, "reducto/_ext/_line.cpp"],
+        include_dirs=[".", r"reducto/_ext"],
+    )
+]
+
+if USE_CYTHON:
+    from Cython.Build import cythonize
+    extensions = cythonize(extensions)
 
 
 # Distribute wheels? (https://github.com/yaml/pyyaml/blob/master/setup.py)
@@ -65,17 +61,17 @@ setup(
     long_description_content_type='text/markdown',
     author=about['__author__'],
     author_email=about['__author_email__'],
-    # url=about['__url__'],
+    url=about['__url__'],
     # packages=packages,
     package_data={'': ['LICENSE']},
     # package_dir={'requests': 'requests'},
     include_package_data=True,
-    # python_requires=">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*",
+    python_requires=">=3.6",
     # install_requires=requires,
     license=about['__license__'],
     zip_safe=False,
     ext_modules=extensions,
-    cmdclass={'build_ext': _build_ext}
+    cmdclass=cmdclass
     # classifiers=[]
     # cmdclass={'test': PyTest},
     # tests_require=test_requirements

@@ -3,8 +3,9 @@
 # cython: language_level=3
 
 
-# from reducto.ext.line_wrap cimport Line
+# from reducto._ext.line_wrap cimport Line
 
+from cython.operator cimport dereference as deref
 from libcpp.string cimport string
 from libcpp cimport bool
 
@@ -32,6 +33,9 @@ cdef class PyLine:
     def __dealloc__(self):
         if self._thisptr != NULL:
             del self._thisptr
+
+    def __repr__(self):
+        return str(deref(self._thisptr))
 
     def get_line(self):
         return self._thisptr.get_line()

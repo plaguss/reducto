@@ -5,23 +5,20 @@
 
 namespace Reducto {
 
-	// FUNCIONES DE PYTHON any, maybe...
-	// Deberían ser un gruppo de tokens, pasarlo como *args...
+	// Python functions from tokenize module:
+	// https://github.com/python/cpython/blob/master/Lib/tokenize.py
 	std::string group(std::string token){
 		// Puts the string token as (token).
 		return "(" + token + ")";
 	}
 
-
 	std::string any(std::string token){
 		return group(token) + "*";
 	}
 
-
 	std::string maybe(std::string token){
 		return group(token) + "?";
 	}
-
 
 	std::string group_or(std::string token1, std::string token2){
 		return "(" + token1 + "|" + token2 + ")";
@@ -82,8 +79,6 @@ namespace Reducto {
 		const std::string raw { "r" };
 
 		// Docstrings related tokens
-		//const std::string single_str { R"(''')"};
-		//const std::string double_str { R"(""")"};
 		const std::string single_str { R"('{3})"};
 		const std::string double_str { R"("{3})"};
 		const std::string docs_grouped { group_or(single_str, double_str) };
@@ -108,6 +103,7 @@ namespace Reducto {
 
 	Tokens toks;
 
+    /*
 	struct Patterns {
 		// Stores the regex patterns to simplify access.
 
@@ -132,6 +128,7 @@ namespace Reducto {
 		const std::regex docstrings_end { toks.docs_end};  // DONE
 
 	};
+	*/
 
 	// Regular expressions to filter each line
 
@@ -151,8 +148,6 @@ namespace Reducto {
 
 	static const std::regex DOCSTRINGS_END(toks.docs_end, std::regex::optimize);
 
-
-	//Patterns patterns;
 
 	Line::Line(const string& l): line(l) {}
 
@@ -174,35 +169,30 @@ namespace Reducto {
 	}
 
 	bool Line::is_comment() {
-		//if (std::regex_search(line, patterns.comment_line))
 		if (std::regex_search(line, COMMENT_LINE))
 			return true;
 		return false;
 	}
 
 	bool Line::is_blank_line() {
-		//if (std::regex_search(line, patterns.blank_line))
 		if (std::regex_search(line, BLANK_LINE))
 			return true;
 		return false;
 	}
 
 	bool Line::is_def_start() {
-		//if (std::regex_search(line, patterns.def_start))
 		if (std::regex_search(line, DEF_START))
 			return true;
 		return false;
 	}
 
 	bool Line::is_def_end() {
-		//if (std::regex_search(line, patterns.def_end))
 		if (std::regex_search(line, DEF_END))
 			return true;
 		return false;
 	}
 
 	bool Line::is_class_start() {
-		//if (std::regex_search(line, patterns.class_start))
 		if (std::regex_search(line, CLASS_START))
 			return true;
 		return false;
@@ -214,24 +204,18 @@ namespace Reducto {
 
 
 	bool Line::is_docstring_one_line(){
-		//if (std::regex_search(line, docstrings_one_line_out))
-		//if (std::regex_search(line, patterns.docstrings_one_line))
 		if (std::regex_search(line, DOCSTRINGS_ONE_LINE))
 			return true;
 		return false;
 	}
 
 	bool Line::is_docstring_start(){
-		//if (std::regex_search(line, docstrings_start_out))
-		//if (std::regex_search(line, patterns.docstrings_start))
 		if (std::regex_search(line, DOCSTRINGS_START))
 			return true;
 		return false;
 	}
 
 	bool Line::is_docstring_end(){
-		//if (std::regex_search(line, docstrings_end_out))
-		//if (std::regex_search(line, patterns.docstrings_end))
 		if (std::regex_search(line, DOCSTRINGS_END))
 			return true;
 		return false;

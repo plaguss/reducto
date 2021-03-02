@@ -4,20 +4,20 @@
 {
     "distutils": {
         "depends": [
-            "reducto\\ext\\_line.h"
+            "reducto\\_ext\\_line.h"
         ],
         "include_dirs": [
-            "reducto/ext",
+            "reducto/_ext",
             "."
         ],
         "language": "c++",
-        "name": "reducto_ext",
+        "name": "line_ext",
         "sources": [
-            "reducto/ext/line_wrap.pyx",
-            "reducto/ext/_line.cpp"
+            "reducto/_ext/line_wrap.pyx",
+            "reducto/_ext/_line.cpp"
         ]
     },
-    "module_name": "reducto_ext"
+    "module_name": "line_ext"
 }
 END: Cython Metadata */
 
@@ -637,8 +637,8 @@ static CYTHON_INLINE float __PYX_NAN() {
   #endif
 #endif
 
-#define __PYX_HAVE__reducto_ext
-#define __PYX_HAVE_API__reducto_ext
+#define __PYX_HAVE__line_ext
+#define __PYX_HAVE_API__line_ext
 /* Early includes */
 #include <string.h>
 #include "ios"
@@ -856,20 +856,20 @@ static const char *__pyx_filename;
 
 static const char *__pyx_f[] = {
   "stringsource",
-  "reducto\\ext\\line_wrap.pyx",
+  "reducto\\_ext\\line_wrap.pyx",
 };
 
 /*--- Type declarations ---*/
-struct __pyx_obj_11reducto_ext_PyLine;
+struct __pyx_obj_8line_ext_PyLine;
 
-/* "reducto/ext/line_wrap.pyx":31
+/* "reducto/_ext/line_wrap.pyx":26
  * 
  * 
  * cdef class PyLine:             # <<<<<<<<<<<<<<
  *     cdef Line* _thisptr
  * 
  */
-struct __pyx_obj_11reducto_ext_PyLine {
+struct __pyx_obj_8line_ext_PyLine {
   PyObject_HEAD
   Reducto::Line *_thisptr;
 };
@@ -1172,19 +1172,19 @@ static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
 /* Module declarations from 'libcpp' */
 
-/* Module declarations from 'reducto_ext' */
-static PyTypeObject *__pyx_ptype_11reducto_ext_PyLine = 0;
+/* Module declarations from 'line_ext' */
+static PyTypeObject *__pyx_ptype_8line_ext_PyLine = 0;
 static std::string __pyx_convert_string_from_py_std__in_string(PyObject *); /*proto*/
 static CYTHON_INLINE PyObject *__pyx_convert_PyObject_string_to_py_std__in_string(std::string const &); /*proto*/
 static CYTHON_INLINE PyObject *__pyx_convert_PyUnicode_string_to_py_std__in_string(std::string const &); /*proto*/
 static CYTHON_INLINE PyObject *__pyx_convert_PyStr_string_to_py_std__in_string(std::string const &); /*proto*/
 static CYTHON_INLINE PyObject *__pyx_convert_PyBytes_string_to_py_std__in_string(std::string const &); /*proto*/
 static CYTHON_INLINE PyObject *__pyx_convert_PyByteArray_string_to_py_std__in_string(std::string const &); /*proto*/
-#define __Pyx_MODULE_NAME "reducto_ext"
-extern int __pyx_module_is_main_reducto_ext;
-int __pyx_module_is_main_reducto_ext = 0;
+#define __Pyx_MODULE_NAME "line_ext"
+extern int __pyx_module_is_main_line_ext;
+int __pyx_module_is_main_line_ext = 0;
 
-/* Implementation of 'reducto_ext' */
+/* Implementation of 'line_ext' */
 static PyObject *__pyx_builtin_TypeError;
 static const char __pyx_k_l[] = "l";
 static const char __pyx_k_main[] = "__main__";
@@ -1214,25 +1214,25 @@ static PyObject *__pyx_n_s_reduce_ex;
 static PyObject *__pyx_n_s_setstate;
 static PyObject *__pyx_n_s_setstate_cython;
 static PyObject *__pyx_n_s_test;
-static int __pyx_pf_11reducto_ext_6PyLine___cinit__(struct __pyx_obj_11reducto_ext_PyLine *__pyx_v_self, std::string __pyx_v_l); /* proto */
-static void __pyx_pf_11reducto_ext_6PyLine_2__dealloc__(struct __pyx_obj_11reducto_ext_PyLine *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_11reducto_ext_6PyLine_4get_line(struct __pyx_obj_11reducto_ext_PyLine *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_11reducto_ext_6PyLine_6indentation_level(struct __pyx_obj_11reducto_ext_PyLine *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_11reducto_ext_6PyLine_8is_comment(struct __pyx_obj_11reducto_ext_PyLine *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_11reducto_ext_6PyLine_10is_blank_line(struct __pyx_obj_11reducto_ext_PyLine *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_11reducto_ext_6PyLine_12is_def_start(struct __pyx_obj_11reducto_ext_PyLine *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_11reducto_ext_6PyLine_14is_def_end(struct __pyx_obj_11reducto_ext_PyLine *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_11reducto_ext_6PyLine_16is_class_start(struct __pyx_obj_11reducto_ext_PyLine *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_11reducto_ext_6PyLine_18is_docstring_start(struct __pyx_obj_11reducto_ext_PyLine *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_11reducto_ext_6PyLine_20is_docstring_end(struct __pyx_obj_11reducto_ext_PyLine *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_11reducto_ext_6PyLine_22__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_11reducto_ext_PyLine *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_11reducto_ext_6PyLine_24__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_11reducto_ext_PyLine *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
-static PyObject *__pyx_tp_new_11reducto_ext_PyLine(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static int __pyx_pf_8line_ext_6PyLine___cinit__(struct __pyx_obj_8line_ext_PyLine *__pyx_v_self, std::string __pyx_v_l); /* proto */
+static void __pyx_pf_8line_ext_6PyLine_2__dealloc__(struct __pyx_obj_8line_ext_PyLine *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_8line_ext_6PyLine_4get_line(struct __pyx_obj_8line_ext_PyLine *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_8line_ext_6PyLine_6indentation_level(struct __pyx_obj_8line_ext_PyLine *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_8line_ext_6PyLine_8is_comment(struct __pyx_obj_8line_ext_PyLine *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_8line_ext_6PyLine_10is_blank_line(struct __pyx_obj_8line_ext_PyLine *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_8line_ext_6PyLine_12is_def_start(struct __pyx_obj_8line_ext_PyLine *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_8line_ext_6PyLine_14is_def_end(struct __pyx_obj_8line_ext_PyLine *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_8line_ext_6PyLine_16is_class_start(struct __pyx_obj_8line_ext_PyLine *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_8line_ext_6PyLine_18is_docstring_start(struct __pyx_obj_8line_ext_PyLine *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_8line_ext_6PyLine_20is_docstring_end(struct __pyx_obj_8line_ext_PyLine *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_8line_ext_6PyLine_22__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_8line_ext_PyLine *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_8line_ext_6PyLine_24__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_8line_ext_PyLine *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_tp_new_8line_ext_PyLine(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tuple_;
 static PyObject *__pyx_tuple__2;
 /* Late includes */
 
-/* "reducto/ext/line_wrap.pyx":34
+/* "reducto/_ext/line_wrap.pyx":29
  *     cdef Line* _thisptr
  * 
  *     def __cinit__(self, const string& l):             # <<<<<<<<<<<<<<
@@ -1241,8 +1241,8 @@ static PyObject *__pyx_tuple__2;
  */
 
 /* Python wrapper */
-static int __pyx_pw_11reducto_ext_6PyLine_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static int __pyx_pw_11reducto_ext_6PyLine_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static int __pyx_pw_8line_ext_6PyLine_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static int __pyx_pw_8line_ext_6PyLine_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   std::string __pyx_v_l;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -1269,31 +1269,31 @@ static int __pyx_pw_11reducto_ext_6PyLine_1__cinit__(PyObject *__pyx_v_self, PyO
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__cinit__") < 0)) __PYX_ERR(1, 34, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__cinit__") < 0)) __PYX_ERR(1, 29, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 1) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
     }
-    __pyx_v_l = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(1, 34, __pyx_L3_error)
+    __pyx_v_l = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(1, 29, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 1, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 34, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 1, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 29, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("reducto_ext.PyLine.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("line_ext.PyLine.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_11reducto_ext_6PyLine___cinit__(((struct __pyx_obj_11reducto_ext_PyLine *)__pyx_v_self), __pyx_v_l);
+  __pyx_r = __pyx_pf_8line_ext_6PyLine___cinit__(((struct __pyx_obj_8line_ext_PyLine *)__pyx_v_self), __pyx_v_l);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_11reducto_ext_6PyLine___cinit__(struct __pyx_obj_11reducto_ext_PyLine *__pyx_v_self, std::string __pyx_v_l) {
+static int __pyx_pf_8line_ext_6PyLine___cinit__(struct __pyx_obj_8line_ext_PyLine *__pyx_v_self, std::string __pyx_v_l) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   Reducto::Line *__pyx_t_1;
@@ -1302,7 +1302,7 @@ static int __pyx_pf_11reducto_ext_6PyLine___cinit__(struct __pyx_obj_11reducto_e
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__cinit__", 0);
 
-  /* "reducto/ext/line_wrap.pyx":35
+  /* "reducto/_ext/line_wrap.pyx":30
  * 
  *     def __cinit__(self, const string& l):
  *         self._thisptr = new Line(l)             # <<<<<<<<<<<<<<
@@ -1313,11 +1313,11 @@ static int __pyx_pf_11reducto_ext_6PyLine___cinit__(struct __pyx_obj_11reducto_e
     __pyx_t_1 = new Reducto::Line(__pyx_v_l);
   } catch(...) {
     __Pyx_CppExn2PyErr();
-    __PYX_ERR(1, 35, __pyx_L1_error)
+    __PYX_ERR(1, 30, __pyx_L1_error)
   }
   __pyx_v_self->_thisptr = __pyx_t_1;
 
-  /* "reducto/ext/line_wrap.pyx":34
+  /* "reducto/_ext/line_wrap.pyx":29
  *     cdef Line* _thisptr
  * 
  *     def __cinit__(self, const string& l):             # <<<<<<<<<<<<<<
@@ -1329,14 +1329,14 @@ static int __pyx_pf_11reducto_ext_6PyLine___cinit__(struct __pyx_obj_11reducto_e
   __pyx_r = 0;
   goto __pyx_L0;
   __pyx_L1_error:;
-  __Pyx_AddTraceback("reducto_ext.PyLine.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("line_ext.PyLine.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "reducto/ext/line_wrap.pyx":37
+/* "reducto/_ext/line_wrap.pyx":32
  *         self._thisptr = new Line(l)
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -1345,22 +1345,22 @@ static int __pyx_pf_11reducto_ext_6PyLine___cinit__(struct __pyx_obj_11reducto_e
  */
 
 /* Python wrapper */
-static void __pyx_pw_11reducto_ext_6PyLine_3__dealloc__(PyObject *__pyx_v_self); /*proto*/
-static void __pyx_pw_11reducto_ext_6PyLine_3__dealloc__(PyObject *__pyx_v_self) {
+static void __pyx_pw_8line_ext_6PyLine_3__dealloc__(PyObject *__pyx_v_self); /*proto*/
+static void __pyx_pw_8line_ext_6PyLine_3__dealloc__(PyObject *__pyx_v_self) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__dealloc__ (wrapper)", 0);
-  __pyx_pf_11reducto_ext_6PyLine_2__dealloc__(((struct __pyx_obj_11reducto_ext_PyLine *)__pyx_v_self));
+  __pyx_pf_8line_ext_6PyLine_2__dealloc__(((struct __pyx_obj_8line_ext_PyLine *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
 }
 
-static void __pyx_pf_11reducto_ext_6PyLine_2__dealloc__(struct __pyx_obj_11reducto_ext_PyLine *__pyx_v_self) {
+static void __pyx_pf_8line_ext_6PyLine_2__dealloc__(struct __pyx_obj_8line_ext_PyLine *__pyx_v_self) {
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("__dealloc__", 0);
 
-  /* "reducto/ext/line_wrap.pyx":38
+  /* "reducto/_ext/line_wrap.pyx":33
  * 
  *     def __dealloc__(self):
  *         if self._thisptr != NULL:             # <<<<<<<<<<<<<<
@@ -1370,7 +1370,7 @@ static void __pyx_pf_11reducto_ext_6PyLine_2__dealloc__(struct __pyx_obj_11reduc
   __pyx_t_1 = ((__pyx_v_self->_thisptr != NULL) != 0);
   if (__pyx_t_1) {
 
-    /* "reducto/ext/line_wrap.pyx":39
+    /* "reducto/_ext/line_wrap.pyx":34
  *     def __dealloc__(self):
  *         if self._thisptr != NULL:
  *             del self._thisptr             # <<<<<<<<<<<<<<
@@ -1379,7 +1379,7 @@ static void __pyx_pf_11reducto_ext_6PyLine_2__dealloc__(struct __pyx_obj_11reduc
  */
     delete __pyx_v_self->_thisptr;
 
-    /* "reducto/ext/line_wrap.pyx":38
+    /* "reducto/_ext/line_wrap.pyx":33
  * 
  *     def __dealloc__(self):
  *         if self._thisptr != NULL:             # <<<<<<<<<<<<<<
@@ -1388,7 +1388,7 @@ static void __pyx_pf_11reducto_ext_6PyLine_2__dealloc__(struct __pyx_obj_11reduc
  */
   }
 
-  /* "reducto/ext/line_wrap.pyx":37
+  /* "reducto/_ext/line_wrap.pyx":32
  *         self._thisptr = new Line(l)
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -1400,7 +1400,7 @@ static void __pyx_pf_11reducto_ext_6PyLine_2__dealloc__(struct __pyx_obj_11reduc
   __Pyx_RefNannyFinishContext();
 }
 
-/* "reducto/ext/line_wrap.pyx":41
+/* "reducto/_ext/line_wrap.pyx":36
  *             del self._thisptr
  * 
  *     def get_line(self):             # <<<<<<<<<<<<<<
@@ -1409,19 +1409,19 @@ static void __pyx_pf_11reducto_ext_6PyLine_2__dealloc__(struct __pyx_obj_11reduc
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_11reducto_ext_6PyLine_5get_line(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_11reducto_ext_6PyLine_5get_line(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_8line_ext_6PyLine_5get_line(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_8line_ext_6PyLine_5get_line(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("get_line (wrapper)", 0);
-  __pyx_r = __pyx_pf_11reducto_ext_6PyLine_4get_line(((struct __pyx_obj_11reducto_ext_PyLine *)__pyx_v_self));
+  __pyx_r = __pyx_pf_8line_ext_6PyLine_4get_line(((struct __pyx_obj_8line_ext_PyLine *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_11reducto_ext_6PyLine_4get_line(struct __pyx_obj_11reducto_ext_PyLine *__pyx_v_self) {
+static PyObject *__pyx_pf_8line_ext_6PyLine_4get_line(struct __pyx_obj_8line_ext_PyLine *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1430,7 +1430,7 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_4get_line(struct __pyx_obj_11red
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("get_line", 0);
 
-  /* "reducto/ext/line_wrap.pyx":42
+  /* "reducto/_ext/line_wrap.pyx":37
  * 
  *     def get_line(self):
  *         return self._thisptr.get_line()             # <<<<<<<<<<<<<<
@@ -1438,13 +1438,13 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_4get_line(struct __pyx_obj_11red
  *     def indentation_level(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_convert_PyUnicode_string_to_py_std__in_string(__pyx_v_self->_thisptr->get_line()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 42, __pyx_L1_error)
+  __pyx_t_1 = __pyx_convert_PyUnicode_string_to_py_std__in_string(__pyx_v_self->_thisptr->get_line()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 37, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "reducto/ext/line_wrap.pyx":41
+  /* "reducto/_ext/line_wrap.pyx":36
  *             del self._thisptr
  * 
  *     def get_line(self):             # <<<<<<<<<<<<<<
@@ -1455,7 +1455,7 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_4get_line(struct __pyx_obj_11red
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("reducto_ext.PyLine.get_line", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("line_ext.PyLine.get_line", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1463,7 +1463,7 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_4get_line(struct __pyx_obj_11red
   return __pyx_r;
 }
 
-/* "reducto/ext/line_wrap.pyx":44
+/* "reducto/_ext/line_wrap.pyx":39
  *         return self._thisptr.get_line()
  * 
  *     def indentation_level(self):             # <<<<<<<<<<<<<<
@@ -1472,19 +1472,19 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_4get_line(struct __pyx_obj_11red
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_11reducto_ext_6PyLine_7indentation_level(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_11reducto_ext_6PyLine_7indentation_level(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_8line_ext_6PyLine_7indentation_level(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_8line_ext_6PyLine_7indentation_level(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("indentation_level (wrapper)", 0);
-  __pyx_r = __pyx_pf_11reducto_ext_6PyLine_6indentation_level(((struct __pyx_obj_11reducto_ext_PyLine *)__pyx_v_self));
+  __pyx_r = __pyx_pf_8line_ext_6PyLine_6indentation_level(((struct __pyx_obj_8line_ext_PyLine *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_11reducto_ext_6PyLine_6indentation_level(struct __pyx_obj_11reducto_ext_PyLine *__pyx_v_self) {
+static PyObject *__pyx_pf_8line_ext_6PyLine_6indentation_level(struct __pyx_obj_8line_ext_PyLine *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1493,7 +1493,7 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_6indentation_level(struct __pyx_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("indentation_level", 0);
 
-  /* "reducto/ext/line_wrap.pyx":45
+  /* "reducto/_ext/line_wrap.pyx":40
  * 
  *     def indentation_level(self):
  *         return self._thisptr.indentation_level()             # <<<<<<<<<<<<<<
@@ -1501,13 +1501,13 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_6indentation_level(struct __pyx_
  *     def is_comment(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->_thisptr->indentation_level()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 45, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->_thisptr->indentation_level()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 40, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "reducto/ext/line_wrap.pyx":44
+  /* "reducto/_ext/line_wrap.pyx":39
  *         return self._thisptr.get_line()
  * 
  *     def indentation_level(self):             # <<<<<<<<<<<<<<
@@ -1518,7 +1518,7 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_6indentation_level(struct __pyx_
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("reducto_ext.PyLine.indentation_level", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("line_ext.PyLine.indentation_level", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1526,7 +1526,7 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_6indentation_level(struct __pyx_
   return __pyx_r;
 }
 
-/* "reducto/ext/line_wrap.pyx":47
+/* "reducto/_ext/line_wrap.pyx":42
  *         return self._thisptr.indentation_level()
  * 
  *     def is_comment(self):             # <<<<<<<<<<<<<<
@@ -1535,19 +1535,19 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_6indentation_level(struct __pyx_
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_11reducto_ext_6PyLine_9is_comment(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_11reducto_ext_6PyLine_9is_comment(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_8line_ext_6PyLine_9is_comment(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_8line_ext_6PyLine_9is_comment(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("is_comment (wrapper)", 0);
-  __pyx_r = __pyx_pf_11reducto_ext_6PyLine_8is_comment(((struct __pyx_obj_11reducto_ext_PyLine *)__pyx_v_self));
+  __pyx_r = __pyx_pf_8line_ext_6PyLine_8is_comment(((struct __pyx_obj_8line_ext_PyLine *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_11reducto_ext_6PyLine_8is_comment(struct __pyx_obj_11reducto_ext_PyLine *__pyx_v_self) {
+static PyObject *__pyx_pf_8line_ext_6PyLine_8is_comment(struct __pyx_obj_8line_ext_PyLine *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1556,7 +1556,7 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_8is_comment(struct __pyx_obj_11r
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("is_comment", 0);
 
-  /* "reducto/ext/line_wrap.pyx":48
+  /* "reducto/_ext/line_wrap.pyx":43
  * 
  *     def is_comment(self):
  *         return self._thisptr.is_comment()             # <<<<<<<<<<<<<<
@@ -1564,13 +1564,13 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_8is_comment(struct __pyx_obj_11r
  *     def is_blank_line(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->_thisptr->is_comment()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 48, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->_thisptr->is_comment()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 43, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "reducto/ext/line_wrap.pyx":47
+  /* "reducto/_ext/line_wrap.pyx":42
  *         return self._thisptr.indentation_level()
  * 
  *     def is_comment(self):             # <<<<<<<<<<<<<<
@@ -1581,7 +1581,7 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_8is_comment(struct __pyx_obj_11r
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("reducto_ext.PyLine.is_comment", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("line_ext.PyLine.is_comment", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1589,7 +1589,7 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_8is_comment(struct __pyx_obj_11r
   return __pyx_r;
 }
 
-/* "reducto/ext/line_wrap.pyx":50
+/* "reducto/_ext/line_wrap.pyx":45
  *         return self._thisptr.is_comment()
  * 
  *     def is_blank_line(self):             # <<<<<<<<<<<<<<
@@ -1598,19 +1598,19 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_8is_comment(struct __pyx_obj_11r
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_11reducto_ext_6PyLine_11is_blank_line(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_11reducto_ext_6PyLine_11is_blank_line(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_8line_ext_6PyLine_11is_blank_line(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_8line_ext_6PyLine_11is_blank_line(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("is_blank_line (wrapper)", 0);
-  __pyx_r = __pyx_pf_11reducto_ext_6PyLine_10is_blank_line(((struct __pyx_obj_11reducto_ext_PyLine *)__pyx_v_self));
+  __pyx_r = __pyx_pf_8line_ext_6PyLine_10is_blank_line(((struct __pyx_obj_8line_ext_PyLine *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_11reducto_ext_6PyLine_10is_blank_line(struct __pyx_obj_11reducto_ext_PyLine *__pyx_v_self) {
+static PyObject *__pyx_pf_8line_ext_6PyLine_10is_blank_line(struct __pyx_obj_8line_ext_PyLine *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1619,7 +1619,7 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_10is_blank_line(struct __pyx_obj
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("is_blank_line", 0);
 
-  /* "reducto/ext/line_wrap.pyx":51
+  /* "reducto/_ext/line_wrap.pyx":46
  * 
  *     def is_blank_line(self):
  *         return self._thisptr.is_blank_line()             # <<<<<<<<<<<<<<
@@ -1627,13 +1627,13 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_10is_blank_line(struct __pyx_obj
  *     def is_def_start(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->_thisptr->is_blank_line()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 51, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->_thisptr->is_blank_line()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 46, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "reducto/ext/line_wrap.pyx":50
+  /* "reducto/_ext/line_wrap.pyx":45
  *         return self._thisptr.is_comment()
  * 
  *     def is_blank_line(self):             # <<<<<<<<<<<<<<
@@ -1644,7 +1644,7 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_10is_blank_line(struct __pyx_obj
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("reducto_ext.PyLine.is_blank_line", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("line_ext.PyLine.is_blank_line", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1652,7 +1652,7 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_10is_blank_line(struct __pyx_obj
   return __pyx_r;
 }
 
-/* "reducto/ext/line_wrap.pyx":53
+/* "reducto/_ext/line_wrap.pyx":48
  *         return self._thisptr.is_blank_line()
  * 
  *     def is_def_start(self):             # <<<<<<<<<<<<<<
@@ -1661,19 +1661,19 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_10is_blank_line(struct __pyx_obj
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_11reducto_ext_6PyLine_13is_def_start(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_11reducto_ext_6PyLine_13is_def_start(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_8line_ext_6PyLine_13is_def_start(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_8line_ext_6PyLine_13is_def_start(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("is_def_start (wrapper)", 0);
-  __pyx_r = __pyx_pf_11reducto_ext_6PyLine_12is_def_start(((struct __pyx_obj_11reducto_ext_PyLine *)__pyx_v_self));
+  __pyx_r = __pyx_pf_8line_ext_6PyLine_12is_def_start(((struct __pyx_obj_8line_ext_PyLine *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_11reducto_ext_6PyLine_12is_def_start(struct __pyx_obj_11reducto_ext_PyLine *__pyx_v_self) {
+static PyObject *__pyx_pf_8line_ext_6PyLine_12is_def_start(struct __pyx_obj_8line_ext_PyLine *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1682,7 +1682,7 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_12is_def_start(struct __pyx_obj_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("is_def_start", 0);
 
-  /* "reducto/ext/line_wrap.pyx":54
+  /* "reducto/_ext/line_wrap.pyx":49
  * 
  *     def is_def_start(self):
  *         return self._thisptr.is_def_start()             # <<<<<<<<<<<<<<
@@ -1690,13 +1690,13 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_12is_def_start(struct __pyx_obj_
  *     def is_def_end(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->_thisptr->is_def_start()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 54, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->_thisptr->is_def_start()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 49, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "reducto/ext/line_wrap.pyx":53
+  /* "reducto/_ext/line_wrap.pyx":48
  *         return self._thisptr.is_blank_line()
  * 
  *     def is_def_start(self):             # <<<<<<<<<<<<<<
@@ -1707,7 +1707,7 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_12is_def_start(struct __pyx_obj_
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("reducto_ext.PyLine.is_def_start", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("line_ext.PyLine.is_def_start", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1715,7 +1715,7 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_12is_def_start(struct __pyx_obj_
   return __pyx_r;
 }
 
-/* "reducto/ext/line_wrap.pyx":56
+/* "reducto/_ext/line_wrap.pyx":51
  *         return self._thisptr.is_def_start()
  * 
  *     def is_def_end(self):             # <<<<<<<<<<<<<<
@@ -1724,19 +1724,19 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_12is_def_start(struct __pyx_obj_
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_11reducto_ext_6PyLine_15is_def_end(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_11reducto_ext_6PyLine_15is_def_end(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_8line_ext_6PyLine_15is_def_end(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_8line_ext_6PyLine_15is_def_end(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("is_def_end (wrapper)", 0);
-  __pyx_r = __pyx_pf_11reducto_ext_6PyLine_14is_def_end(((struct __pyx_obj_11reducto_ext_PyLine *)__pyx_v_self));
+  __pyx_r = __pyx_pf_8line_ext_6PyLine_14is_def_end(((struct __pyx_obj_8line_ext_PyLine *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_11reducto_ext_6PyLine_14is_def_end(struct __pyx_obj_11reducto_ext_PyLine *__pyx_v_self) {
+static PyObject *__pyx_pf_8line_ext_6PyLine_14is_def_end(struct __pyx_obj_8line_ext_PyLine *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1745,7 +1745,7 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_14is_def_end(struct __pyx_obj_11
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("is_def_end", 0);
 
-  /* "reducto/ext/line_wrap.pyx":57
+  /* "reducto/_ext/line_wrap.pyx":52
  * 
  *     def is_def_end(self):
  *         return self._thisptr.is_def_end()             # <<<<<<<<<<<<<<
@@ -1753,13 +1753,13 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_14is_def_end(struct __pyx_obj_11
  *     def is_class_start(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->_thisptr->is_def_end()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 57, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->_thisptr->is_def_end()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 52, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "reducto/ext/line_wrap.pyx":56
+  /* "reducto/_ext/line_wrap.pyx":51
  *         return self._thisptr.is_def_start()
  * 
  *     def is_def_end(self):             # <<<<<<<<<<<<<<
@@ -1770,7 +1770,7 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_14is_def_end(struct __pyx_obj_11
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("reducto_ext.PyLine.is_def_end", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("line_ext.PyLine.is_def_end", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1778,7 +1778,7 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_14is_def_end(struct __pyx_obj_11
   return __pyx_r;
 }
 
-/* "reducto/ext/line_wrap.pyx":59
+/* "reducto/_ext/line_wrap.pyx":54
  *         return self._thisptr.is_def_end()
  * 
  *     def is_class_start(self):             # <<<<<<<<<<<<<<
@@ -1787,19 +1787,19 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_14is_def_end(struct __pyx_obj_11
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_11reducto_ext_6PyLine_17is_class_start(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_11reducto_ext_6PyLine_17is_class_start(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_8line_ext_6PyLine_17is_class_start(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_8line_ext_6PyLine_17is_class_start(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("is_class_start (wrapper)", 0);
-  __pyx_r = __pyx_pf_11reducto_ext_6PyLine_16is_class_start(((struct __pyx_obj_11reducto_ext_PyLine *)__pyx_v_self));
+  __pyx_r = __pyx_pf_8line_ext_6PyLine_16is_class_start(((struct __pyx_obj_8line_ext_PyLine *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_11reducto_ext_6PyLine_16is_class_start(struct __pyx_obj_11reducto_ext_PyLine *__pyx_v_self) {
+static PyObject *__pyx_pf_8line_ext_6PyLine_16is_class_start(struct __pyx_obj_8line_ext_PyLine *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1808,7 +1808,7 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_16is_class_start(struct __pyx_ob
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("is_class_start", 0);
 
-  /* "reducto/ext/line_wrap.pyx":60
+  /* "reducto/_ext/line_wrap.pyx":55
  * 
  *     def is_class_start(self):
  *         return self._thisptr.is_class_start()             # <<<<<<<<<<<<<<
@@ -1816,13 +1816,13 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_16is_class_start(struct __pyx_ob
  *     def is_docstring_start(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->_thisptr->is_class_start()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 60, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->_thisptr->is_class_start()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 55, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "reducto/ext/line_wrap.pyx":59
+  /* "reducto/_ext/line_wrap.pyx":54
  *         return self._thisptr.is_def_end()
  * 
  *     def is_class_start(self):             # <<<<<<<<<<<<<<
@@ -1833,7 +1833,7 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_16is_class_start(struct __pyx_ob
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("reducto_ext.PyLine.is_class_start", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("line_ext.PyLine.is_class_start", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1841,7 +1841,7 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_16is_class_start(struct __pyx_ob
   return __pyx_r;
 }
 
-/* "reducto/ext/line_wrap.pyx":62
+/* "reducto/_ext/line_wrap.pyx":57
  *         return self._thisptr.is_class_start()
  * 
  *     def is_docstring_start(self):             # <<<<<<<<<<<<<<
@@ -1850,19 +1850,19 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_16is_class_start(struct __pyx_ob
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_11reducto_ext_6PyLine_19is_docstring_start(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_11reducto_ext_6PyLine_19is_docstring_start(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_8line_ext_6PyLine_19is_docstring_start(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_8line_ext_6PyLine_19is_docstring_start(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("is_docstring_start (wrapper)", 0);
-  __pyx_r = __pyx_pf_11reducto_ext_6PyLine_18is_docstring_start(((struct __pyx_obj_11reducto_ext_PyLine *)__pyx_v_self));
+  __pyx_r = __pyx_pf_8line_ext_6PyLine_18is_docstring_start(((struct __pyx_obj_8line_ext_PyLine *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_11reducto_ext_6PyLine_18is_docstring_start(struct __pyx_obj_11reducto_ext_PyLine *__pyx_v_self) {
+static PyObject *__pyx_pf_8line_ext_6PyLine_18is_docstring_start(struct __pyx_obj_8line_ext_PyLine *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1871,7 +1871,7 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_18is_docstring_start(struct __py
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("is_docstring_start", 0);
 
-  /* "reducto/ext/line_wrap.pyx":63
+  /* "reducto/_ext/line_wrap.pyx":58
  * 
  *     def is_docstring_start(self):
  *         return self._thisptr.is_docstring_start()             # <<<<<<<<<<<<<<
@@ -1879,13 +1879,13 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_18is_docstring_start(struct __py
  *     def is_docstring_end(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->_thisptr->is_docstring_start()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 63, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->_thisptr->is_docstring_start()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 58, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "reducto/ext/line_wrap.pyx":62
+  /* "reducto/_ext/line_wrap.pyx":57
  *         return self._thisptr.is_class_start()
  * 
  *     def is_docstring_start(self):             # <<<<<<<<<<<<<<
@@ -1896,7 +1896,7 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_18is_docstring_start(struct __py
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("reducto_ext.PyLine.is_docstring_start", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("line_ext.PyLine.is_docstring_start", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1904,7 +1904,7 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_18is_docstring_start(struct __py
   return __pyx_r;
 }
 
-/* "reducto/ext/line_wrap.pyx":65
+/* "reducto/_ext/line_wrap.pyx":60
  *         return self._thisptr.is_docstring_start()
  * 
  *     def is_docstring_end(self):             # <<<<<<<<<<<<<<
@@ -1912,19 +1912,19 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_18is_docstring_start(struct __py
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_11reducto_ext_6PyLine_21is_docstring_end(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_11reducto_ext_6PyLine_21is_docstring_end(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_8line_ext_6PyLine_21is_docstring_end(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_8line_ext_6PyLine_21is_docstring_end(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("is_docstring_end (wrapper)", 0);
-  __pyx_r = __pyx_pf_11reducto_ext_6PyLine_20is_docstring_end(((struct __pyx_obj_11reducto_ext_PyLine *)__pyx_v_self));
+  __pyx_r = __pyx_pf_8line_ext_6PyLine_20is_docstring_end(((struct __pyx_obj_8line_ext_PyLine *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_11reducto_ext_6PyLine_20is_docstring_end(struct __pyx_obj_11reducto_ext_PyLine *__pyx_v_self) {
+static PyObject *__pyx_pf_8line_ext_6PyLine_20is_docstring_end(struct __pyx_obj_8line_ext_PyLine *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1933,19 +1933,19 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_20is_docstring_end(struct __pyx_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("is_docstring_end", 0);
 
-  /* "reducto/ext/line_wrap.pyx":66
+  /* "reducto/_ext/line_wrap.pyx":61
  * 
  *     def is_docstring_end(self):
  *         return self._thisptr.is_docstring_end()             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->_thisptr->is_docstring_end()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 66, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->_thisptr->is_docstring_end()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 61, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "reducto/ext/line_wrap.pyx":65
+  /* "reducto/_ext/line_wrap.pyx":60
  *         return self._thisptr.is_docstring_start()
  * 
  *     def is_docstring_end(self):             # <<<<<<<<<<<<<<
@@ -1955,7 +1955,7 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_20is_docstring_end(struct __pyx_
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("reducto_ext.PyLine.is_docstring_end", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("line_ext.PyLine.is_docstring_end", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1970,19 +1970,19 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_20is_docstring_end(struct __pyx_
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_11reducto_ext_6PyLine_23__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_11reducto_ext_6PyLine_23__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_8line_ext_6PyLine_23__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_8line_ext_6PyLine_23__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__reduce_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_11reducto_ext_6PyLine_22__reduce_cython__(((struct __pyx_obj_11reducto_ext_PyLine *)__pyx_v_self));
+  __pyx_r = __pyx_pf_8line_ext_6PyLine_22__reduce_cython__(((struct __pyx_obj_8line_ext_PyLine *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_11reducto_ext_6PyLine_22__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_11reducto_ext_PyLine *__pyx_v_self) {
+static PyObject *__pyx_pf_8line_ext_6PyLine_22__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_8line_ext_PyLine *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -2012,7 +2012,7 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_22__reduce_cython__(CYTHON_UNUSE
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("reducto_ext.PyLine.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("line_ext.PyLine.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
@@ -2027,19 +2027,19 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_22__reduce_cython__(CYTHON_UNUSE
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_11reducto_ext_6PyLine_25__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
-static PyObject *__pyx_pw_11reducto_ext_6PyLine_25__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pw_8line_ext_6PyLine_25__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
+static PyObject *__pyx_pw_8line_ext_6PyLine_25__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__setstate_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_11reducto_ext_6PyLine_24__setstate_cython__(((struct __pyx_obj_11reducto_ext_PyLine *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
+  __pyx_r = __pyx_pf_8line_ext_6PyLine_24__setstate_cython__(((struct __pyx_obj_8line_ext_PyLine *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_11reducto_ext_6PyLine_24__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_11reducto_ext_PyLine *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_8line_ext_6PyLine_24__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_8line_ext_PyLine *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -2069,7 +2069,7 @@ static PyObject *__pyx_pf_11reducto_ext_6PyLine_24__setstate_cython__(CYTHON_UNU
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("reducto_ext.PyLine.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("line_ext.PyLine.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
@@ -2390,7 +2390,7 @@ static CYTHON_INLINE PyObject *__pyx_convert_PyByteArray_string_to_py_std__in_st
   return __pyx_r;
 }
 
-static PyObject *__pyx_tp_new_11reducto_ext_PyLine(PyTypeObject *t, PyObject *a, PyObject *k) {
+static PyObject *__pyx_tp_new_8line_ext_PyLine(PyTypeObject *t, PyObject *a, PyObject *k) {
   PyObject *o;
   if (likely((t->tp_flags & Py_TPFLAGS_IS_ABSTRACT) == 0)) {
     o = (*t->tp_alloc)(t, 0);
@@ -2398,14 +2398,14 @@ static PyObject *__pyx_tp_new_11reducto_ext_PyLine(PyTypeObject *t, PyObject *a,
     o = (PyObject *) PyBaseObject_Type.tp_new(t, __pyx_empty_tuple, 0);
   }
   if (unlikely(!o)) return 0;
-  if (unlikely(__pyx_pw_11reducto_ext_6PyLine_1__cinit__(o, a, k) < 0)) goto bad;
+  if (unlikely(__pyx_pw_8line_ext_6PyLine_1__cinit__(o, a, k) < 0)) goto bad;
   return o;
   bad:
   Py_DECREF(o); o = 0;
   return NULL;
 }
 
-static void __pyx_tp_dealloc_11reducto_ext_PyLine(PyObject *o) {
+static void __pyx_tp_dealloc_8line_ext_PyLine(PyObject *o) {
   #if CYTHON_USE_TP_FINALIZE
   if (unlikely(PyType_HasFeature(Py_TYPE(o), Py_TPFLAGS_HAVE_FINALIZE) && Py_TYPE(o)->tp_finalize) && (!PyType_IS_GC(Py_TYPE(o)) || !_PyGC_FINALIZED(o))) {
     if (PyObject_CallFinalizerFromDealloc(o)) return;
@@ -2415,34 +2415,34 @@ static void __pyx_tp_dealloc_11reducto_ext_PyLine(PyObject *o) {
     PyObject *etype, *eval, *etb;
     PyErr_Fetch(&etype, &eval, &etb);
     __Pyx_SET_REFCNT(o, Py_REFCNT(o) + 1);
-    __pyx_pw_11reducto_ext_6PyLine_3__dealloc__(o);
+    __pyx_pw_8line_ext_6PyLine_3__dealloc__(o);
     __Pyx_SET_REFCNT(o, Py_REFCNT(o) - 1);
     PyErr_Restore(etype, eval, etb);
   }
   (*Py_TYPE(o)->tp_free)(o);
 }
 
-static PyMethodDef __pyx_methods_11reducto_ext_PyLine[] = {
-  {"get_line", (PyCFunction)__pyx_pw_11reducto_ext_6PyLine_5get_line, METH_NOARGS, 0},
-  {"indentation_level", (PyCFunction)__pyx_pw_11reducto_ext_6PyLine_7indentation_level, METH_NOARGS, 0},
-  {"is_comment", (PyCFunction)__pyx_pw_11reducto_ext_6PyLine_9is_comment, METH_NOARGS, 0},
-  {"is_blank_line", (PyCFunction)__pyx_pw_11reducto_ext_6PyLine_11is_blank_line, METH_NOARGS, 0},
-  {"is_def_start", (PyCFunction)__pyx_pw_11reducto_ext_6PyLine_13is_def_start, METH_NOARGS, 0},
-  {"is_def_end", (PyCFunction)__pyx_pw_11reducto_ext_6PyLine_15is_def_end, METH_NOARGS, 0},
-  {"is_class_start", (PyCFunction)__pyx_pw_11reducto_ext_6PyLine_17is_class_start, METH_NOARGS, 0},
-  {"is_docstring_start", (PyCFunction)__pyx_pw_11reducto_ext_6PyLine_19is_docstring_start, METH_NOARGS, 0},
-  {"is_docstring_end", (PyCFunction)__pyx_pw_11reducto_ext_6PyLine_21is_docstring_end, METH_NOARGS, 0},
-  {"__reduce_cython__", (PyCFunction)__pyx_pw_11reducto_ext_6PyLine_23__reduce_cython__, METH_NOARGS, 0},
-  {"__setstate_cython__", (PyCFunction)__pyx_pw_11reducto_ext_6PyLine_25__setstate_cython__, METH_O, 0},
+static PyMethodDef __pyx_methods_8line_ext_PyLine[] = {
+  {"get_line", (PyCFunction)__pyx_pw_8line_ext_6PyLine_5get_line, METH_NOARGS, 0},
+  {"indentation_level", (PyCFunction)__pyx_pw_8line_ext_6PyLine_7indentation_level, METH_NOARGS, 0},
+  {"is_comment", (PyCFunction)__pyx_pw_8line_ext_6PyLine_9is_comment, METH_NOARGS, 0},
+  {"is_blank_line", (PyCFunction)__pyx_pw_8line_ext_6PyLine_11is_blank_line, METH_NOARGS, 0},
+  {"is_def_start", (PyCFunction)__pyx_pw_8line_ext_6PyLine_13is_def_start, METH_NOARGS, 0},
+  {"is_def_end", (PyCFunction)__pyx_pw_8line_ext_6PyLine_15is_def_end, METH_NOARGS, 0},
+  {"is_class_start", (PyCFunction)__pyx_pw_8line_ext_6PyLine_17is_class_start, METH_NOARGS, 0},
+  {"is_docstring_start", (PyCFunction)__pyx_pw_8line_ext_6PyLine_19is_docstring_start, METH_NOARGS, 0},
+  {"is_docstring_end", (PyCFunction)__pyx_pw_8line_ext_6PyLine_21is_docstring_end, METH_NOARGS, 0},
+  {"__reduce_cython__", (PyCFunction)__pyx_pw_8line_ext_6PyLine_23__reduce_cython__, METH_NOARGS, 0},
+  {"__setstate_cython__", (PyCFunction)__pyx_pw_8line_ext_6PyLine_25__setstate_cython__, METH_O, 0},
   {0, 0, 0, 0}
 };
 
-static PyTypeObject __pyx_type_11reducto_ext_PyLine = {
+static PyTypeObject __pyx_type_8line_ext_PyLine = {
   PyVarObject_HEAD_INIT(0, 0)
-  "reducto_ext.PyLine", /*tp_name*/
-  sizeof(struct __pyx_obj_11reducto_ext_PyLine), /*tp_basicsize*/
+  "line_ext.PyLine", /*tp_name*/
+  sizeof(struct __pyx_obj_8line_ext_PyLine), /*tp_basicsize*/
   0, /*tp_itemsize*/
-  __pyx_tp_dealloc_11reducto_ext_PyLine, /*tp_dealloc*/
+  __pyx_tp_dealloc_8line_ext_PyLine, /*tp_dealloc*/
   #if PY_VERSION_HEX < 0x030800b4
   0, /*tp_print*/
   #endif
@@ -2475,7 +2475,7 @@ static PyTypeObject __pyx_type_11reducto_ext_PyLine = {
   0, /*tp_weaklistoffset*/
   0, /*tp_iter*/
   0, /*tp_iternext*/
-  __pyx_methods_11reducto_ext_PyLine, /*tp_methods*/
+  __pyx_methods_8line_ext_PyLine, /*tp_methods*/
   0, /*tp_members*/
   0, /*tp_getset*/
   0, /*tp_base*/
@@ -2485,7 +2485,7 @@ static PyTypeObject __pyx_type_11reducto_ext_PyLine = {
   0, /*tp_dictoffset*/
   0, /*tp_init*/
   0, /*tp_alloc*/
-  __pyx_tp_new_11reducto_ext_PyLine, /*tp_new*/
+  __pyx_tp_new_8line_ext_PyLine, /*tp_new*/
   0, /*tp_free*/
   0, /*tp_is_gc*/
   0, /*tp_bases*/
@@ -2513,17 +2513,17 @@ static PyMethodDef __pyx_methods[] = {
 #if PY_MAJOR_VERSION >= 3
 #if CYTHON_PEP489_MULTI_PHASE_INIT
 static PyObject* __pyx_pymod_create(PyObject *spec, PyModuleDef *def); /*proto*/
-static int __pyx_pymod_exec_reducto_ext(PyObject* module); /*proto*/
+static int __pyx_pymod_exec_line_ext(PyObject* module); /*proto*/
 static PyModuleDef_Slot __pyx_moduledef_slots[] = {
   {Py_mod_create, (void*)__pyx_pymod_create},
-  {Py_mod_exec, (void*)__pyx_pymod_exec_reducto_ext},
+  {Py_mod_exec, (void*)__pyx_pymod_exec_line_ext},
   {0, NULL}
 };
 #endif
 
 static struct PyModuleDef __pyx_moduledef = {
     PyModuleDef_HEAD_INIT,
-    "reducto_ext",
+    "line_ext",
     0, /* m_doc */
   #if CYTHON_PEP489_MULTI_PHASE_INIT
     0, /* m_size */
@@ -2650,16 +2650,16 @@ static int __Pyx_modinit_type_init_code(void) {
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__Pyx_modinit_type_init_code", 0);
   /*--- Type init code ---*/
-  if (PyType_Ready(&__pyx_type_11reducto_ext_PyLine) < 0) __PYX_ERR(1, 31, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_8line_ext_PyLine) < 0) __PYX_ERR(1, 26, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
-  __pyx_type_11reducto_ext_PyLine.tp_print = 0;
+  __pyx_type_8line_ext_PyLine.tp_print = 0;
   #endif
-  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_11reducto_ext_PyLine.tp_dictoffset && __pyx_type_11reducto_ext_PyLine.tp_getattro == PyObject_GenericGetAttr)) {
-    __pyx_type_11reducto_ext_PyLine.tp_getattro = __Pyx_PyObject_GenericGetAttr;
+  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_8line_ext_PyLine.tp_dictoffset && __pyx_type_8line_ext_PyLine.tp_getattro == PyObject_GenericGetAttr)) {
+    __pyx_type_8line_ext_PyLine.tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_PyLine, (PyObject *)&__pyx_type_11reducto_ext_PyLine) < 0) __PYX_ERR(1, 31, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_11reducto_ext_PyLine) < 0) __PYX_ERR(1, 31, __pyx_L1_error)
-  __pyx_ptype_11reducto_ext_PyLine = &__pyx_type_11reducto_ext_PyLine;
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_PyLine, (PyObject *)&__pyx_type_8line_ext_PyLine) < 0) __PYX_ERR(1, 26, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_8line_ext_PyLine) < 0) __PYX_ERR(1, 26, __pyx_L1_error)
+  __pyx_ptype_8line_ext_PyLine = &__pyx_type_8line_ext_PyLine;
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -2710,11 +2710,11 @@ static int __Pyx_modinit_function_import_code(void) {
 
 
 #if PY_MAJOR_VERSION < 3
-__Pyx_PyMODINIT_FUNC initreducto_ext(void) CYTHON_SMALL_CODE; /*proto*/
-__Pyx_PyMODINIT_FUNC initreducto_ext(void)
+__Pyx_PyMODINIT_FUNC initline_ext(void) CYTHON_SMALL_CODE; /*proto*/
+__Pyx_PyMODINIT_FUNC initline_ext(void)
 #else
-__Pyx_PyMODINIT_FUNC PyInit_reducto_ext(void) CYTHON_SMALL_CODE; /*proto*/
-__Pyx_PyMODINIT_FUNC PyInit_reducto_ext(void)
+__Pyx_PyMODINIT_FUNC PyInit_line_ext(void) CYTHON_SMALL_CODE; /*proto*/
+__Pyx_PyMODINIT_FUNC PyInit_line_ext(void)
 #if CYTHON_PEP489_MULTI_PHASE_INIT
 {
   return PyModuleDef_Init(&__pyx_moduledef);
@@ -2781,7 +2781,7 @@ bad:
 }
 
 
-static CYTHON_SMALL_CODE int __pyx_pymod_exec_reducto_ext(PyObject *__pyx_pyinit_module)
+static CYTHON_SMALL_CODE int __pyx_pymod_exec_line_ext(PyObject *__pyx_pyinit_module)
 #endif
 #endif
 {
@@ -2793,7 +2793,7 @@ static CYTHON_SMALL_CODE int __pyx_pymod_exec_reducto_ext(PyObject *__pyx_pyinit
   #if CYTHON_PEP489_MULTI_PHASE_INIT
   if (__pyx_m) {
     if (__pyx_m == __pyx_pyinit_module) return 0;
-    PyErr_SetString(PyExc_RuntimeError, "Module 'reducto_ext' has already been imported. Re-initialisation is not supported.");
+    PyErr_SetString(PyExc_RuntimeError, "Module 'line_ext' has already been imported. Re-initialisation is not supported.");
     return -1;
   }
   #elif PY_MAJOR_VERSION >= 3
@@ -2808,7 +2808,7 @@ if (!__Pyx_RefNanny) {
       Py_FatalError("failed to import 'refnanny' module");
 }
 #endif
-  __Pyx_RefNannySetupContext("__Pyx_PyMODINIT_FUNC PyInit_reducto_ext(void)", 0);
+  __Pyx_RefNannySetupContext("__Pyx_PyMODINIT_FUNC PyInit_line_ext(void)", 0);
   if (__Pyx_check_binary_version() < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   #ifdef __Pxy_PyFrame_Initialize_Offsets
   __Pxy_PyFrame_Initialize_Offsets();
@@ -2847,7 +2847,7 @@ if (!__Pyx_RefNanny) {
   Py_INCREF(__pyx_m);
   #else
   #if PY_MAJOR_VERSION < 3
-  __pyx_m = Py_InitModule4("reducto_ext", __pyx_methods, 0, 0, PYTHON_API_VERSION); Py_XINCREF(__pyx_m);
+  __pyx_m = Py_InitModule4("line_ext", __pyx_methods, 0, 0, PYTHON_API_VERSION); Py_XINCREF(__pyx_m);
   #else
   __pyx_m = PyModule_Create(&__pyx_moduledef);
   #endif
@@ -2865,14 +2865,14 @@ if (!__Pyx_RefNanny) {
   #if PY_MAJOR_VERSION < 3 && (__PYX_DEFAULT_STRING_ENCODING_IS_ASCII || __PYX_DEFAULT_STRING_ENCODING_IS_DEFAULT)
   if (__Pyx_init_sys_getdefaultencoding_params() < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   #endif
-  if (__pyx_module_is_main_reducto_ext) {
+  if (__pyx_module_is_main_line_ext) {
     if (PyObject_SetAttr(__pyx_m, __pyx_n_s_name, __pyx_n_s_main) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   }
   #if PY_MAJOR_VERSION >= 3
   {
     PyObject *modules = PyImport_GetModuleDict(); if (unlikely(!modules)) __PYX_ERR(1, 1, __pyx_L1_error)
-    if (!PyDict_GetItemString(modules, "reducto_ext")) {
-      if (unlikely(PyDict_SetItemString(modules, "reducto_ext", __pyx_m) < 0)) __PYX_ERR(1, 1, __pyx_L1_error)
+    if (!PyDict_GetItemString(modules, "line_ext")) {
+      if (unlikely(PyDict_SetItemString(modules, "line_ext", __pyx_m) < 0)) __PYX_ERR(1, 1, __pyx_L1_error)
     }
   }
   #endif
@@ -2893,7 +2893,7 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_patch_abc() < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   #endif
 
-  /* "reducto/ext/line_wrap.pyx":1
+  /* "reducto/_ext/line_wrap.pyx":1
  * # distutils: language=c++             # <<<<<<<<<<<<<<
  * # cython: c_string_type=unicode, c_string_encoding=utf8
  * # cython: language_level=3
@@ -2918,11 +2918,11 @@ if (!__Pyx_RefNanny) {
   __Pyx_XDECREF(__pyx_t_1);
   if (__pyx_m) {
     if (__pyx_d) {
-      __Pyx_AddTraceback("init reducto_ext", __pyx_clineno, __pyx_lineno, __pyx_filename);
+      __Pyx_AddTraceback("init line_ext", __pyx_clineno, __pyx_lineno, __pyx_filename);
     }
     Py_CLEAR(__pyx_m);
   } else if (!PyErr_Occurred()) {
-    PyErr_SetString(PyExc_ImportError, "init reducto_ext");
+    PyErr_SetString(PyExc_ImportError, "init line_ext");
   }
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();

@@ -63,7 +63,6 @@ namespace Reducto {
 
 		private:
 			string line;
-			//const string& line;
 
 	};
 
