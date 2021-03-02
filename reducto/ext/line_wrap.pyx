@@ -3,15 +3,10 @@
 # cython: language_level=3
 
 
-# TODO: Should work with cimport
 # from reducto.ext.line_wrap cimport Line
 
 from libcpp.string cimport string
 from libcpp cimport bool
-
-
-# cdef extern from "_line.cpp":
-#     pass
 
 
 cdef extern from "_line.h" namespace "Reducto":
