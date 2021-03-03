@@ -66,10 +66,25 @@ cdef class PyFile:
     def get_max_line_length(self):
         return self._thisptr.get_max_line_length()
 
-    cdef dict _stats(self):
-        FileStats _stats = self._thisptr.stats()
-        cdef dict results
+    # cdef dict _stats(self):
+    #     FileStats _stats = self._thisptr.stats()
+    #     cdef dict results
+    #
+    #     results = {
+    #         "number_of_lines": _stats.number_of_lines,
+    #         "max_line_length": _stats.max_line_length,
+    #         "docstrings": _stats.docstrings,
+    #         "comment_lines": _stats.comment_lines,
+    #         "blank_lines": _stats.blank_lines,
+    #         "function_lengths": _stats.funtions
+    #     }
+    #
+    #     return results
 
+    def stats(self):
+        # TODO: Ayuda con FileStats
+        cdef FileStats _stats
+        _stats = self._thisptr.stats()
         results = {
             "number_of_lines": _stats.number_of_lines,
             "max_line_length": _stats.max_line_length,
@@ -78,14 +93,10 @@ cdef class PyFile:
             "blank_lines": _stats.blank_lines,
             "function_lengths": _stats.funtions
         }
-
         return results
-
-    def stats(self):
-        # TODO: Ayuda con FileStats
         # Tendría que ser un cpdef para devolver Python/Cpp!
         # https://groups.google.com/g/cython-users/c/39Nwqsksdto
         # https://stackoverflow.com/questions/63570432/dectlaration-of-function-that-returns-dictionary-in-cython
         # https://stackoverflow.com/questions/9781572/c-struct-inheritance-in-cython
-        return self._stats()
+        # return self._stats()
         # TODO: acceder a la info internamente y devolver dict
