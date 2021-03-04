@@ -27,11 +27,18 @@ cmdclass = {'build_ext': build_ext}
 
 extensions = [
     Extension(
-        "line_ext",
+        "reducto._ext.line_ext",
         ["reducto/_ext/line_wrap" + ext, "reducto/_ext/_line.cpp"],
-        include_dirs=[".", r"reducto/_ext"],
+        include_dirs=[".", r"reducto/_ext"]
+    ),
+    Extension(
+        "reducto._ext.pyfile_wrap",
+        ["reducto/_ext/pyfile_wrap" + ext, "reducto/_ext/_pyfile.cpp"],
+        depends=["reducto/_ext/_pyfile.h"],
+        include_dirs=[".", r"reducto/_ext"]
     )
 ]
+
 
 if USE_CYTHON:
     from Cython.Build import cythonize

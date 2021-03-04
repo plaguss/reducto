@@ -10,7 +10,8 @@ from libcpp.vector cimport vector
 
 cdef extern from "_pyfile.h" namespace "Reducto":
 
-    cdef cppclass FileStats:
+    # cdef cppclass FileStats:
+    ctypedef struct FileStats:
         int number_of_lines
         int max_line_length
         int docstrings
@@ -18,9 +19,9 @@ cdef extern from "_pyfile.h" namespace "Reducto":
         int blank_lines
         vector[int] functions
 
-    cdef cppclass PyFileCpp:
-        PyFileCpp() except +
-        PyFileCpp(const string&) except +
+    cdef cppclass PyFile:
+        PyFile() except +
+        PyFile(const string&) except +
         void collect()
         int number_of_functions()
         int number_of_lines()
@@ -35,11 +36,13 @@ cdef extern from "_pyfile.h" namespace "Reducto":
         # FileStats stats();  # TODO: Y este?
 
 
-cdef class PyFile:
-    cdef PyFileCpp* _thisptr
+cdef class PySrc:
+    cdef PyFile* _thisptr
+    # cdef FileStats* _stats
 
     def __cinit__(self, const string& f):
-        self._thisptr = new PyFileCpp(f)
+        self._thisptr = new PyFile(f)
+        # self._stats = new FileStats()
 
     def __dealloc__(self):
         if self._thisptr != NULL:
@@ -81,19 +84,29 @@ cdef class PyFile:
     #
     #     return results
 
-    def stats(self):
+    # def stats(self):
+    #     return get_file_stats(self._thisptr.stats())
+
+    cpdef stats(self):
         # TODO: Ayuda con FileStats
+        # _stats = PyFileStats(self._thisptr.stats())
         cdef FileStats _stats
-        _stats = self._thisptr.stats()
+
+        # _stats = PyFileStats()
+        # _stats = self._thisptr.stats()
+        # self._stats = self._thisptr.stats()
+        # _stats = self._thisptr.stats()
+
         results = {
             "number_of_lines": _stats.number_of_lines,
             "max_line_length": _stats.max_line_length,
             "docstrings": _stats.docstrings,
             "comment_lines": _stats.comment_lines,
             "blank_lines": _stats.blank_lines,
-            "function_lengths": _stats.funtions
+            "function_lengths": _stats.functions
         }
         return results
+        # return _stats
         # Tendría que ser un cpdef para devolver Python/Cpp!
         # https://groups.google.com/g/cython-users/c/39Nwqsksdto
         # https://stackoverflow.com/questions/63570432/dectlaration-of-function-that-returns-dictionary-in-cython
