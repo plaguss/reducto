@@ -3,7 +3,6 @@
 # cython: language_level=3
 
 
-from cython.operator cimport dereference as deref
 from libcpp.string cimport string
 from libcpp.vector cimport vector
 
@@ -23,7 +22,7 @@ cdef extern from "_pyfile.h" namespace "Reducto":
         PyFile() except +
         PyFile(const string&) except +
         void collect()
-        int number_of_functions()
+        # int number_of_functions()
         int number_of_lines()
         int number_of_comment_lines()
         int number_of_blank_lines()
@@ -51,8 +50,8 @@ cdef class PySrc:
     def collect(self):
         return self._thisptr.collect()
 
-    def number_of_functions(self):
-        return self._thisptr.number_of_functions()
+    # def number_of_functions(self):
+    #     return self._thisptr.number_of_functions()
 
     def number_of_lines(self):
         return self._thisptr.number_of_lines()

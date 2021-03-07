@@ -44,7 +44,7 @@ namespace Reducto {
 			//void grab_info_no_function();
 
 			// Count the number of functions in a processed src file.
-			int number_of_functions();
+//			int number_of_functions();
 
 			int number_of_lines();
 

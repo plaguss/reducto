@@ -1,6 +1,22 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+How to create extensions. From the directory containing the setup.py
+>>> python setup.py build_ext --inplace
+
+import reducto._ext.pyfile_ext as pe
+or
+import pyfile_ext
+import line_ext
+
+When dealing directly with cpp to compile:
+Open Developer Command Prompt for VS 2019 (using cl compiler
+C:\Users\agustin\git_repository\scoutpy\src>cl /EHsc test_regex.cpp pyfile.cpp line.cpp
+
+uses cl compiler.
+"""
+
 import os
 from setuptools import Extension, setup
 from setuptools.command.build_ext import build_ext
@@ -27,13 +43,15 @@ cmdclass = {'build_ext': build_ext}
 
 extensions = [
     Extension(
-        "reducto._ext.line_ext",
+        "line_ext",
+        # "reducto._ext.line_ext",
         ["reducto/_ext/line_wrap" + ext, "reducto/_ext/_line.cpp"],
         include_dirs=[".", r"reducto/_ext"]
     ),
     Extension(
-        "reducto._ext.pyfile_wrap",
-        ["reducto/_ext/pyfile_wrap" + ext, "reducto/_ext/_pyfile.cpp"],
+        "pyfile_ext",
+        # "reducto._ext.pyfile_ext",
+        ["reducto/_ext/pyfile_wrap" + ext, "reducto/_ext/_pyfile.cpp", "reducto/_ext/_line.cpp"],
         depends=["reducto/_ext/_pyfile.h"],
         include_dirs=[".", r"reducto/_ext"]
     )
@@ -78,6 +96,7 @@ setup(
     license=about['__license__'],
     zip_safe=False,
     ext_modules=extensions,
+    include_dirs=[".", r"reducto/_ext"],
     cmdclass=cmdclass
     # classifiers=[]
     # cmdclass={'test': PyTest},

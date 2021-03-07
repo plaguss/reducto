@@ -4,6 +4,7 @@
 {
     "distutils": {
         "depends": [
+            "reducto/_ext/_pyfile.h",
             "reducto\\_ext\\_pyfile.h"
         ],
         "include_dirs": [
@@ -11,13 +12,14 @@
             "."
         ],
         "language": "c++",
-        "name": "reducto._ext.pyfile_wrap",
+        "name": "reducto._ext.pyfile_ext",
         "sources": [
             "reducto/_ext/pyfile_wrap.pyx",
-            "reducto/_ext/_pyfile.cpp"
+            "reducto/_ext/_pyfile.cpp",
+            "reducto/_ext/_line.cpp"
         ]
     },
-    "module_name": "reducto._ext.pyfile_wrap"
+    "module_name": "reducto._ext.pyfile_ext"
 }
 END: Cython Metadata */
 
@@ -637,8 +639,8 @@ static CYTHON_INLINE float __PYX_NAN() {
   #endif
 #endif
 
-#define __PYX_HAVE__reducto___ext__pyfile_wrap
-#define __PYX_HAVE_API__reducto___ext__pyfile_wrap
+#define __PYX_HAVE__reducto___ext__pyfile_ext
+#define __PYX_HAVE_API__reducto___ext__pyfile_ext
 /* Early includes */
 #include <string.h>
 #include "ios"
@@ -861,27 +863,27 @@ static const char *__pyx_f[] = {
 };
 
 /*--- Type declarations ---*/
-struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc;
+struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc;
 
-/* "reducto/_ext/pyfile_wrap.pyx":39
+/* "reducto/_ext/pyfile_wrap.pyx":38
  * 
  * 
  * cdef class PySrc:             # <<<<<<<<<<<<<<
  *     cdef PyFile* _thisptr
  *     # cdef FileStats* _stats
  */
-struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc {
+struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc {
   PyObject_HEAD
-  struct __pyx_vtabstruct_7reducto_4_ext_11pyfile_wrap_PySrc *__pyx_vtab;
+  struct __pyx_vtabstruct_7reducto_4_ext_10pyfile_ext_PySrc *__pyx_vtab;
   Reducto::PyFile *_thisptr;
 };
 
 
 
-struct __pyx_vtabstruct_7reducto_4_ext_11pyfile_wrap_PySrc {
-  PyObject *(*stats)(struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *, int __pyx_skip_dispatch);
+struct __pyx_vtabstruct_7reducto_4_ext_10pyfile_ext_PySrc {
+  PyObject *(*stats)(struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *, int __pyx_skip_dispatch);
 };
-static struct __pyx_vtabstruct_7reducto_4_ext_11pyfile_wrap_PySrc *__pyx_vtabptr_7reducto_4_ext_11pyfile_wrap_PySrc;
+static struct __pyx_vtabstruct_7reducto_4_ext_10pyfile_ext_PySrc *__pyx_vtabptr_7reducto_4_ext_10pyfile_ext_PySrc;
 
 /* --- Runtime support code (head) --- */
 /* Refnanny.proto */
@@ -1241,7 +1243,7 @@ static int __Pyx_check_binary_version(void);
 /* InitStrings.proto */
 static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
-static PyObject *__pyx_f_7reducto_4_ext_11pyfile_wrap_5PySrc_stats(CYTHON_UNUSED struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *__pyx_v_self, int __pyx_skip_dispatch); /* proto*/
+static PyObject *__pyx_f_7reducto_4_ext_10pyfile_ext_5PySrc_stats(CYTHON_UNUSED struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *__pyx_v_self, int __pyx_skip_dispatch); /* proto*/
 
 /* Module declarations from 'libc.string' */
 
@@ -1249,15 +1251,15 @@ static PyObject *__pyx_f_7reducto_4_ext_11pyfile_wrap_5PySrc_stats(CYTHON_UNUSED
 
 /* Module declarations from 'libcpp.vector' */
 
-/* Module declarations from 'reducto._ext.pyfile_wrap' */
-static PyTypeObject *__pyx_ptype_7reducto_4_ext_11pyfile_wrap_PySrc = 0;
+/* Module declarations from 'reducto._ext.pyfile_ext' */
+static PyTypeObject *__pyx_ptype_7reducto_4_ext_10pyfile_ext_PySrc = 0;
 static std::string __pyx_convert_string_from_py_std__in_string(PyObject *); /*proto*/
 static PyObject *__pyx_convert_vector_to_py_int(const std::vector<int>  &); /*proto*/
-#define __Pyx_MODULE_NAME "reducto._ext.pyfile_wrap"
-extern int __pyx_module_is_main_reducto___ext__pyfile_wrap;
-int __pyx_module_is_main_reducto___ext__pyfile_wrap = 0;
+#define __Pyx_MODULE_NAME "reducto._ext.pyfile_ext"
+extern int __pyx_module_is_main_reducto___ext__pyfile_ext;
+int __pyx_module_is_main_reducto___ext__pyfile_ext = 0;
 
-/* Implementation of 'reducto._ext.pyfile_wrap' */
+/* Implementation of 'reducto._ext.pyfile_ext' */
 static PyObject *__pyx_builtin_TypeError;
 static PyObject *__pyx_builtin_range;
 static const char __pyx_k_f[] = "f";
@@ -1306,24 +1308,23 @@ static PyObject *__pyx_n_s_setstate;
 static PyObject *__pyx_n_s_setstate_cython;
 static PyObject *__pyx_n_s_stats;
 static PyObject *__pyx_n_s_test;
-static int __pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc___cinit__(struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *__pyx_v_self, std::string __pyx_v_f); /* proto */
-static void __pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_2__dealloc__(struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_4collect(struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_6number_of_functions(struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_8number_of_lines(struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_10number_of_comment_lines(struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_12number_of_blank_lines(struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_14number_of_docstring_lines(struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_16get_max_line_length(struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_18stats(struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_20__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_22__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
-static PyObject *__pyx_tp_new_7reducto_4_ext_11pyfile_wrap_PySrc(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static int __pyx_pf_7reducto_4_ext_10pyfile_ext_5PySrc___cinit__(struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *__pyx_v_self, std::string __pyx_v_f); /* proto */
+static void __pyx_pf_7reducto_4_ext_10pyfile_ext_5PySrc_2__dealloc__(struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_7reducto_4_ext_10pyfile_ext_5PySrc_4collect(struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_7reducto_4_ext_10pyfile_ext_5PySrc_6number_of_lines(struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_7reducto_4_ext_10pyfile_ext_5PySrc_8number_of_comment_lines(struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_7reducto_4_ext_10pyfile_ext_5PySrc_10number_of_blank_lines(struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_7reducto_4_ext_10pyfile_ext_5PySrc_12number_of_docstring_lines(struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_7reducto_4_ext_10pyfile_ext_5PySrc_14get_max_line_length(struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_7reducto_4_ext_10pyfile_ext_5PySrc_16stats(struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_7reducto_4_ext_10pyfile_ext_5PySrc_18__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_7reducto_4_ext_10pyfile_ext_5PySrc_20__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_tp_new_7reducto_4_ext_10pyfile_ext_PySrc(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tuple_;
 static PyObject *__pyx_tuple__2;
 /* Late includes */
 
-/* "reducto/_ext/pyfile_wrap.pyx":43
+/* "reducto/_ext/pyfile_wrap.pyx":42
  *     # cdef FileStats* _stats
  * 
  *     def __cinit__(self, const string& f):             # <<<<<<<<<<<<<<
@@ -1332,8 +1333,8 @@ static PyObject *__pyx_tuple__2;
  */
 
 /* Python wrapper */
-static int __pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static int __pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static int __pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static int __pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   std::string __pyx_v_f;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -1360,31 +1361,31 @@ static int __pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_1__cinit__(PyObject *__p
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__cinit__") < 0)) __PYX_ERR(1, 43, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__cinit__") < 0)) __PYX_ERR(1, 42, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 1) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
     }
-    __pyx_v_f = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(1, 43, __pyx_L3_error)
+    __pyx_v_f = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(1, 42, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 1, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 43, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 1, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 42, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("reducto._ext.pyfile_wrap.PySrc.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("reducto._ext.pyfile_ext.PySrc.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc___cinit__(((struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *)__pyx_v_self), __pyx_v_f);
+  __pyx_r = __pyx_pf_7reducto_4_ext_10pyfile_ext_5PySrc___cinit__(((struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *)__pyx_v_self), __pyx_v_f);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc___cinit__(struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *__pyx_v_self, std::string __pyx_v_f) {
+static int __pyx_pf_7reducto_4_ext_10pyfile_ext_5PySrc___cinit__(struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *__pyx_v_self, std::string __pyx_v_f) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   Reducto::PyFile *__pyx_t_1;
@@ -1393,7 +1394,7 @@ static int __pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc___cinit__(struct __pyx_o
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__cinit__", 0);
 
-  /* "reducto/_ext/pyfile_wrap.pyx":44
+  /* "reducto/_ext/pyfile_wrap.pyx":43
  * 
  *     def __cinit__(self, const string& f):
  *         self._thisptr = new PyFile(f)             # <<<<<<<<<<<<<<
@@ -1404,11 +1405,11 @@ static int __pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc___cinit__(struct __pyx_o
     __pyx_t_1 = new Reducto::PyFile(__pyx_v_f);
   } catch(...) {
     __Pyx_CppExn2PyErr();
-    __PYX_ERR(1, 44, __pyx_L1_error)
+    __PYX_ERR(1, 43, __pyx_L1_error)
   }
   __pyx_v_self->_thisptr = __pyx_t_1;
 
-  /* "reducto/_ext/pyfile_wrap.pyx":43
+  /* "reducto/_ext/pyfile_wrap.pyx":42
  *     # cdef FileStats* _stats
  * 
  *     def __cinit__(self, const string& f):             # <<<<<<<<<<<<<<
@@ -1420,14 +1421,14 @@ static int __pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc___cinit__(struct __pyx_o
   __pyx_r = 0;
   goto __pyx_L0;
   __pyx_L1_error:;
-  __Pyx_AddTraceback("reducto._ext.pyfile_wrap.PySrc.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("reducto._ext.pyfile_ext.PySrc.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "reducto/_ext/pyfile_wrap.pyx":47
+/* "reducto/_ext/pyfile_wrap.pyx":46
  *         # self._stats = new FileStats()
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -1436,22 +1437,22 @@ static int __pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc___cinit__(struct __pyx_o
  */
 
 /* Python wrapper */
-static void __pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_3__dealloc__(PyObject *__pyx_v_self); /*proto*/
-static void __pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_3__dealloc__(PyObject *__pyx_v_self) {
+static void __pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_3__dealloc__(PyObject *__pyx_v_self); /*proto*/
+static void __pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_3__dealloc__(PyObject *__pyx_v_self) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__dealloc__ (wrapper)", 0);
-  __pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_2__dealloc__(((struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *)__pyx_v_self));
+  __pyx_pf_7reducto_4_ext_10pyfile_ext_5PySrc_2__dealloc__(((struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
 }
 
-static void __pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_2__dealloc__(struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *__pyx_v_self) {
+static void __pyx_pf_7reducto_4_ext_10pyfile_ext_5PySrc_2__dealloc__(struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *__pyx_v_self) {
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("__dealloc__", 0);
 
-  /* "reducto/_ext/pyfile_wrap.pyx":48
+  /* "reducto/_ext/pyfile_wrap.pyx":47
  * 
  *     def __dealloc__(self):
  *         if self._thisptr != NULL:             # <<<<<<<<<<<<<<
@@ -1461,7 +1462,7 @@ static void __pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_2__dealloc__(struct __p
   __pyx_t_1 = ((__pyx_v_self->_thisptr != NULL) != 0);
   if (__pyx_t_1) {
 
-    /* "reducto/_ext/pyfile_wrap.pyx":49
+    /* "reducto/_ext/pyfile_wrap.pyx":48
  *     def __dealloc__(self):
  *         if self._thisptr != NULL:
  *             del self._thisptr             # <<<<<<<<<<<<<<
@@ -1470,7 +1471,7 @@ static void __pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_2__dealloc__(struct __p
  */
     delete __pyx_v_self->_thisptr;
 
-    /* "reducto/_ext/pyfile_wrap.pyx":48
+    /* "reducto/_ext/pyfile_wrap.pyx":47
  * 
  *     def __dealloc__(self):
  *         if self._thisptr != NULL:             # <<<<<<<<<<<<<<
@@ -1479,7 +1480,7 @@ static void __pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_2__dealloc__(struct __p
  */
   }
 
-  /* "reducto/_ext/pyfile_wrap.pyx":47
+  /* "reducto/_ext/pyfile_wrap.pyx":46
  *         # self._stats = new FileStats()
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -1491,7 +1492,7 @@ static void __pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_2__dealloc__(struct __p
   __Pyx_RefNannyFinishContext();
 }
 
-/* "reducto/_ext/pyfile_wrap.pyx":51
+/* "reducto/_ext/pyfile_wrap.pyx":50
  *             del self._thisptr
  * 
  *     def collect(self):             # <<<<<<<<<<<<<<
@@ -1500,19 +1501,19 @@ static void __pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_2__dealloc__(struct __p
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_5collect(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_5collect(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_5collect(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_5collect(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("collect (wrapper)", 0);
-  __pyx_r = __pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_4collect(((struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *)__pyx_v_self));
+  __pyx_r = __pyx_pf_7reducto_4_ext_10pyfile_ext_5PySrc_4collect(((struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_4collect(struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *__pyx_v_self) {
+static PyObject *__pyx_pf_7reducto_4_ext_10pyfile_ext_5PySrc_4collect(struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1521,21 +1522,21 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_4collect(struct __
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("collect", 0);
 
-  /* "reducto/_ext/pyfile_wrap.pyx":52
+  /* "reducto/_ext/pyfile_wrap.pyx":51
  * 
  *     def collect(self):
  *         return self._thisptr.collect()             # <<<<<<<<<<<<<<
  * 
- *     def number_of_functions(self):
+ *     # def number_of_functions(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_void_to_None(__pyx_v_self->_thisptr->collect()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 52, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_void_to_None(__pyx_v_self->_thisptr->collect()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "reducto/_ext/pyfile_wrap.pyx":51
+  /* "reducto/_ext/pyfile_wrap.pyx":50
  *             del self._thisptr
  * 
  *     def collect(self):             # <<<<<<<<<<<<<<
@@ -1546,7 +1547,7 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_4collect(struct __
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("reducto._ext.pyfile_wrap.PySrc.collect", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("reducto._ext.pyfile_ext.PySrc.collect", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1554,71 +1555,8 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_4collect(struct __
   return __pyx_r;
 }
 
-/* "reducto/_ext/pyfile_wrap.pyx":54
- *         return self._thisptr.collect()
- * 
- *     def number_of_functions(self):             # <<<<<<<<<<<<<<
- *         return self._thisptr.number_of_functions()
- * 
- */
-
-/* Python wrapper */
-static PyObject *__pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_7number_of_functions(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_7number_of_functions(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("number_of_functions (wrapper)", 0);
-  __pyx_r = __pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_6number_of_functions(((struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *)__pyx_v_self));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_6number_of_functions(struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *__pyx_v_self) {
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("number_of_functions", 0);
-
-  /* "reducto/_ext/pyfile_wrap.pyx":55
- * 
- *     def number_of_functions(self):
- *         return self._thisptr.number_of_functions()             # <<<<<<<<<<<<<<
- * 
- *     def number_of_lines(self):
- */
-  __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->_thisptr->number_of_functions()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 55, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_r = __pyx_t_1;
-  __pyx_t_1 = 0;
-  goto __pyx_L0;
-
-  /* "reducto/_ext/pyfile_wrap.pyx":54
- *         return self._thisptr.collect()
- * 
- *     def number_of_functions(self):             # <<<<<<<<<<<<<<
- *         return self._thisptr.number_of_functions()
- * 
- */
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("reducto._ext.pyfile_wrap.PySrc.number_of_functions", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
-  __pyx_L0:;
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "reducto/_ext/pyfile_wrap.pyx":57
- *         return self._thisptr.number_of_functions()
+/* "reducto/_ext/pyfile_wrap.pyx":56
+ *     #     return self._thisptr.number_of_functions()
  * 
  *     def number_of_lines(self):             # <<<<<<<<<<<<<<
  *         return self._thisptr.number_of_lines()
@@ -1626,19 +1564,19 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_6number_of_functio
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_9number_of_lines(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_9number_of_lines(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_7number_of_lines(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_7number_of_lines(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("number_of_lines (wrapper)", 0);
-  __pyx_r = __pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_8number_of_lines(((struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *)__pyx_v_self));
+  __pyx_r = __pyx_pf_7reducto_4_ext_10pyfile_ext_5PySrc_6number_of_lines(((struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_8number_of_lines(struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *__pyx_v_self) {
+static PyObject *__pyx_pf_7reducto_4_ext_10pyfile_ext_5PySrc_6number_of_lines(struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1647,7 +1585,7 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_8number_of_lines(s
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("number_of_lines", 0);
 
-  /* "reducto/_ext/pyfile_wrap.pyx":58
+  /* "reducto/_ext/pyfile_wrap.pyx":57
  * 
  *     def number_of_lines(self):
  *         return self._thisptr.number_of_lines()             # <<<<<<<<<<<<<<
@@ -1655,14 +1593,14 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_8number_of_lines(s
  *     def number_of_comment_lines(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->_thisptr->number_of_lines()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 58, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->_thisptr->number_of_lines()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 57, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "reducto/_ext/pyfile_wrap.pyx":57
- *         return self._thisptr.number_of_functions()
+  /* "reducto/_ext/pyfile_wrap.pyx":56
+ *     #     return self._thisptr.number_of_functions()
  * 
  *     def number_of_lines(self):             # <<<<<<<<<<<<<<
  *         return self._thisptr.number_of_lines()
@@ -1672,7 +1610,7 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_8number_of_lines(s
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("reducto._ext.pyfile_wrap.PySrc.number_of_lines", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("reducto._ext.pyfile_ext.PySrc.number_of_lines", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1680,7 +1618,7 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_8number_of_lines(s
   return __pyx_r;
 }
 
-/* "reducto/_ext/pyfile_wrap.pyx":60
+/* "reducto/_ext/pyfile_wrap.pyx":59
  *         return self._thisptr.number_of_lines()
  * 
  *     def number_of_comment_lines(self):             # <<<<<<<<<<<<<<
@@ -1689,19 +1627,19 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_8number_of_lines(s
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_11number_of_comment_lines(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_11number_of_comment_lines(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_9number_of_comment_lines(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_9number_of_comment_lines(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("number_of_comment_lines (wrapper)", 0);
-  __pyx_r = __pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_10number_of_comment_lines(((struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *)__pyx_v_self));
+  __pyx_r = __pyx_pf_7reducto_4_ext_10pyfile_ext_5PySrc_8number_of_comment_lines(((struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_10number_of_comment_lines(struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *__pyx_v_self) {
+static PyObject *__pyx_pf_7reducto_4_ext_10pyfile_ext_5PySrc_8number_of_comment_lines(struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1710,7 +1648,7 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_10number_of_commen
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("number_of_comment_lines", 0);
 
-  /* "reducto/_ext/pyfile_wrap.pyx":61
+  /* "reducto/_ext/pyfile_wrap.pyx":60
  * 
  *     def number_of_comment_lines(self):
  *         return self._thisptr.number_of_comment_lines()             # <<<<<<<<<<<<<<
@@ -1718,13 +1656,13 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_10number_of_commen
  *     def number_of_blank_lines(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->_thisptr->number_of_comment_lines()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 61, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->_thisptr->number_of_comment_lines()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 60, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "reducto/_ext/pyfile_wrap.pyx":60
+  /* "reducto/_ext/pyfile_wrap.pyx":59
  *         return self._thisptr.number_of_lines()
  * 
  *     def number_of_comment_lines(self):             # <<<<<<<<<<<<<<
@@ -1735,7 +1673,7 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_10number_of_commen
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("reducto._ext.pyfile_wrap.PySrc.number_of_comment_lines", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("reducto._ext.pyfile_ext.PySrc.number_of_comment_lines", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1743,7 +1681,7 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_10number_of_commen
   return __pyx_r;
 }
 
-/* "reducto/_ext/pyfile_wrap.pyx":63
+/* "reducto/_ext/pyfile_wrap.pyx":62
  *         return self._thisptr.number_of_comment_lines()
  * 
  *     def number_of_blank_lines(self):             # <<<<<<<<<<<<<<
@@ -1752,19 +1690,19 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_10number_of_commen
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_13number_of_blank_lines(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_13number_of_blank_lines(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_11number_of_blank_lines(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_11number_of_blank_lines(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("number_of_blank_lines (wrapper)", 0);
-  __pyx_r = __pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_12number_of_blank_lines(((struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *)__pyx_v_self));
+  __pyx_r = __pyx_pf_7reducto_4_ext_10pyfile_ext_5PySrc_10number_of_blank_lines(((struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_12number_of_blank_lines(struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *__pyx_v_self) {
+static PyObject *__pyx_pf_7reducto_4_ext_10pyfile_ext_5PySrc_10number_of_blank_lines(struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1773,7 +1711,7 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_12number_of_blank_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("number_of_blank_lines", 0);
 
-  /* "reducto/_ext/pyfile_wrap.pyx":64
+  /* "reducto/_ext/pyfile_wrap.pyx":63
  * 
  *     def number_of_blank_lines(self):
  *         return self._thisptr.number_of_blank_lines()             # <<<<<<<<<<<<<<
@@ -1781,13 +1719,13 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_12number_of_blank_
  *     def number_of_docstring_lines(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->_thisptr->number_of_blank_lines()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 64, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->_thisptr->number_of_blank_lines()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "reducto/_ext/pyfile_wrap.pyx":63
+  /* "reducto/_ext/pyfile_wrap.pyx":62
  *         return self._thisptr.number_of_comment_lines()
  * 
  *     def number_of_blank_lines(self):             # <<<<<<<<<<<<<<
@@ -1798,7 +1736,7 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_12number_of_blank_
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("reducto._ext.pyfile_wrap.PySrc.number_of_blank_lines", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("reducto._ext.pyfile_ext.PySrc.number_of_blank_lines", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1806,7 +1744,7 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_12number_of_blank_
   return __pyx_r;
 }
 
-/* "reducto/_ext/pyfile_wrap.pyx":66
+/* "reducto/_ext/pyfile_wrap.pyx":65
  *         return self._thisptr.number_of_blank_lines()
  * 
  *     def number_of_docstring_lines(self):             # <<<<<<<<<<<<<<
@@ -1815,19 +1753,19 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_12number_of_blank_
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_15number_of_docstring_lines(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_15number_of_docstring_lines(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_13number_of_docstring_lines(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_13number_of_docstring_lines(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("number_of_docstring_lines (wrapper)", 0);
-  __pyx_r = __pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_14number_of_docstring_lines(((struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *)__pyx_v_self));
+  __pyx_r = __pyx_pf_7reducto_4_ext_10pyfile_ext_5PySrc_12number_of_docstring_lines(((struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_14number_of_docstring_lines(struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *__pyx_v_self) {
+static PyObject *__pyx_pf_7reducto_4_ext_10pyfile_ext_5PySrc_12number_of_docstring_lines(struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1836,7 +1774,7 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_14number_of_docstr
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("number_of_docstring_lines", 0);
 
-  /* "reducto/_ext/pyfile_wrap.pyx":67
+  /* "reducto/_ext/pyfile_wrap.pyx":66
  * 
  *     def number_of_docstring_lines(self):
  *         return self._thisptr.number_of_docstring_lines()             # <<<<<<<<<<<<<<
@@ -1844,13 +1782,13 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_14number_of_docstr
  *     def get_max_line_length(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->_thisptr->number_of_docstring_lines()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 67, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->_thisptr->number_of_docstring_lines()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 66, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "reducto/_ext/pyfile_wrap.pyx":66
+  /* "reducto/_ext/pyfile_wrap.pyx":65
  *         return self._thisptr.number_of_blank_lines()
  * 
  *     def number_of_docstring_lines(self):             # <<<<<<<<<<<<<<
@@ -1861,7 +1799,7 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_14number_of_docstr
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("reducto._ext.pyfile_wrap.PySrc.number_of_docstring_lines", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("reducto._ext.pyfile_ext.PySrc.number_of_docstring_lines", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1869,7 +1807,7 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_14number_of_docstr
   return __pyx_r;
 }
 
-/* "reducto/_ext/pyfile_wrap.pyx":69
+/* "reducto/_ext/pyfile_wrap.pyx":68
  *         return self._thisptr.number_of_docstring_lines()
  * 
  *     def get_max_line_length(self):             # <<<<<<<<<<<<<<
@@ -1878,19 +1816,19 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_14number_of_docstr
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_17get_max_line_length(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_17get_max_line_length(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_15get_max_line_length(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_15get_max_line_length(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("get_max_line_length (wrapper)", 0);
-  __pyx_r = __pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_16get_max_line_length(((struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *)__pyx_v_self));
+  __pyx_r = __pyx_pf_7reducto_4_ext_10pyfile_ext_5PySrc_14get_max_line_length(((struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_16get_max_line_length(struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *__pyx_v_self) {
+static PyObject *__pyx_pf_7reducto_4_ext_10pyfile_ext_5PySrc_14get_max_line_length(struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1899,7 +1837,7 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_16get_max_line_len
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("get_max_line_length", 0);
 
-  /* "reducto/_ext/pyfile_wrap.pyx":70
+  /* "reducto/_ext/pyfile_wrap.pyx":69
  * 
  *     def get_max_line_length(self):
  *         return self._thisptr.get_max_line_length()             # <<<<<<<<<<<<<<
@@ -1907,13 +1845,13 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_16get_max_line_len
  *     # cdef dict _stats(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->_thisptr->get_max_line_length()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 70, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->_thisptr->get_max_line_length()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 69, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "reducto/_ext/pyfile_wrap.pyx":69
+  /* "reducto/_ext/pyfile_wrap.pyx":68
  *         return self._thisptr.number_of_docstring_lines()
  * 
  *     def get_max_line_length(self):             # <<<<<<<<<<<<<<
@@ -1924,7 +1862,7 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_16get_max_line_len
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("reducto._ext.pyfile_wrap.PySrc.get_max_line_length", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("reducto._ext.pyfile_ext.PySrc.get_max_line_length", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1932,7 +1870,7 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_16get_max_line_len
   return __pyx_r;
 }
 
-/* "reducto/_ext/pyfile_wrap.pyx":90
+/* "reducto/_ext/pyfile_wrap.pyx":89
  *     #     return get_file_stats(self._thisptr.stats())
  * 
  *     cpdef stats(self):             # <<<<<<<<<<<<<<
@@ -1940,8 +1878,8 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_16get_max_line_len
  *         # _stats = PyFileStats(self._thisptr.stats())
  */
 
-static PyObject *__pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_19stats(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_f_7reducto_4_ext_11pyfile_wrap_5PySrc_stats(CYTHON_UNUSED struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *__pyx_v_self, int __pyx_skip_dispatch) {
+static PyObject *__pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_17stats(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_f_7reducto_4_ext_10pyfile_ext_5PySrc_stats(CYTHON_UNUSED struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *__pyx_v_self, int __pyx_skip_dispatch) {
   Reducto::FileStats __pyx_v__stats;
   PyObject *__pyx_v_results = NULL;
   PyObject *__pyx_r = NULL;
@@ -1963,9 +1901,9 @@ static PyObject *__pyx_f_7reducto_4_ext_11pyfile_wrap_5PySrc_stats(CYTHON_UNUSED
     if (unlikely(!__Pyx_object_dict_version_matches(((PyObject *)__pyx_v_self), __pyx_tp_dict_version, __pyx_obj_dict_version))) {
       PY_UINT64_T __pyx_type_dict_guard = __Pyx_get_tp_dict_version(((PyObject *)__pyx_v_self));
       #endif
-      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_stats); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 90, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_stats); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 89, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)(void*)__pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_19stats)) {
+      if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)(void*)__pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_17stats)) {
         __Pyx_XDECREF(__pyx_r);
         __Pyx_INCREF(__pyx_t_1);
         __pyx_t_3 = __pyx_t_1; __pyx_t_4 = NULL;
@@ -1980,7 +1918,7 @@ static PyObject *__pyx_f_7reducto_4_ext_11pyfile_wrap_5PySrc_stats(CYTHON_UNUSED
         }
         __pyx_t_2 = (__pyx_t_4) ? __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4) : __Pyx_PyObject_CallNoArg(__pyx_t_3);
         __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-        if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 90, __pyx_L1_error)
+        if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 89, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         __pyx_r = __pyx_t_2;
@@ -2001,83 +1939,83 @@ static PyObject *__pyx_f_7reducto_4_ext_11pyfile_wrap_5PySrc_stats(CYTHON_UNUSED
     #endif
   }
 
-  /* "reducto/_ext/pyfile_wrap.pyx":101
+  /* "reducto/_ext/pyfile_wrap.pyx":100
  * 
  *         results = {
  *             "number_of_lines": _stats.number_of_lines,             # <<<<<<<<<<<<<<
  *             "max_line_length": _stats.max_line_length,
  *             "docstrings": _stats.docstrings,
  */
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(6); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 101, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(6); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 100, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v__stats.number_of_lines); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 101, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v__stats.number_of_lines); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 100, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_number_of_lines, __pyx_t_2) < 0) __PYX_ERR(1, 101, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_number_of_lines, __pyx_t_2) < 0) __PYX_ERR(1, 100, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "reducto/_ext/pyfile_wrap.pyx":102
+  /* "reducto/_ext/pyfile_wrap.pyx":101
  *         results = {
  *             "number_of_lines": _stats.number_of_lines,
  *             "max_line_length": _stats.max_line_length,             # <<<<<<<<<<<<<<
  *             "docstrings": _stats.docstrings,
  *             "comment_lines": _stats.comment_lines,
  */
-  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v__stats.max_line_length); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 102, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v__stats.max_line_length); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 101, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_max_line_length, __pyx_t_2) < 0) __PYX_ERR(1, 101, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_max_line_length, __pyx_t_2) < 0) __PYX_ERR(1, 100, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "reducto/_ext/pyfile_wrap.pyx":103
+  /* "reducto/_ext/pyfile_wrap.pyx":102
  *             "number_of_lines": _stats.number_of_lines,
  *             "max_line_length": _stats.max_line_length,
  *             "docstrings": _stats.docstrings,             # <<<<<<<<<<<<<<
  *             "comment_lines": _stats.comment_lines,
  *             "blank_lines": _stats.blank_lines,
  */
-  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v__stats.docstrings); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 103, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v__stats.docstrings); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 102, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_docstrings, __pyx_t_2) < 0) __PYX_ERR(1, 101, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_docstrings, __pyx_t_2) < 0) __PYX_ERR(1, 100, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "reducto/_ext/pyfile_wrap.pyx":104
+  /* "reducto/_ext/pyfile_wrap.pyx":103
  *             "max_line_length": _stats.max_line_length,
  *             "docstrings": _stats.docstrings,
  *             "comment_lines": _stats.comment_lines,             # <<<<<<<<<<<<<<
  *             "blank_lines": _stats.blank_lines,
  *             "function_lengths": _stats.functions
  */
-  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v__stats.comment_lines); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 104, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v__stats.comment_lines); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 103, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_comment_lines, __pyx_t_2) < 0) __PYX_ERR(1, 101, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_comment_lines, __pyx_t_2) < 0) __PYX_ERR(1, 100, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "reducto/_ext/pyfile_wrap.pyx":105
+  /* "reducto/_ext/pyfile_wrap.pyx":104
  *             "docstrings": _stats.docstrings,
  *             "comment_lines": _stats.comment_lines,
  *             "blank_lines": _stats.blank_lines,             # <<<<<<<<<<<<<<
  *             "function_lengths": _stats.functions
  *         }
  */
-  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v__stats.blank_lines); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 105, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v__stats.blank_lines); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 104, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_blank_lines, __pyx_t_2) < 0) __PYX_ERR(1, 101, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_blank_lines, __pyx_t_2) < 0) __PYX_ERR(1, 100, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "reducto/_ext/pyfile_wrap.pyx":106
+  /* "reducto/_ext/pyfile_wrap.pyx":105
  *             "comment_lines": _stats.comment_lines,
  *             "blank_lines": _stats.blank_lines,
  *             "function_lengths": _stats.functions             # <<<<<<<<<<<<<<
  *         }
  *         return results
  */
-  __pyx_t_2 = __pyx_convert_vector_to_py_int(__pyx_v__stats.functions); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 106, __pyx_L1_error)
+  __pyx_t_2 = __pyx_convert_vector_to_py_int(__pyx_v__stats.functions); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 105, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_function_lengths, __pyx_t_2) < 0) __PYX_ERR(1, 101, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_function_lengths, __pyx_t_2) < 0) __PYX_ERR(1, 100, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_results = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "reducto/_ext/pyfile_wrap.pyx":108
+  /* "reducto/_ext/pyfile_wrap.pyx":107
  *             "function_lengths": _stats.functions
  *         }
  *         return results             # <<<<<<<<<<<<<<
@@ -2089,7 +2027,7 @@ static PyObject *__pyx_f_7reducto_4_ext_11pyfile_wrap_5PySrc_stats(CYTHON_UNUSED
   __pyx_r = __pyx_v_results;
   goto __pyx_L0;
 
-  /* "reducto/_ext/pyfile_wrap.pyx":90
+  /* "reducto/_ext/pyfile_wrap.pyx":89
  *     #     return get_file_stats(self._thisptr.stats())
  * 
  *     cpdef stats(self):             # <<<<<<<<<<<<<<
@@ -2103,7 +2041,7 @@ static PyObject *__pyx_f_7reducto_4_ext_11pyfile_wrap_5PySrc_stats(CYTHON_UNUSED
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("reducto._ext.pyfile_wrap.PySrc.stats", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("reducto._ext.pyfile_ext.PySrc.stats", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_results);
@@ -2113,19 +2051,19 @@ static PyObject *__pyx_f_7reducto_4_ext_11pyfile_wrap_5PySrc_stats(CYTHON_UNUSED
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_19stats(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_19stats(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_17stats(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_17stats(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("stats (wrapper)", 0);
-  __pyx_r = __pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_18stats(((struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *)__pyx_v_self));
+  __pyx_r = __pyx_pf_7reducto_4_ext_10pyfile_ext_5PySrc_16stats(((struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_18stats(struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *__pyx_v_self) {
+static PyObject *__pyx_pf_7reducto_4_ext_10pyfile_ext_5PySrc_16stats(struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -2134,7 +2072,7 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_18stats(struct __p
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("stats", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_7reducto_4_ext_11pyfile_wrap_5PySrc_stats(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 90, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_7reducto_4_ext_10pyfile_ext_5PySrc_stats(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 89, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -2143,7 +2081,7 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_18stats(struct __p
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("reducto._ext.pyfile_wrap.PySrc.stats", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("reducto._ext.pyfile_ext.PySrc.stats", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -2158,19 +2096,19 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_18stats(struct __p
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_21__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_21__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_19__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_19__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__reduce_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_20__reduce_cython__(((struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *)__pyx_v_self));
+  __pyx_r = __pyx_pf_7reducto_4_ext_10pyfile_ext_5PySrc_18__reduce_cython__(((struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_20__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *__pyx_v_self) {
+static PyObject *__pyx_pf_7reducto_4_ext_10pyfile_ext_5PySrc_18__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -2200,7 +2138,7 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_20__reduce_cython_
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("reducto._ext.pyfile_wrap.PySrc.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("reducto._ext.pyfile_ext.PySrc.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
@@ -2215,19 +2153,19 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_20__reduce_cython_
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_23__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
-static PyObject *__pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_23__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_21__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
+static PyObject *__pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_21__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__setstate_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_22__setstate_cython__(((struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
+  __pyx_r = __pyx_pf_7reducto_4_ext_10pyfile_ext_5PySrc_20__setstate_cython__(((struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_22__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_7reducto_4_ext_10pyfile_ext_5PySrc_20__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -2257,7 +2195,7 @@ static PyObject *__pyx_pf_7reducto_4_ext_11pyfile_wrap_5PySrc_22__setstate_cytho
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("reducto._ext.pyfile_wrap.PySrc.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("reducto._ext.pyfile_ext.PySrc.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
@@ -2393,10 +2331,10 @@ static PyObject *__pyx_convert_vector_to_py_int(const std::vector<int>  &__pyx_v
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
-static struct __pyx_vtabstruct_7reducto_4_ext_11pyfile_wrap_PySrc __pyx_vtable_7reducto_4_ext_11pyfile_wrap_PySrc;
+static struct __pyx_vtabstruct_7reducto_4_ext_10pyfile_ext_PySrc __pyx_vtable_7reducto_4_ext_10pyfile_ext_PySrc;
 
-static PyObject *__pyx_tp_new_7reducto_4_ext_11pyfile_wrap_PySrc(PyTypeObject *t, PyObject *a, PyObject *k) {
-  struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *p;
+static PyObject *__pyx_tp_new_7reducto_4_ext_10pyfile_ext_PySrc(PyTypeObject *t, PyObject *a, PyObject *k) {
+  struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *p;
   PyObject *o;
   if (likely((t->tp_flags & Py_TPFLAGS_IS_ABSTRACT) == 0)) {
     o = (*t->tp_alloc)(t, 0);
@@ -2404,16 +2342,16 @@ static PyObject *__pyx_tp_new_7reducto_4_ext_11pyfile_wrap_PySrc(PyTypeObject *t
     o = (PyObject *) PyBaseObject_Type.tp_new(t, __pyx_empty_tuple, 0);
   }
   if (unlikely(!o)) return 0;
-  p = ((struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *)o);
-  p->__pyx_vtab = __pyx_vtabptr_7reducto_4_ext_11pyfile_wrap_PySrc;
-  if (unlikely(__pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_1__cinit__(o, a, k) < 0)) goto bad;
+  p = ((struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *)o);
+  p->__pyx_vtab = __pyx_vtabptr_7reducto_4_ext_10pyfile_ext_PySrc;
+  if (unlikely(__pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_1__cinit__(o, a, k) < 0)) goto bad;
   return o;
   bad:
   Py_DECREF(o); o = 0;
   return NULL;
 }
 
-static void __pyx_tp_dealloc_7reducto_4_ext_11pyfile_wrap_PySrc(PyObject *o) {
+static void __pyx_tp_dealloc_7reducto_4_ext_10pyfile_ext_PySrc(PyObject *o) {
   #if CYTHON_USE_TP_FINALIZE
   if (unlikely(PyType_HasFeature(Py_TYPE(o), Py_TPFLAGS_HAVE_FINALIZE) && Py_TYPE(o)->tp_finalize) && (!PyType_IS_GC(Py_TYPE(o)) || !_PyGC_FINALIZED(o))) {
     if (PyObject_CallFinalizerFromDealloc(o)) return;
@@ -2423,33 +2361,32 @@ static void __pyx_tp_dealloc_7reducto_4_ext_11pyfile_wrap_PySrc(PyObject *o) {
     PyObject *etype, *eval, *etb;
     PyErr_Fetch(&etype, &eval, &etb);
     __Pyx_SET_REFCNT(o, Py_REFCNT(o) + 1);
-    __pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_3__dealloc__(o);
+    __pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_3__dealloc__(o);
     __Pyx_SET_REFCNT(o, Py_REFCNT(o) - 1);
     PyErr_Restore(etype, eval, etb);
   }
   (*Py_TYPE(o)->tp_free)(o);
 }
 
-static PyMethodDef __pyx_methods_7reducto_4_ext_11pyfile_wrap_PySrc[] = {
-  {"collect", (PyCFunction)__pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_5collect, METH_NOARGS, 0},
-  {"number_of_functions", (PyCFunction)__pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_7number_of_functions, METH_NOARGS, 0},
-  {"number_of_lines", (PyCFunction)__pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_9number_of_lines, METH_NOARGS, 0},
-  {"number_of_comment_lines", (PyCFunction)__pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_11number_of_comment_lines, METH_NOARGS, 0},
-  {"number_of_blank_lines", (PyCFunction)__pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_13number_of_blank_lines, METH_NOARGS, 0},
-  {"number_of_docstring_lines", (PyCFunction)__pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_15number_of_docstring_lines, METH_NOARGS, 0},
-  {"get_max_line_length", (PyCFunction)__pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_17get_max_line_length, METH_NOARGS, 0},
-  {"stats", (PyCFunction)__pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_19stats, METH_NOARGS, 0},
-  {"__reduce_cython__", (PyCFunction)__pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_21__reduce_cython__, METH_NOARGS, 0},
-  {"__setstate_cython__", (PyCFunction)__pyx_pw_7reducto_4_ext_11pyfile_wrap_5PySrc_23__setstate_cython__, METH_O, 0},
+static PyMethodDef __pyx_methods_7reducto_4_ext_10pyfile_ext_PySrc[] = {
+  {"collect", (PyCFunction)__pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_5collect, METH_NOARGS, 0},
+  {"number_of_lines", (PyCFunction)__pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_7number_of_lines, METH_NOARGS, 0},
+  {"number_of_comment_lines", (PyCFunction)__pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_9number_of_comment_lines, METH_NOARGS, 0},
+  {"number_of_blank_lines", (PyCFunction)__pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_11number_of_blank_lines, METH_NOARGS, 0},
+  {"number_of_docstring_lines", (PyCFunction)__pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_13number_of_docstring_lines, METH_NOARGS, 0},
+  {"get_max_line_length", (PyCFunction)__pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_15get_max_line_length, METH_NOARGS, 0},
+  {"stats", (PyCFunction)__pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_17stats, METH_NOARGS, 0},
+  {"__reduce_cython__", (PyCFunction)__pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_19__reduce_cython__, METH_NOARGS, 0},
+  {"__setstate_cython__", (PyCFunction)__pyx_pw_7reducto_4_ext_10pyfile_ext_5PySrc_21__setstate_cython__, METH_O, 0},
   {0, 0, 0, 0}
 };
 
-static PyTypeObject __pyx_type_7reducto_4_ext_11pyfile_wrap_PySrc = {
+static PyTypeObject __pyx_type_7reducto_4_ext_10pyfile_ext_PySrc = {
   PyVarObject_HEAD_INIT(0, 0)
-  "reducto._ext.pyfile_wrap.PySrc", /*tp_name*/
-  sizeof(struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc), /*tp_basicsize*/
+  "reducto._ext.pyfile_ext.PySrc", /*tp_name*/
+  sizeof(struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc), /*tp_basicsize*/
   0, /*tp_itemsize*/
-  __pyx_tp_dealloc_7reducto_4_ext_11pyfile_wrap_PySrc, /*tp_dealloc*/
+  __pyx_tp_dealloc_7reducto_4_ext_10pyfile_ext_PySrc, /*tp_dealloc*/
   #if PY_VERSION_HEX < 0x030800b4
   0, /*tp_print*/
   #endif
@@ -2482,7 +2419,7 @@ static PyTypeObject __pyx_type_7reducto_4_ext_11pyfile_wrap_PySrc = {
   0, /*tp_weaklistoffset*/
   0, /*tp_iter*/
   0, /*tp_iternext*/
-  __pyx_methods_7reducto_4_ext_11pyfile_wrap_PySrc, /*tp_methods*/
+  __pyx_methods_7reducto_4_ext_10pyfile_ext_PySrc, /*tp_methods*/
   0, /*tp_members*/
   0, /*tp_getset*/
   0, /*tp_base*/
@@ -2492,7 +2429,7 @@ static PyTypeObject __pyx_type_7reducto_4_ext_11pyfile_wrap_PySrc = {
   0, /*tp_dictoffset*/
   0, /*tp_init*/
   0, /*tp_alloc*/
-  __pyx_tp_new_7reducto_4_ext_11pyfile_wrap_PySrc, /*tp_new*/
+  __pyx_tp_new_7reducto_4_ext_10pyfile_ext_PySrc, /*tp_new*/
   0, /*tp_free*/
   0, /*tp_is_gc*/
   0, /*tp_bases*/
@@ -2520,17 +2457,17 @@ static PyMethodDef __pyx_methods[] = {
 #if PY_MAJOR_VERSION >= 3
 #if CYTHON_PEP489_MULTI_PHASE_INIT
 static PyObject* __pyx_pymod_create(PyObject *spec, PyModuleDef *def); /*proto*/
-static int __pyx_pymod_exec_pyfile_wrap(PyObject* module); /*proto*/
+static int __pyx_pymod_exec_pyfile_ext(PyObject* module); /*proto*/
 static PyModuleDef_Slot __pyx_moduledef_slots[] = {
   {Py_mod_create, (void*)__pyx_pymod_create},
-  {Py_mod_exec, (void*)__pyx_pymod_exec_pyfile_wrap},
+  {Py_mod_exec, (void*)__pyx_pymod_exec_pyfile_ext},
   {0, NULL}
 };
 #endif
 
 static struct PyModuleDef __pyx_moduledef = {
     PyModuleDef_HEAD_INIT,
-    "pyfile_wrap",
+    "pyfile_ext",
     0, /* m_doc */
   #if CYTHON_PEP489_MULTI_PHASE_INIT
     0, /* m_size */
@@ -2667,19 +2604,19 @@ static int __Pyx_modinit_type_init_code(void) {
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__Pyx_modinit_type_init_code", 0);
   /*--- Type init code ---*/
-  __pyx_vtabptr_7reducto_4_ext_11pyfile_wrap_PySrc = &__pyx_vtable_7reducto_4_ext_11pyfile_wrap_PySrc;
-  __pyx_vtable_7reducto_4_ext_11pyfile_wrap_PySrc.stats = (PyObject *(*)(struct __pyx_obj_7reducto_4_ext_11pyfile_wrap_PySrc *, int __pyx_skip_dispatch))__pyx_f_7reducto_4_ext_11pyfile_wrap_5PySrc_stats;
-  if (PyType_Ready(&__pyx_type_7reducto_4_ext_11pyfile_wrap_PySrc) < 0) __PYX_ERR(1, 39, __pyx_L1_error)
+  __pyx_vtabptr_7reducto_4_ext_10pyfile_ext_PySrc = &__pyx_vtable_7reducto_4_ext_10pyfile_ext_PySrc;
+  __pyx_vtable_7reducto_4_ext_10pyfile_ext_PySrc.stats = (PyObject *(*)(struct __pyx_obj_7reducto_4_ext_10pyfile_ext_PySrc *, int __pyx_skip_dispatch))__pyx_f_7reducto_4_ext_10pyfile_ext_5PySrc_stats;
+  if (PyType_Ready(&__pyx_type_7reducto_4_ext_10pyfile_ext_PySrc) < 0) __PYX_ERR(1, 38, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
-  __pyx_type_7reducto_4_ext_11pyfile_wrap_PySrc.tp_print = 0;
+  __pyx_type_7reducto_4_ext_10pyfile_ext_PySrc.tp_print = 0;
   #endif
-  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_7reducto_4_ext_11pyfile_wrap_PySrc.tp_dictoffset && __pyx_type_7reducto_4_ext_11pyfile_wrap_PySrc.tp_getattro == PyObject_GenericGetAttr)) {
-    __pyx_type_7reducto_4_ext_11pyfile_wrap_PySrc.tp_getattro = __Pyx_PyObject_GenericGetAttr;
+  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_7reducto_4_ext_10pyfile_ext_PySrc.tp_dictoffset && __pyx_type_7reducto_4_ext_10pyfile_ext_PySrc.tp_getattro == PyObject_GenericGetAttr)) {
+    __pyx_type_7reducto_4_ext_10pyfile_ext_PySrc.tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
-  if (__Pyx_SetVtable(__pyx_type_7reducto_4_ext_11pyfile_wrap_PySrc.tp_dict, __pyx_vtabptr_7reducto_4_ext_11pyfile_wrap_PySrc) < 0) __PYX_ERR(1, 39, __pyx_L1_error)
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_PySrc, (PyObject *)&__pyx_type_7reducto_4_ext_11pyfile_wrap_PySrc) < 0) __PYX_ERR(1, 39, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_7reducto_4_ext_11pyfile_wrap_PySrc) < 0) __PYX_ERR(1, 39, __pyx_L1_error)
-  __pyx_ptype_7reducto_4_ext_11pyfile_wrap_PySrc = &__pyx_type_7reducto_4_ext_11pyfile_wrap_PySrc;
+  if (__Pyx_SetVtable(__pyx_type_7reducto_4_ext_10pyfile_ext_PySrc.tp_dict, __pyx_vtabptr_7reducto_4_ext_10pyfile_ext_PySrc) < 0) __PYX_ERR(1, 38, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_PySrc, (PyObject *)&__pyx_type_7reducto_4_ext_10pyfile_ext_PySrc) < 0) __PYX_ERR(1, 38, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_7reducto_4_ext_10pyfile_ext_PySrc) < 0) __PYX_ERR(1, 38, __pyx_L1_error)
+  __pyx_ptype_7reducto_4_ext_10pyfile_ext_PySrc = &__pyx_type_7reducto_4_ext_10pyfile_ext_PySrc;
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -2730,11 +2667,11 @@ static int __Pyx_modinit_function_import_code(void) {
 
 
 #if PY_MAJOR_VERSION < 3
-__Pyx_PyMODINIT_FUNC initpyfile_wrap(void) CYTHON_SMALL_CODE; /*proto*/
-__Pyx_PyMODINIT_FUNC initpyfile_wrap(void)
+__Pyx_PyMODINIT_FUNC initpyfile_ext(void) CYTHON_SMALL_CODE; /*proto*/
+__Pyx_PyMODINIT_FUNC initpyfile_ext(void)
 #else
-__Pyx_PyMODINIT_FUNC PyInit_pyfile_wrap(void) CYTHON_SMALL_CODE; /*proto*/
-__Pyx_PyMODINIT_FUNC PyInit_pyfile_wrap(void)
+__Pyx_PyMODINIT_FUNC PyInit_pyfile_ext(void) CYTHON_SMALL_CODE; /*proto*/
+__Pyx_PyMODINIT_FUNC PyInit_pyfile_ext(void)
 #if CYTHON_PEP489_MULTI_PHASE_INIT
 {
   return PyModuleDef_Init(&__pyx_moduledef);
@@ -2801,7 +2738,7 @@ bad:
 }
 
 
-static CYTHON_SMALL_CODE int __pyx_pymod_exec_pyfile_wrap(PyObject *__pyx_pyinit_module)
+static CYTHON_SMALL_CODE int __pyx_pymod_exec_pyfile_ext(PyObject *__pyx_pyinit_module)
 #endif
 #endif
 {
@@ -2813,7 +2750,7 @@ static CYTHON_SMALL_CODE int __pyx_pymod_exec_pyfile_wrap(PyObject *__pyx_pyinit
   #if CYTHON_PEP489_MULTI_PHASE_INIT
   if (__pyx_m) {
     if (__pyx_m == __pyx_pyinit_module) return 0;
-    PyErr_SetString(PyExc_RuntimeError, "Module 'pyfile_wrap' has already been imported. Re-initialisation is not supported.");
+    PyErr_SetString(PyExc_RuntimeError, "Module 'pyfile_ext' has already been imported. Re-initialisation is not supported.");
     return -1;
   }
   #elif PY_MAJOR_VERSION >= 3
@@ -2828,7 +2765,7 @@ if (!__Pyx_RefNanny) {
       Py_FatalError("failed to import 'refnanny' module");
 }
 #endif
-  __Pyx_RefNannySetupContext("__Pyx_PyMODINIT_FUNC PyInit_pyfile_wrap(void)", 0);
+  __Pyx_RefNannySetupContext("__Pyx_PyMODINIT_FUNC PyInit_pyfile_ext(void)", 0);
   if (__Pyx_check_binary_version() < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   #ifdef __Pxy_PyFrame_Initialize_Offsets
   __Pxy_PyFrame_Initialize_Offsets();
@@ -2867,7 +2804,7 @@ if (!__Pyx_RefNanny) {
   Py_INCREF(__pyx_m);
   #else
   #if PY_MAJOR_VERSION < 3
-  __pyx_m = Py_InitModule4("pyfile_wrap", __pyx_methods, 0, 0, PYTHON_API_VERSION); Py_XINCREF(__pyx_m);
+  __pyx_m = Py_InitModule4("pyfile_ext", __pyx_methods, 0, 0, PYTHON_API_VERSION); Py_XINCREF(__pyx_m);
   #else
   __pyx_m = PyModule_Create(&__pyx_moduledef);
   #endif
@@ -2885,14 +2822,14 @@ if (!__Pyx_RefNanny) {
   #if PY_MAJOR_VERSION < 3 && (__PYX_DEFAULT_STRING_ENCODING_IS_ASCII || __PYX_DEFAULT_STRING_ENCODING_IS_DEFAULT)
   if (__Pyx_init_sys_getdefaultencoding_params() < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   #endif
-  if (__pyx_module_is_main_reducto___ext__pyfile_wrap) {
+  if (__pyx_module_is_main_reducto___ext__pyfile_ext) {
     if (PyObject_SetAttr(__pyx_m, __pyx_n_s_name, __pyx_n_s_main) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   }
   #if PY_MAJOR_VERSION >= 3
   {
     PyObject *modules = PyImport_GetModuleDict(); if (unlikely(!modules)) __PYX_ERR(1, 1, __pyx_L1_error)
-    if (!PyDict_GetItemString(modules, "reducto._ext.pyfile_wrap")) {
-      if (unlikely(PyDict_SetItemString(modules, "reducto._ext.pyfile_wrap", __pyx_m) < 0)) __PYX_ERR(1, 1, __pyx_L1_error)
+    if (!PyDict_GetItemString(modules, "reducto._ext.pyfile_ext")) {
+      if (unlikely(PyDict_SetItemString(modules, "reducto._ext.pyfile_ext", __pyx_m) < 0)) __PYX_ERR(1, 1, __pyx_L1_error)
     }
   }
   #endif
@@ -2938,11 +2875,11 @@ if (!__Pyx_RefNanny) {
   __Pyx_XDECREF(__pyx_t_1);
   if (__pyx_m) {
     if (__pyx_d) {
-      __Pyx_AddTraceback("init reducto._ext.pyfile_wrap", __pyx_clineno, __pyx_lineno, __pyx_filename);
+      __Pyx_AddTraceback("init reducto._ext.pyfile_ext", __pyx_clineno, __pyx_lineno, __pyx_filename);
     }
     Py_CLEAR(__pyx_m);
   } else if (!PyErr_Occurred()) {
-    PyErr_SetString(PyExc_ImportError, "init reducto._ext.pyfile_wrap");
+    PyErr_SetString(PyExc_ImportError, "init reducto._ext.pyfile_ext");
   }
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
