@@ -10,11 +10,33 @@ https://laptrinhx.com/julien-danjou-finding-definitions-from-a-source-file-and-a
 https://kamneemaran45.medium.com/python-ast-5789a1b60300
 """
 
+import os
 import ast
 import tokenize
 
 
-def parse_file(filename):
+def source_to_ast(filename: str) -> ast.Module:
+    """Opens and parses a source file by means of tokenize.open.
+
+    Parameters
+    ----------
+    filename : str
+        Name of the file to be parsed. Must be a source file with .py extension.
+
+    Returns
+    -------
+    ast_module : ast.Module
+        Source file parsed to an ast.
+
+    Raises
+    ------
+    FileNotFoundError
+        If the file is not found.
+    """
+
+    if not os.path.isfile(filename):
+        raise FileNotFoundError(f"No file found called: {filename}.")
+
     with tokenize.open(filename) as f:
         return ast.parse(f.read(), filename=filename)
 
@@ -38,7 +60,7 @@ class SourceVisitor(ast.NodeVisitor):
 
 if __name__ == '__main__':
     EXAMPLE = r'C:\Users\agustin\git_repository\reducto\tests\data\example.py'
-    tree = parse_file(EXAMPLE)
+    tree = source_to_ast(EXAMPLE)
 
     sourcer = SourceVisitor()
     sourcer.visit(tree)
