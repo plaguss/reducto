@@ -13,40 +13,35 @@ https://kamneemaran45.medium.com/python-ast-5789a1b60300
 import ast
 import tokenize
 
-SAY_HELLO = r'C:\Users\agustin\git_repository\reducto\tests\data\say_hello.py'
 
 def parse_file(filename):
     with tokenize.open(filename) as f:
         return ast.parse(f.read(), filename=filename)
 
-tree = parse_file(SAY_HELLO)
-
-
-class FuncLister(ast.NodeVisitor):
-    def visit_FunctionDef(self, node):
-        print(node.name)
-        self.generic_visit(node)
-
-FuncLister().visit(tree)
-
-
-for node in ast.walk(tree):
-    print(node)
-
-for node in ast.walk(tree):
-    if isinstance(node, ast.FunctionDef):
-        print(node.name)
-
 
 class SourceVisitor(ast.NodeVisitor):
-    def visit_FunctionDef(self, node):
-        print(node.name)
+    def visit_FunctionDef(self, node: ast.FunctionDef):
+        print('lines', (node.name, node.lineno, node.end_lineno))
+        # self.generic_visit(node)
+
+    visit_AsyncFunctionDef = visit_FunctionDef
+    # def visit_AsyncFunctionDef(self, node: ast.AsyncFunctionDef):
+    #     print('lines', (node.name, node.lineno, node.end_lineno))
+    #     # print(NotImplementedError)
+
+    def visit_ClassDef(self, node: ast.ClassDef):
+        print('lines', (node.name, node.lineno, node.end_lineno))
+        print('Inside class ->')
         self.generic_visit(node)
+        # print(NotImplementedError)
 
-    def visit_AsyncFunctionDef(self, node):
-        print(node)
-        print(NotImplementedError)
 
-    def visit_ClassDef(self, node):
-        print(node)
-        print(NotImplementedError)
+if __name__ == '__main__':
+    EXAMPLE = r'C:\Users\agustin\git_repository\reducto\tests\data\example.py'
+    tree = parse_file(EXAMPLE)
+
+    sourcer = SourceVisitor()
+    sourcer.visit(tree)
+
+    funcs = [(i, f) for i, f in enumerate(tree.body) if isinstance(f, (ast.FunctionDef, ast.AsyncFunctionDef))]
+    # get a function

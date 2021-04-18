@@ -23,6 +23,16 @@ async def print_task() -> None:
     print("Hey")
     return
 
+
+def nested_func() -> float:
+    import random
+
+    def _inner_func(param):
+        return param
+
+    return _inner_func(random.random())
+
+
 # This line is a simple comment.
 
 
