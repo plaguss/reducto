@@ -42,20 +42,21 @@ def source_to_ast(filename: str) -> ast.Module:
 
 
 class SourceVisitor(ast.NodeVisitor):
+
+    def __init__(self) -> None:
+        self.items = {}
+
     def visit_FunctionDef(self, node: ast.FunctionDef):
         print('lines', (node.name, node.lineno, node.end_lineno))
-        # self.generic_visit(node)
+        return node
 
     visit_AsyncFunctionDef = visit_FunctionDef
-    # def visit_AsyncFunctionDef(self, node: ast.AsyncFunctionDef):
-    #     print('lines', (node.name, node.lineno, node.end_lineno))
-    #     # print(NotImplementedError)
 
     def visit_ClassDef(self, node: ast.ClassDef):
         print('lines', (node.name, node.lineno, node.end_lineno))
         print('Inside class ->')
         self.generic_visit(node)
-        # print(NotImplementedError)
+        return node
 
 
 if __name__ == '__main__':
@@ -63,7 +64,7 @@ if __name__ == '__main__':
     tree = source_to_ast(EXAMPLE)
 
     sourcer = SourceVisitor()
-    sourcer.visit(tree)
+    hey = sourcer.visit(tree)
 
     funcs = [(i, f) for i, f in enumerate(tree.body) if isinstance(f, (ast.FunctionDef, ast.AsyncFunctionDef))]
     # get a function

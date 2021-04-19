@@ -4,7 +4,7 @@
 import os
 import pytest
 
-import reducto.parser as prs
+import reducto.api as prs
 
 
 PARENT_DIR = os.path.dirname(os.path.abspath(__file__))
