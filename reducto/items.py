@@ -41,20 +41,20 @@ class Item:
 
         return self.end - self.start
 
-    def __eq__(self, other: 'Item') -> bool:
+    def __lt__(self, other: 'Item') -> bool:
+        """Lower than operator to allow the objects to be sorted in a list.
+
+        Parameters
+        ----------
+        other : Item
+            Item or subclass of it.
         """
-        Compares for equality when all name, start and end from both items are the same.
-        """
 
-        cmp = self.name == other.name \
-            and self.start == other.start \
-            and self.end == other.end
+        if not isinstance(other, Item):
+            msg = f"Operator defined only for {self.__class__.__name__} intances."
+            raise TypeError(msg)
 
-        return cmp
-
-    def __hash__(self) -> int:
-        """TODO: May be necessary if its used as a key dict, remove otherwise! """
-        return hash(self.name)
+        return self.start < other.start
 
     @property
     def docstrings(self) -> int:
@@ -98,7 +98,7 @@ class Item:
 class FunctionDef(Item):
     """Corresponds to ast.FunctionDef. No distinction to an AsyncFunctionDef in here.
     """
-    def __init__(self, name: str) -> None:
+    def __init__(self, name: str, start: int = 0, end: int = 0) -> None:
         super().__init__(name)
 
 
