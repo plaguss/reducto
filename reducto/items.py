@@ -99,7 +99,7 @@ class FunctionDef(Item):
     """Corresponds to ast.FunctionDef. No distinction to an AsyncFunctionDef in here.
     """
     def __init__(self, name: str, start: int = 0, end: int = 0) -> None:
-        super().__init__(name)
+        super().__init__(name, start=start, end=end)
 
 
 class MethodDef(Item):
@@ -108,5 +108,5 @@ class MethodDef(Item):
     The reason to keep it separated from FunctionDef is to add a distinction in the
     name to avoid possible collisions. Always prepends __method__ to the name.
     """
-    def __init__(self, name: str) -> None:
-        super().__init__("__method__" + name)
+    def __init__(self, name: str, start: int = 0, end: int = 0) -> None:
+        super().__init__("__method__" + name, start=start, end=end)
