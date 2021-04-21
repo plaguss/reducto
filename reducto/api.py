@@ -10,9 +10,12 @@ https://laptrinhx.com/julien-danjou-finding-definitions-from-a-source-file-and-a
 https://kamneemaran45.medium.com/python-ast-5789a1b60300
 """
 
+import typing as ty
 import os
 import ast
 import tokenize
+
+import reducto.items as it
 
 
 def source_to_ast(filename: str) -> ast.Module:
@@ -42,12 +45,21 @@ def source_to_ast(filename: str) -> ast.Module:
 
 
 class SourceVisitor(ast.NodeVisitor):
+    """
+    TODO:
+        - Añadir la distinción entre método y función (método nuevo en lugar
+        de generic_visit?)
+        - Método len para contar casos
+        - docstrings
+    """
 
     def __init__(self) -> None:
-        self.items = {}
+        self._items = []
 
     def visit_FunctionDef(self, node: ast.FunctionDef):
         print('lines', (node.name, node.lineno, node.end_lineno))
+        func_def = it.FunctionDef(node.name, start=node.lineno, end=node.end_lineno)
+        self._items.append(func_def)
         return node
 
     visit_AsyncFunctionDef = visit_FunctionDef
@@ -57,6 +69,16 @@ class SourceVisitor(ast.NodeVisitor):
         print('Inside class ->')
         self.generic_visit(node)
         return node
+
+    @property
+    def items(self) -> ty.Union[ty.List[it.Item]]:
+        """May be without any content for some .py files.
+
+        Returns
+        -------
+
+        """
+        return self._items
 
 
 if __name__ == '__main__':
