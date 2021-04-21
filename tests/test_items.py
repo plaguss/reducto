@@ -1,7 +1,7 @@
 """Contains the tests for reducto.items. """
 
 import pytest
-
+import bisect
 import reducto.items as it
 
 
@@ -81,3 +81,21 @@ class TestMethodDef:
 
     def test_name(self, method_def):
         assert method_def.name == '__method__name'
+
+
+def test_sorting_list_of_function_defs():
+
+    func1 = it.FunctionDef('func1', start=0, end=5)
+    func2 = it.MethodDef('func2', start=6, end=10)
+    func3 = it.FunctionDef('func3', start=11, end=11)
+    list_sorted = [func1, func2, func3]
+    assert list_sorted == sorted([func2, func3, func1])
+
+    assert bisect.bisect_left(list_sorted, it.FunctionDef('func', start=3, end=9)) == 1
+    assert bisect.bisect_left(list_sorted, 0) == 0
+    assert bisect.bisect_left(list_sorted, 1) == 1
+    assert bisect.bisect_left(list_sorted, 3) == 1
+    assert bisect.bisect_left(list_sorted, 5) == 1
+    assert bisect.bisect_left(list_sorted, 6) == 1
+    assert bisect.bisect_left(list_sorted, 10) == 2
+    assert bisect.bisect_left(list_sorted, 11) == 2

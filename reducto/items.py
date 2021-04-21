@@ -50,11 +50,16 @@ class Item:
             Item or subclass of it.
         """
 
-        if not isinstance(other, Item):
-            msg = f"Operator defined only for {self.__class__.__name__} intances."
+        if isinstance(other, Item):
+            other_start = other.start
+        elif isinstance(other, int):
+            other_start = other
+        else:
+            msg = f"Operator defined only for {self.__class__.__name__}" \
+                  f" intances. You gave: {type(other)}."
             raise TypeError(msg)
 
-        return self.start < other.start
+        return self.start < other_start
 
     @property
     def docstrings(self) -> int:
