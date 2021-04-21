@@ -97,5 +97,6 @@ def test_sorting_list_of_function_defs():
     assert bisect.bisect_left(list_sorted, 3) == 1
     assert bisect.bisect_left(list_sorted, 5) == 1
     assert bisect.bisect_left(list_sorted, 6) == 1
+    assert bisect.bisect_left(list_sorted, 7) == 2
     assert bisect.bisect_left(list_sorted, 10) == 2
     assert bisect.bisect_left(list_sorted, 11) == 2
