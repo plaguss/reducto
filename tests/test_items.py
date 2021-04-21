@@ -84,7 +84,9 @@ class TestMethodDef:
 
 
 def test_sorting_list_of_function_defs():
-
+    """Check a list of FunctionDef and MethodDef mixed can be sorted.
+    checks for different positions and objects can be found using bisect_left.
+    """
     func1 = it.FunctionDef('func1', start=0, end=5)
     func2 = it.MethodDef('func2', start=6, end=10)
     func3 = it.FunctionDef('func3', start=11, end=11)
