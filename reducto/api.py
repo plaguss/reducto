@@ -10,7 +10,7 @@ https://laptrinhx.com/julien-danjou-finding-definitions-from-a-source-file-and-a
 https://kamneemaran45.medium.com/python-ast-5789a1b60300
 """
 
-import typing as ty
+from typing import Union, List
 import os
 import ast
 import tokenize
@@ -65,13 +65,16 @@ class SourceVisitor(ast.NodeVisitor):
     visit_AsyncFunctionDef = visit_FunctionDef
 
     def visit_ClassDef(self, node: ast.ClassDef):
+        """
+        TODO: Review how to distinguish between functions and methods.
+        """
         print('lines', (node.name, node.lineno, node.end_lineno))
         print('Inside class ->')
         self.generic_visit(node)
         return node
 
     @property
-    def items(self) -> ty.Union[ty.List[it.Item]]:
+    def items(self) -> Union[List[it.Item]]:
         """May be without any content for some .py files.
 
         Returns
@@ -82,7 +85,7 @@ class SourceVisitor(ast.NodeVisitor):
 
 
 if __name__ == '__main__':
-    EXAMPLE = r'C:\Users\agustin\git_repository\reducto\tests\data\example.py'
+    EXAMPLE = os.path.join(os.getcwd(), 'tests', 'data', 'example.py')
     tree = source_to_ast(EXAMPLE)
 
     sourcer = SourceVisitor()
