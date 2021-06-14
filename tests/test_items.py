@@ -40,29 +40,29 @@ class TestItem:
         assert item.docstrings == 0
         item.docstrings += 2
         assert item.docstrings == 2
-        assert item.source_lines() == 8
+        assert item.source_lines == 8
         item.docstrings = 0
 
     def test_comments(self, item):
         assert item.comments == 0
         item.comments += 2
         assert item.comments == 2
-        assert item.source_lines() == 8
+        assert item.source_lines == 8
         item.comments = 0
 
     def test_blank(self, item):
         assert item.blank == 0
         item.blank += 2
         assert item.blank == 2
-        assert item.source_lines() == 8
+        assert item.source_lines == 8
         item.blank = 0
 
     def test_source_lines(self, item):
-        assert item.source_lines() == 10
+        assert item.source_lines == 10
         item.docstrings += 1
         item.comments += 1
         item.blank += 1
-        assert item.source_lines() == 7
+        assert item.source_lines == 7
 
 
 class TestFuncionDef:
