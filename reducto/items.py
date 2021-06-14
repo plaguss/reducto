@@ -86,9 +86,10 @@ class Item:
         return self._blank
 
     @blank.setter
-    def blank(self, blnk: int):
+    def blank(self, blnk: int) -> None:
         self._blank = blnk
 
+    @property
     def source_lines(self) -> int:
         """
         Computes the total number of lines of the item, subtracts docstrings, and blank
