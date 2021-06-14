@@ -2,8 +2,6 @@
 
 """
 
-import typing as ty
-
 
 class Item:
     """Base class for the items to be extracted from an ast parsed source file.
