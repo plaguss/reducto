@@ -6,6 +6,12 @@ build-backend = "flit_core.buildapi"
 module = "reducto"
 author = "agustin"
 author-email = "agustin.piqueres@gmail.com"
+home-page = "https://github.com/plaguss/reducto"
+requires-python=">=3.8"
 classifiers = [ "License :: OSI Approved :: MIT License",]
 description-file = "README.md"
-
+test = [
+    "pytest==6.2.3",
+    "pytest-cov==2.11.1"
+]
+doc = ["sphinx"]
