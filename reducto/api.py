@@ -10,38 +10,188 @@ https://laptrinhx.com/julien-danjou-finding-definitions-from-a-source-file-and-a
 https://kamneemaran45.medium.com/python-ast-5789a1b60300
 """
 
-from typing import Union, List
+from typing import Union, List, Optional, Tuple
 import os
 import ast
 import tokenize
+from token import COMMENT, NL, NEWLINE
+import pathlib
 
 import reducto.items as it
 
 
-def source_to_ast(filename: str) -> ast.Module:
-    """Opens and parses a source file by means of tokenize.open.
+TokenType = Tuple[int, str, Tuple[int, int], Tuple[int, int], str]
+
+NL_CHAR: str = '\n'  # New line character
+
+
+class SourceFile:
+    """Class representing a .py source file.
+
+    Allows to read a file, obtain the tokens and the ast.
+    """
+    def __init__(self, filename: str) -> None:
+        """
+
+        Parameters
+        ----------
+        filename : str
+            Name of the file.
+        """
+        if not os.path.isfile(filename):
+            raise FileNotFoundError(f"No file found called: {filename}.")
+
+        self._filename: pathlib.Path = pathlib.Path(filename)
+        self._lines: Optional[List[str]] = None
+        self._ast: Optional[ast.Module] = None
+        self._tokens: Optional[List[tokenize.TokenInfo]] = None
+        self._blank_lines: int = 0
+
+    def __repr__(self):
+        return type(self).__name__ + f"({self._filename.name})"
+
+    def __len__(self) -> int:
+        """Return the total number of lines in the file. """
+        return len(self.lines)
+
+    def _read_file_by_lines(self) -> List[str]:
+        """Read a file using tokenize.open and return the lines.
+
+        Returns
+        -------
+        lines : List[str]
+            Returns the lines as a list of str.
+        """
+        with tokenize.open(str(self._filename)) as fd:
+            return fd.readlines()
+
+    @property
+    def lines(self) -> List[str]:
+        """Contains the lines of the file as initially parsed with tokenize module. """
+        if self._lines is None:
+            self._lines: List[str] = self._read_file_by_lines()
+        return self._lines
+
+    @property
+    def ast(self) -> ast.Module:
+        """Parses and returns the ast of a file from the lines read with tokenize module.
+
+        Returns
+        -------
+        ast : ast.Module
+            Abstract Syntax Tree module object.
+        """
+        if self._ast is None:
+            self._ast = ast.parse("".join(self.lines))
+        return self._ast
+
+    @property
+    def tokens(self) -> List[tokenize.TokenInfo]:
+        """Return the complete set of tokens for a file. """
+        if self._tokens is None:
+            line_iter = iter(self.lines)
+            self._tokens = list(tokenize.generate_tokens(lambda: next(line_iter)))
+
+        return self._tokens
+
+    def comment_lines(self):
+        """
+
+        Obtained with tokens
+
+        Returns
+        -------
+
+        """
+        pass
+
+    def comment_lines_positioned(self):
+        """
+        TODO:
+            Obtain the comments, as a list of tuples containing the
+            line number and the actual content.
+            Maybe differentiate if its a line with only comment?
+
+        Returns
+        -------
+
+        """
+        pass
+
+    @property
+    def blank_lines(self):
+        """
+        Obtained with tokens.
+
+        TODO:
+            Hace falta tener el total de blank lines tanto en número de blank lines
+            para el módulo, como la línea en la que está para restarlos de las funciones.
+
+        Returns
+        -------
+
+        """
+        return self._blank_lines
+
+    def blank_lines_positioned(self):
+        """
+        TODO:
+            Obtain the comments, as a list of tuples containing the
+            line number and the actual content.
+            Maybe differentiate if its a line with only comment?
+
+        Returns
+        -------
+
+        """
+        pass
+
+    def visit_source(self):
+        """
+        TODO:
+            Se encargará de llamar al SourceVisitor
+            Tiene que almacenar los diferentes objetos visitados
+            Dejar los diferentes métodos controlados para acceder a las funciones
+            y trabajar con ellas de forma sencilla.
+            Dejar todo ese contenido dentro de SourceVisitor
+
+        Returns
+        -------
+
+        """
+        tree = self.ast
+        sourcer = SourceVisitor()
+        hey = sourcer.visit(tree)
+        funcs = [(i, f) for i, f in enumerate(tree.body) if isinstance(f, (ast.FunctionDef, ast.AsyncFunctionDef))]
+
+
+def token_is_comment():
+    pass
+
+
+def token_is_blank_line(tok: tokenize.TokenInfo) -> bool:
+    r"""Checks if a given line is a blank line or not.
+
+    The check is done for a NL token and a line containing only a
+    new line character.
 
     Parameters
     ----------
-    filename : str
-        Name of the file to be parsed. Must be a source file with .py extension.
+    tok : tokenize.TokenInfo
+        Token obtained from tokenize.generate_tokens.
 
     Returns
     -------
-    ast_module : ast.Module
-        Source file parsed to an ast.
+    check : bool
+        If a token is a blank line returns True, False otherwise.
 
-    Raises
-    ------
-    FileNotFoundError
-        If the file is not found.
+    Examples
+    --------
+    >>> tok = tokenize.TokenInfo(type=61, string='\n', start=(123, 0), end=(126, 1), line='\n')
+    >>> token_is_blank_line(tok)
+    True
     """
-
-    if not os.path.isfile(filename):
-        raise FileNotFoundError(f"No file found called: {filename}.")
-
-    with tokenize.open(filename) as f:
-        return ast.parse(f.read(), filename=filename)
+    return tok == NL and tok.line == NL_CHAR
 
 
 class SourceVisitor(ast.NodeVisitor):
@@ -86,7 +236,10 @@ class SourceVisitor(ast.NodeVisitor):
 
 if __name__ == '__main__':
     EXAMPLE = os.path.join(os.getcwd(), 'tests', 'data', 'example.py')
-    tree = source_to_ast(EXAMPLE)
+
+    src = SourceFile(EXAMPLE)
+    tree = src.ast
+    tokens = src.tokens
 
     sourcer = SourceVisitor()
     hey = sourcer.visit(tree)
