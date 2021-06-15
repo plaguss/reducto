@@ -118,5 +118,11 @@ class SampleClass:
             yield i
 
 
+A = 'a'
+"""Variable with docstring. """
+
+
+"""Docstring alone. """
+
 if __name__ == '__main__':
     say_hello()
