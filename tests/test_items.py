@@ -80,7 +80,7 @@ class TestMethodDef:
         return it.MethodDef('name', start=4, end=14)
 
     def test_name(self, method_def):
-        assert method_def.name == '__method__name'
+        assert method_def.name == 'name'
 
 
 def test_sorting_list_of_function_defs():
