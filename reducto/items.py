@@ -2,6 +2,9 @@
 
 """
 
+from typing import Optional, Union
+import ast
+
 
 class Item:
     """Base class for the items to be extracted from an ast parsed source file.
@@ -9,6 +12,7 @@ class Item:
     A subclass of this Item corresponds to an ast Node
     """
     def __init__(self, name: str, start: int = 0, end: int = 0) -> None:
+        self._node: Optional[ast.AST] = None
         self._name = name
         self._start = start
         self._end = end
@@ -18,6 +22,15 @@ class Item:
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}({self.name}[{self.start}, {self.end}])"
+
+    @property
+    def node(self) -> ast.AST:
+        """Returns the node itself. """
+        return self._node
+
+    @node.setter
+    def node(self, node_: ast.AST) -> None:
+        self._node = node_
 
     @property
     def name(self) -> str:
@@ -99,18 +112,49 @@ class Item:
         return len(self) - self.docstrings - self.comments - self.blank
 
 
+def get_docstring_lines(node: Union[ast.Module, ast.FunctionDef]) -> int:
+    """Obtains the number of lines which are docstrings.
+
+    Parameters
+    ----------
+    node : Union[ast.Module, ast.FunctionDef]
+
+    Returns
+    -------
+
+    """
+
+    docs: str = ast.get_docstring(node)
+
+    try:
+        docstrings: int = len(docs.split('\n'))
+    except AttributeError:  # When there are no docstrings, returns None.
+        docstrings: int = 0
+
+    return docstrings
+
+
 class FunctionDef(Item):
     """Corresponds to ast.FunctionDef. No distinction to an AsyncFunctionDef in here.
     """
     def __init__(self, name: str, start: int = 0, end: int = 0) -> None:
         super().__init__(name, start=start, end=end)
 
+    def _get_docstrings(self) -> int:
+        """Obtain the number of lines which are docstring inside the function.
 
-class MethodDef(Item):
+        Returns
+        -------
+
+        """
+        return get_docstring_lines(self.node)
+
+
+class MethodDef(FunctionDef):
     """Equivalent to a FunctionDef, but obtained from a class.
 
     The reason to keep it separated from FunctionDef is to add a distinction in the
     name to avoid possible collisions. Always prepends __method__ to the name.
     """
     def __init__(self, name: str, start: int = 0, end: int = 0) -> None:
-        super().__init__("__method__" + name, start=start, end=end)
+        super().__init__(name, start=start, end=end)
