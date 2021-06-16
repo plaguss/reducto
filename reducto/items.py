@@ -115,13 +115,15 @@ class Item:
 def get_docstring_lines(node: Union[ast.Module, ast.FunctionDef]) -> int:
     """Obtains the number of lines which are docstrings.
 
+    TODO: When the docstrings are not multiline, a 1 must be added?
+
     Parameters
     ----------
     node : Union[ast.Module, ast.FunctionDef]
 
     Returns
     -------
-
+    docstring_lines : int
     """
 
     docs: str = ast.get_docstring(node)
