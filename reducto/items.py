@@ -16,7 +16,7 @@ class Item:
         self._name = name
         self._start = start
         self._end = end
-        self._docstrings = 0
+        self._docstrings: Optional[int] = None  # Initially as None to detect when to run get_docstrings
         self._comments = 0
         self._blank = 0
 
@@ -142,14 +142,16 @@ class FunctionDef(Item):
     def __init__(self, name: str, start: int = 0, end: int = 0) -> None:
         super().__init__(name, start=start, end=end)
 
-    def _get_docstrings(self) -> int:
+    def get_docstrings(self) -> int:
         """Obtain the number of lines which are docstring inside the function.
 
         Returns
         -------
 
         """
-        return get_docstring_lines(self.node)
+        if self.docstrings is None:
+            self.docstrings = get_docstring_lines(self.node)
+        return self.docstrings
 
 
 class MethodDef(FunctionDef):
