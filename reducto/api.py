@@ -149,6 +149,16 @@ class SourceFile:
 
     @property
     def source_visitor(self) -> "SourceVisitor":
+        """Returns the SourceVisitor once visited.
+
+        Instantiates and calls the visit method to the SourceVisitor.
+        All the necessary info regarding the ast of the source file
+        should be contained here.
+
+        Returns
+        -------
+        source_visitor : SourceVisitor
+        """
         if self._source_visitor is None:
             self._source_visitor = self._visit_source()
         return self._source_visitor
@@ -180,6 +190,7 @@ class SourceFile:
         docstrings : int
             Lines of docstrings in the module.
         """
+        return it.get_docstring_lines(self.ast)
 
 
 def token_is_comment():
@@ -283,6 +294,7 @@ class SourceVisitor(ast.NodeVisitor):
         """Returns the items which are functions from the list of items obtained. """
         if len(self._functions) == 0:
             self._functions = [item for item in self.items if isinstance(item, it.FunctionDef)]
+            [func.get_docstrings() for func in self._functions]
         return self._functions
 
     def private_functions(self) -> List[it.FunctionDef]:
@@ -301,8 +313,5 @@ if __name__ == '__main__':
 
     sourcer = SourceVisitor()
     sourcer.visit(tree)
-    sourcer.functions
+    functions: List[it.FunctionDef] = sourcer.functions
     # Access to the items to see the content.
-
-    funcs = [(i, f) for i, f in enumerate(tree.body) if isinstance(f, (ast.FunctionDef, ast.AsyncFunctionDef))]
-    # get a function
