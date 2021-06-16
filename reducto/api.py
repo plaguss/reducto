@@ -14,7 +14,6 @@ from typing import Union, List, Optional, Tuple
 import os
 import ast
 import tokenize
-from token import COMMENT, NL, NEWLINE
 import pathlib
 
 import reducto.items as it
@@ -95,7 +94,8 @@ class SourceFile:
 
         return self._tokens
 
-    def comment_lines(self):
+    @property
+    def comment_lines(self) -> int:
         """
 
         Obtained with tokens
@@ -117,6 +117,9 @@ class SourceFile:
         -------
 
         """
+#        for i, t in enumerate(tokens):
+#            if token_is_comment(t):
+#                print((i, t))
         pass
 
     @property
@@ -176,7 +179,7 @@ class SourceFile:
         -------
 
         """
-        tree = self.ast
+        tree: ast.Module = self.ast
         source_visitor = SourceVisitor()
         source_visitor.visit(tree)
         return source_visitor
@@ -193,8 +196,20 @@ class SourceFile:
         return it.get_docstring_lines(self.ast)
 
 
-def token_is_comment():
-    pass
+def token_is_comment(tok: tokenize.TokenInfo) -> bool:
+    """Checks whether a given token is a comment.
+
+    TODO: THIS MUST BE CHECKED FOR A LINE, NOT JUST A TOKEN.
+
+    Parameters
+    ----------
+    tok
+
+    Returns
+    -------
+
+    """
+    return tok[0] == tokenize.COMMENT
 
 
 def token_is_blank_line(tok: tokenize.TokenInfo) -> bool:
@@ -219,7 +234,7 @@ def token_is_blank_line(tok: tokenize.TokenInfo) -> bool:
     >>> token_is_blank_line(tok)
     True
     """
-    return tok == NL and tok.line == NL_CHAR
+    return tok[0] == tokenize.NL and tok.line == NL_CHAR
 
 
 class SourceVisitor(ast.NodeVisitor):
