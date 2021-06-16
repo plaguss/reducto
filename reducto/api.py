@@ -46,6 +46,7 @@ class SourceFile:
         self._ast: Optional[ast.Module] = None
         self._tokens: Optional[List[tokenize.TokenInfo]] = None
         self._blank_lines: int = 0
+        self._source_visitor: Optional[SourceVisitor] = None
 
     def __repr__(self):
         return type(self).__name__ + f"({self._filename.name})"
@@ -146,7 +147,13 @@ class SourceFile:
         """
         pass
 
-    def visit_source(self):
+    @property
+    def source_visitor(self) -> "SourceVisitor":
+        if self._source_visitor is None:
+            self._source_visitor = self._visit_source()
+        return self._source_visitor
+
+    def _visit_source(self) -> "SourceVisitor":
         """
         TODO:
             Se encargará de llamar al SourceVisitor
@@ -160,9 +167,19 @@ class SourceFile:
 
         """
         tree = self.ast
-        sourcer = SourceVisitor()
-        hey = sourcer.visit(tree)
-        funcs = [(i, f) for i, f in enumerate(tree.body) if isinstance(f, (ast.FunctionDef, ast.AsyncFunctionDef))]
+        source_visitor = SourceVisitor()
+        source_visitor.visit(tree)
+        return source_visitor
+
+    @property
+    def module_docstrings(self) -> int:
+        """Obtains the lines of docstrings at the module level.
+
+        Returns
+        -------
+        docstrings : int
+            Lines of docstrings in the module.
+        """
 
 
 def token_is_comment():
@@ -201,14 +218,39 @@ class SourceVisitor(ast.NodeVisitor):
         de generic_visit?)
         - Método len para contar casos
         - docstrings
+
+    Notes
+    -----
+    For the moment, no distinction is done between functions and definitions,
+    so between the items there will be only FunctionDef, no MethodDef items.
     """
 
     def __init__(self) -> None:
-        self._items = []
+        self._items: List[it.Item] = []
+        self._functions: List[it.FunctionDef] = []
+
+    def __repr__(self):
+        return type(self).__name__
 
     def visit_FunctionDef(self, node: ast.FunctionDef):
+        """Visits the FunctionDef nodes.
+
+        Creates and stores the corresponding item, along with the
+        name, start and end lines.
+
+        Parameters
+        ----------
+        node : ast.FunctionDef
+            Node automatically filtered when visit method is called.
+
+        Returns
+        -------
+        node : ast.FunctionDef
+            Returns the node itself.
+        """
         print('lines', (node.name, node.lineno, node.end_lineno))
         func_def = it.FunctionDef(node.name, start=node.lineno, end=node.end_lineno)
+        func_def.node = node  # TODO: This has to be tested! https://stackoverflow.com/questions/48759838/how-to-create-a-function-object-from-an-ast-functiondef-node
         self._items.append(func_def)
         return node
 
@@ -224,14 +266,30 @@ class SourceVisitor(ast.NodeVisitor):
         return node
 
     @property
-    def items(self) -> Union[List[it.Item]]:
-        """May be without any content for some .py files.
+    def items(self) -> List[it.Item]:
+        """
+
+        May be without any content for some .py files.
 
         Returns
         -------
-
+        items : List[it.Item]
+            Returns all the items found in the ast source.
         """
         return self._items
+
+    @property
+    def functions(self) -> List[it.FunctionDef]:
+        """Returns the items which are functions from the list of items obtained. """
+        if len(self._functions) == 0:
+            self._functions = [item for item in self.items if isinstance(item, it.FunctionDef)]
+        return self._functions
+
+    def private_functions(self) -> List[it.FunctionDef]:
+        raise NotImplementedError
+
+    def dunder_methods(self) -> List[it.FunctionDef]:
+        raise NotImplementedError
 
 
 if __name__ == '__main__':
@@ -242,7 +300,9 @@ if __name__ == '__main__':
     tokens = src.tokens
 
     sourcer = SourceVisitor()
-    hey = sourcer.visit(tree)
+    sourcer.visit(tree)
+    sourcer.functions
+    # Access to the items to see the content.
 
     funcs = [(i, f) for i, f in enumerate(tree.body) if isinstance(f, (ast.FunctionDef, ast.AsyncFunctionDef))]
     # get a function
