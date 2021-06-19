@@ -72,6 +72,19 @@ class Item:
 
         return self.start < other_start
 
+    def __contains__(self, item: Union['Item', int]) -> bool:
+        """To check if a given line is contained in the item or not.
+
+        Parameters
+        ----------
+        item
+
+        Returns
+        -------
+
+        """
+        return self.start <= item <= self.end
+
     @property
     def docstrings(self) -> int:
         """Number of lines which are docstring in the item. """
