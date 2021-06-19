@@ -72,6 +72,9 @@ class Item:
 
         return self.start < other_start
 
+    def __ge__(self, other: Union['Item', int]) -> bool:
+        return not self < other
+
     def __contains__(self, item: Union['Item', int]) -> bool:
         """To check if a given line is contained in the item or not.
 
