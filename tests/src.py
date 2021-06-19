@@ -6,7 +6,7 @@ import pytest
 import ast
 import tokenize
 
-import reducto.api as rd
+import reducto.src as rd
 
 
 PARENT_DIR = os.path.dirname(os.path.abspath(__file__))

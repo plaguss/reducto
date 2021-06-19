@@ -22,6 +22,7 @@ import reducto.items as it
 TokenType = Tuple[int, str, Tuple[int, int], Tuple[int, int], str]
 
 NL_CHAR: str = '\n'  # New line character
+COMMENT_CHAR: str = '#'  # Comment character
 
 
 class SourceFile:
@@ -45,6 +46,9 @@ class SourceFile:
         self._ast: Optional[ast.Module] = None
         self._tokens: Optional[List[tokenize.TokenInfo]] = None
         self._blank_lines: int = 0
+        self._blank_lines_positions: Optional[List[int]] = None
+        self._comment_lines: int = 0
+        self._comment_lines_positions: Optional[List[int]] = None
         self._source_visitor: Optional[SourceVisitor] = None
 
     def __repr__(self):
@@ -104,26 +108,18 @@ class SourceFile:
         -------
 
         """
-        pass
-
-    def comment_lines_positioned(self):
-        """
-        TODO:
-            Obtain the comments, as a list of tuples containing the
-            line number and the actual content.
-            Maybe differentiate if its a line with only comment?
-
-        Returns
-        -------
-
-        """
-#        for i, t in enumerate(tokens):
-#            if token_is_comment(t):
-#                print((i, t))
-        pass
+        if self._comment_lines_positions is None:
+            self._comment_blank_lines_positions()
+        return self._comment_lines
 
     @property
-    def blank_lines(self):
+    def comment_lines_positions(self) -> List[int]:
+        if self._comment_lines_positions is None:
+            self._comment_blank_lines_positions()
+        return self._comment_lines_positions
+
+    @property
+    def blank_lines(self) -> int:
         """
         Obtained with tokens.
 
@@ -135,10 +131,19 @@ class SourceFile:
         -------
 
         """
+        if self._blank_lines_positions is None:
+            self._comment_blank_lines_positions()
         return self._blank_lines
 
-    def blank_lines_positioned(self):
+    @property
+    def blank_lines_positions(self) -> List[int]:
+        if self._blank_lines_positions is None:
+            self._comment_blank_lines_positions()
+        return self._blank_lines_positions
+
+    def _comment_blank_lines_positions(self) -> None:
         """
+        Grabs both comment lines and blank lines.
         TODO:
             Obtain the comments, as a list of tuples containing the
             line number and the actual content.
@@ -148,7 +153,17 @@ class SourceFile:
         -------
 
         """
-        pass
+        self._comment_lines_positions = []
+        self._blank_lines_positions = []
+        for tok in self.tokens:
+            if token_is_comment_line(tok):
+                idx: int = tok.start[0]  # Get the line number.
+                self._comment_lines_positions.append(idx)
+                self._comment_lines += 1
+            if token_is_blank_line(tok):
+                idx: int = tok.start[0]  # Get the line number.
+                self._blank_lines_positions.append(idx)
+                self._blank_lines += 1
 
     @property
     def source_visitor(self) -> "SourceVisitor":
@@ -184,6 +199,15 @@ class SourceFile:
         source_visitor.visit(tree)
         return source_visitor
 
+    def _register_functions(self) -> None:
+        """Register the docstrings, comments and blank lines on the grabbed functions.
+
+        Returns
+        -------
+
+        """
+        pass
+
     @property
     def module_docstrings(self) -> int:
         """Obtains the lines of docstrings at the module level.
@@ -196,20 +220,29 @@ class SourceFile:
         return it.get_docstring_lines(self.ast)
 
 
-def token_is_comment(tok: tokenize.TokenInfo) -> bool:
-    """Checks whether a given token is a comment.
+def token_is_comment_line(tok: tokenize.TokenInfo) -> bool:
+    """Checks whether a given token line is a comment.
 
-    TODO: THIS MUST BE CHECKED FOR A LINE, NOT JUST A TOKEN.
+    The check is done for the whole line, not just the token type.
+    A line containing a comment after anything which isn't a space
+    is not considered a comment line.
 
     Parameters
     ----------
-    tok
+    tok : tokenize.TokenInfo
+        Token as extracted from tokenize.generate_tokens.
 
     Returns
     -------
-
+    is_comment_line : bool
+        Returns True when the line is a comment line only, False otherwise.
     """
-    return tok[0] == tokenize.COMMENT
+    is_comment_line: bool = False
+
+    if tok.type == tokenize.COMMENT:
+        is_comment_line = tok.line.lstrip().startswith(COMMENT_CHAR)
+
+    return is_comment_line
 
 
 def token_is_blank_line(tok: tokenize.TokenInfo) -> bool:
@@ -234,7 +267,7 @@ def token_is_blank_line(tok: tokenize.TokenInfo) -> bool:
     >>> token_is_blank_line(tok)
     True
     """
-    return tok[0] == tokenize.NL and tok.line == NL_CHAR
+    return tok.type == tokenize.NL and tok.line == NL_CHAR
 
 
 class SourceVisitor(ast.NodeVisitor):
@@ -311,6 +344,9 @@ class SourceVisitor(ast.NodeVisitor):
             self._functions = [item for item in self.items if isinstance(item, it.FunctionDef)]
             [func.get_docstrings() for func in self._functions]
         return self._functions
+
+    def register_functions(self):
+        pass
 
     def private_functions(self) -> List[it.FunctionDef]:
         raise NotImplementedError
