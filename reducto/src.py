@@ -10,11 +10,12 @@ https://laptrinhx.com/julien-danjou-finding-definitions-from-a-source-file-and-a
 https://kamneemaran45.medium.com/python-ast-5789a1b60300
 """
 
-from typing import Union, List, Optional, Tuple
+from typing import List, Optional, Tuple, Dict
 import os
 import ast
 import tokenize
 import pathlib
+from bisect import bisect_left
 
 import reducto.items as it
 
@@ -345,8 +346,77 @@ class SourceVisitor(ast.NodeVisitor):
             [func.get_docstrings() for func in self._functions]
         return self._functions
 
-    def register_functions(self):
-        pass
+    def register_comments(self, comments_positions: List[int]) -> None:
+        # Only check between the start of the first function
+        # and the end of the last function.
+        start: int = self.functions[0].start
+        end: int = self.functions[-1].end
+
+        for line in comments_positions:
+            if start < line < end:  # Exclude exactly first and last.
+                idx: int = bisect_left(self.functions, line) - 1
+                function = self.functions[idx]
+                if line in function:
+                    function.comments += 1
+
+    def _register_elements(self, positions: List[int], attribute: str) -> None:
+        """Algorithm to insert the comments and blank lines on functions.
+
+        # TODO: Algorithm to insert things on functions:
+        #   1) get position with bisect_left
+        # idx = bisect_left(functions, comment_position[0]) - 1
+        #   2) See if the value is contained in the item (may be between functions)
+        # comment_position[0] in functions[idx]
+        #   3) If found, register
+        # functions[idx].comments +=1
+
+        Parameters
+        ----------
+        positions
+        attribute
+
+        Returns
+        -------
+
+        Examples
+        --------
+        Per a list of positions of comments in the source code:
+        >>> comment_positions = [4, 40, 41, 107]
+
+        Register those lines on the corresponding functions when corresponds:
+
+        >>> visitor._register_elements(comment_positions, 'comments')
+        """
+        # Only check between the start of the first function
+        # and the end of the last function.
+        start: int = self.functions[0].start
+        end: int = self.functions[-1].end
+
+        for line in positions:
+            if start < line < end:  # Exclude exactly first and last.
+                idx: int = bisect_left(self.functions, line) - 1
+                function = self.functions[idx]
+                if line in function:
+                    attribute: str = '_' + attribute
+                    value = getattr(function, attribute) + 1
+                    setattr(function, attribute, value)
+
+    def register_functions(self, content: Dict[str, List[int]]) -> None:
+        """
+
+        Parameters
+        ----------
+        content : Dict[str, List[int]]
+            Contains a dict with the list of the corresponding positions
+            to be registered.
+
+        Examples
+        --------
+        >>> content = {'comments': [1, 4, 5, 6, 22], 'blank_lines': [12, 46]}
+        >>> visitor.register_functions(content)
+        """
+        for attribute, positions in content.items():
+            self._register_elements(positions, attribute)
 
     def private_functions(self) -> List[it.FunctionDef]:
         raise NotImplementedError
@@ -361,8 +431,5 @@ if __name__ == '__main__':
     src = SourceFile(EXAMPLE)
     tree = src.ast
     tokens = src.tokens
-
-    sourcer = SourceVisitor()
-    sourcer.visit(tree)
-    functions: List[it.FunctionDef] = sourcer.functions
-    # Access to the items to see the content.
+    functions = src.source_visitor.functions
+    comments = src.comment_lines_positions
