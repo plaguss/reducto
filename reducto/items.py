@@ -18,7 +18,7 @@ class Item:
         self._end = end
         self._docstrings: Optional[int] = None  # Initially as None to detect when to run get_docstrings
         self._comments = 0
-        self._blank = 0
+        self._blank_lines = 0
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}({self.name}[{self.start}, {self.end}])"
@@ -109,14 +109,14 @@ class Item:
         self._comments = cmnt
 
     @property
-    def blank(self) -> int:
+    def blank_lines(self) -> int:
         """Number of lines which are blank lines in the item. """
 
-        return self._blank
+        return self._blank_lines
 
-    @blank.setter
-    def blank(self, blnk: int) -> None:
-        self._blank = blnk
+    @blank_lines.setter
+    def blank_lines(self, blnk: int) -> None:
+        self._blank_lines = blnk
 
     @property
     def source_lines(self) -> int:
@@ -124,8 +124,7 @@ class Item:
         Computes the total number of lines of the item, subtracts docstrings, and blank
         lines if found.
         """
-
-        return len(self) - self.docstrings - self.comments - self.blank
+        return len(self) - self.docstrings - self.comments - self.blank_lines
 
 
 def get_docstring_lines(node: Union[ast.Module, ast.FunctionDef]) -> int:
