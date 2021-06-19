@@ -51,17 +51,17 @@ class TestItem:
         item.comments = 0
 
     def test_blank(self, item):
-        assert item.blank == 0
-        item.blank += 2
-        assert item.blank == 2
+        assert item.blank_lines == 0
+        item.blank_lines += 2
+        assert item.blank_lines == 2
         assert item.source_lines == 8
-        item.blank = 0
+        item.blank_lines = 0
 
     def test_source_lines(self, item):
         assert item.source_lines == 10
         item.docstrings += 1
         item.comments += 1
-        item.blank += 1
+        item.blank_lines += 1
         assert item.source_lines == 7
 
 
