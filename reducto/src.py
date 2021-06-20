@@ -10,7 +10,7 @@ https://laptrinhx.com/julien-danjou-finding-definitions-from-a-source-file-and-a
 https://kamneemaran45.medium.com/python-ast-5789a1b60300
 """
 
-from typing import List, Optional, Tuple, Dict
+from typing import List, Optional, Dict
 import os
 import ast
 import tokenize
@@ -19,8 +19,6 @@ from bisect import bisect_left
 
 import reducto.items as it
 
-
-TokenType = Tuple[int, str, Tuple[int, int], Tuple[int, int], str]
 
 NL_CHAR: str = '\n'  # New line character
 COMMENT_CHAR: str = '#'  # Comment character
@@ -42,6 +40,8 @@ class SourceFile:
         if not os.path.isfile(filename):
             raise FileNotFoundError(f"No file found called: {filename}.")
 
+        if not isinstance(filename, pathlib.Path):
+            filename = pathlib.Path(filename)
         self._filename: pathlib.Path = filename
         self._lines: Optional[List[str]] = None
         self._ast: Optional[ast.Module] = None
@@ -317,7 +317,6 @@ class SourceVisitor(ast.NodeVisitor):
         node : ast.FunctionDef
             Returns the node itself.
         """
-        print('lines', (node.name, node.lineno, node.end_lineno))
         func_def = it.FunctionDef(node.name, start=node.lineno, end=node.end_lineno)
         func_def.node = node  # TODO: This has to be tested! https://stackoverflow.com/questions/48759838/how-to-create-a-function-object-from-an-ast-functiondef-node
         self._items.append(func_def)
@@ -329,8 +328,6 @@ class SourceVisitor(ast.NodeVisitor):
         """
         TODO: Review how to distinguish between functions and methods.
         """
-        print('lines', (node.name, node.lineno, node.end_lineno))
-        print('Inside class ->')
         self.generic_visit(node)
         return node
 
