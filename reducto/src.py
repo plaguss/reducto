@@ -31,7 +31,7 @@ class SourceFile:
 
     Allows to read a file, obtain the tokens and the ast.
     """
-    def __init__(self, filename: str) -> None:
+    def __init__(self, filename: pathlib.Path) -> None:
         """
 
         Parameters
@@ -42,7 +42,7 @@ class SourceFile:
         if not os.path.isfile(filename):
             raise FileNotFoundError(f"No file found called: {filename}.")
 
-        self._filename: pathlib.Path = pathlib.Path(filename)
+        self._filename: pathlib.Path = filename
         self._lines: Optional[List[str]] = None
         self._ast: Optional[ast.Module] = None
         self._tokens: Optional[List[tokenize.TokenInfo]] = None
@@ -193,21 +193,30 @@ class SourceFile:
 
         Returns
         -------
-
+        source_vistor :
         """
         tree: ast.Module = self.ast
         source_visitor = SourceVisitor()
         source_visitor.visit(tree)
+
+        # Register comments and blank lines on the functions.
+        content: Dict[str, List[int]] = {
+            'comments': self.comment_lines_positions,
+            'blank_lines': self.blank_lines_positions
+        }
+        source_visitor.register_functions(content)
+
         return source_visitor
 
-    def _register_functions(self) -> None:
-        """Register the docstrings, comments and blank lines on the grabbed functions.
+    @property
+    def functions(self) -> List[it.FunctionDef]:
+        """Returns the list of functions grabbed through the ast.
 
         Returns
         -------
-
+        functions : List[it.FunctionDef]
         """
-        pass
+        return self.source_visitor.functions
 
     @property
     def module_docstrings(self) -> int:
@@ -346,19 +355,6 @@ class SourceVisitor(ast.NodeVisitor):
             [func.get_docstrings() for func in self._functions]
         return self._functions
 
-    def register_comments(self, comments_positions: List[int]) -> None:
-        # Only check between the start of the first function
-        # and the end of the last function.
-        start: int = self.functions[0].start
-        end: int = self.functions[-1].end
-
-        for line in comments_positions:
-            if start < line < end:  # Exclude exactly first and last.
-                idx: int = bisect_left(self.functions, line) - 1
-                function = self.functions[idx]
-                if line in function:
-                    function.comments += 1
-
     def _register_elements(self, positions: List[int], attribute: str) -> None:
         """Algorithm to insert the comments and blank lines on functions.
 
@@ -397,12 +393,13 @@ class SourceVisitor(ast.NodeVisitor):
                 idx: int = bisect_left(self.functions, line) - 1
                 function = self.functions[idx]
                 if line in function:
-                    attribute: str = '_' + attribute
                     value = getattr(function, attribute) + 1
                     setattr(function, attribute, value)
 
     def register_functions(self, content: Dict[str, List[int]]) -> None:
-        """
+        """Register the contents grabbed as tokens outside the ast.
+
+        Inserts the positions of the comments and blank lines.
 
         Parameters
         ----------
@@ -428,8 +425,11 @@ class SourceVisitor(ast.NodeVisitor):
 if __name__ == '__main__':
     EXAMPLE = os.path.join(os.getcwd(), 'tests', 'data', 'example.py')
 
-    src = SourceFile(EXAMPLE)
+    path = pathlib.Path(EXAMPLE)
+    src = SourceFile(path)
     tree = src.ast
     tokens = src.tokens
-    functions = src.source_visitor.functions
+    functions = src.functions
     comments = src.comment_lines_positions
+    blank_lines = src.blank_lines_positions
+
