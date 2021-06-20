@@ -2,6 +2,8 @@
 """
 
 import os
+import pathlib
+
 import pytest
 import ast
 import tokenize
@@ -17,16 +19,19 @@ def get_sample_file(name: str) -> str:
     return os.path.join(SAMPLE_DATA, name)
 
 
-def test_load_source_file():
-    tree = rd.source_to_ast(get_sample_file('example.py'))
-    assert isinstance(tree, ast.Module)
+def ast_parsed() -> ast.Module:
+    # Simplify parsing the file as there is no
+    # external function for it.
+    path = pathlib.Path(get_sample_file('example.py'))
+    src = rd.SourceFile(path)
+    return src.ast
 
 
 class TestSourceVisitor:
     @pytest.fixture(scope='class')
     def visitor(self):
         visitor = rd.SourceVisitor()
-        visitor.visit(rd.source_to_ast(get_sample_file('example.py')))
+        visitor.visit(ast_parsed())
         return visitor
 
     # def test_visitor_instance(self):
