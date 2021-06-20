@@ -16,7 +16,8 @@ class Item:
         self._name = name
         self._start = start
         self._end = end
-        self._docstrings: Optional[int] = None  # Initially as None to detect when to run get_docstrings
+        self._docstrings: int = 0
+        self._get_docstrings_called: bool = False  # Check attribute, TODO: EXPLAIN
         self._comments = 0
         self._blank_lines = 0
 
@@ -164,7 +165,7 @@ class FunctionDef(Item):
         -------
 
         """
-        if self.docstrings is None:
+        if not self._get_docstrings_called:
             self.docstrings = get_docstring_lines(self.node)
         return self.docstrings
 
