@@ -31,11 +31,15 @@ class SourceFile:
     """
     def __init__(self, filename: pathlib.Path) -> None:
         """
-
         Parameters
         ----------
-        filename : str
-            Name of the file.
+        filename : pathlib.Path
+            Full name of the file.
+
+        Raises
+        ------
+        FileNotFoundError
+            If the file doesn't exists.
         """
         if not os.path.isfile(filename):
             raise FileNotFoundError(f"No file found called: {filename}.")
@@ -52,7 +56,7 @@ class SourceFile:
         self._comment_lines_positions: Optional[List[int]] = None
         self._source_visitor: Optional[SourceVisitor] = None
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return type(self).__name__ + f"({self._filename.name})"
 
     def __len__(self) -> int:
@@ -298,7 +302,7 @@ class SourceVisitor(ast.NodeVisitor):
         self._items: List[it.Item] = []
         self._functions: List[it.FunctionDef] = []
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return type(self).__name__
 
     def visit_FunctionDef(self, node: ast.FunctionDef):
@@ -318,7 +322,7 @@ class SourceVisitor(ast.NodeVisitor):
             Returns the node itself.
         """
         func_def = it.FunctionDef(node.name, start=node.lineno, end=node.end_lineno)
-        func_def.node = node  # TODO: This has to be tested! https://stackoverflow.com/questions/48759838/how-to-create-a-function-object-from-an-ast-functiondef-node
+        func_def.node = node
         self._items.append(func_def)
         return node
 
@@ -333,9 +337,7 @@ class SourceVisitor(ast.NodeVisitor):
 
     @property
     def items(self) -> List[it.Item]:
-        """
-
-        May be without any content for some .py files.
+        """List of items parsed with the ast.parse.
 
         Returns
         -------
@@ -355,21 +357,21 @@ class SourceVisitor(ast.NodeVisitor):
     def _register_elements(self, positions: List[int], attribute: str) -> None:
         """Algorithm to insert the comments and blank lines on functions.
 
-        # TODO: Algorithm to insert things on functions:
-        #   1) get position with bisect_left
-        # idx = bisect_left(functions, comment_position[0]) - 1
-        #   2) See if the value is contained in the item (may be between functions)
-        # comment_position[0] in functions[idx]
-        #   3) If found, register
-        # functions[idx].comments +=1
+        Algorithm to insert items on functions:
+            1) get position with bisect_left
+            idx = bisect_left(functions, comment_position[0]) - 1
+            2) See if the value is contained in the item (may be between functions)
+            comment_position[0] in functions[idx]
+            3) If found, register
+            functions[idx].comments +=1
 
         Parameters
         ----------
-        positions
-        attribute
-
-        Returns
-        -------
+        positions : List[int]
+            List of ints representings the positions of the lines.
+        attribute : str
+            Name of the attribute. May be one of comments or blank_lines.
+            Must be an attribute of the corresponding items.
 
         Examples
         --------
@@ -412,12 +414,6 @@ class SourceVisitor(ast.NodeVisitor):
         for attribute, positions in content.items():
             self._register_elements(positions, attribute)
 
-    def private_functions(self) -> List[it.FunctionDef]:
-        raise NotImplementedError
-
-    def dunder_methods(self) -> List[it.FunctionDef]:
-        raise NotImplementedError
-
 
 if __name__ == '__main__':
     EXAMPLE = os.path.join(os.getcwd(), 'tests', 'data', 'example.py')
@@ -429,4 +425,3 @@ if __name__ == '__main__':
     functions = src.functions
     comments = src.comment_lines_positions
     blank_lines = src.blank_lines_positions
-
