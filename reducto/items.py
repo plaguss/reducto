@@ -131,30 +131,6 @@ class Item:
         return len(self) - self.docstrings - self.comments - self.blank_lines
 
 
-def get_docstring_lines(node: Union[ast.Module, ast.FunctionDef]) -> int:
-    """Obtains the number of lines which are docstrings.
-
-    TODO: When the docstrings are not multiline, a 1 must be added?
-
-    Parameters
-    ----------
-    node : Union[ast.Module, ast.FunctionDef]
-
-    Returns
-    -------
-    docstring_lines : int
-    """
-
-    docs: str = ast.get_docstring(node)
-
-    try:
-        docstrings: int = len(docs.split('\n'))
-    except AttributeError:  # When there are no docstrings, returns None.
-        docstrings: int = 0
-
-    return docstrings
-
-
 class FunctionDef(Item):
     """Corresponds to ast.FunctionDef. No distinction to an AsyncFunctionDef in here.
     """
@@ -181,3 +157,27 @@ class MethodDef(FunctionDef):
     """
     def __init__(self, name: str, start: int = 0, end: int = 0) -> None:
         super().__init__(name, start=start, end=end)
+
+
+def get_docstring_lines(node: Union[ast.Module, ast.FunctionDef]) -> int:
+    """Obtains the number of lines which are docstrings.
+
+    TODO: When the docstrings are not multiline, a 1 must be added?
+
+    Parameters
+    ----------
+    node : Union[ast.Module, ast.FunctionDef]
+
+    Returns
+    -------
+    docstring_lines : int
+    """
+
+    docs: str = ast.get_docstring(node)
+
+    try:
+        docstrings: int = len(docs.split('\n'))
+    except AttributeError:  # When there are no docstrings, returns None.
+        docstrings: int = 0
+
+    return docstrings
