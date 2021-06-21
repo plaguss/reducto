@@ -9,9 +9,35 @@ import ast
 class Item:
     """Base class for the items to be extracted from an ast parsed source file.
 
-    A subclass of this Item corresponds to an ast Node
+    A subclass of this Item corresponds to an ast Node.
+
+    Methods
+    -------
+    node
+    name
+    start
+    end
+    docstrings
+    comments
+    blank_lines
+    source_lines
+
+    Notes
+    -----
+    The nodes are inserted as an attribute instead of doing it on the initialization
+    to simplify the unit tests.
     """
     def __init__(self, name: str, start: int = 0, end: int = 0) -> None:
+        """
+        Parameters
+        ----------
+        name : str
+            The name of the item.
+        start : int
+            Line where the item starts in the file.
+        end : int
+            Line where the item ends in the file.
+        """
         self._node: Optional[ast.AST] = None
         self._name = name
         self._start = start
@@ -50,10 +76,9 @@ class Item:
 
     def __len__(self) -> int:
         """Computes the total number of lines of the function. """
-
         return self.end - self.start
 
-    def __lt__(self, other: 'Item') -> bool:
+    def __lt__(self, other: Union['Item', int]) -> bool:
         """Lower than operator to allow the objects to be sorted in a list.
 
         Parameters
@@ -61,14 +86,13 @@ class Item:
         other : Item
             Item or subclass of it.
         """
-
         if isinstance(other, Item):
             other_start = other.start
         elif isinstance(other, int):
             other_start = other
         else:
             msg = f"Operator defined only for {self.__class__.__name__}" \
-                  f" intances. You gave: {type(other)}."
+                  f" instances. You gave: {type(other)}."
             raise TypeError(msg)
 
         return self.start < other_start
@@ -132,7 +156,13 @@ class Item:
 
 
 class FunctionDef(Item):
-    """Corresponds to ast.FunctionDef. No distinction to an AsyncFunctionDef in here.
+    """Implementation of an ast.FunctionDef in.
+
+    No distinction to an AsyncFunctionDef is made.
+
+    Methods
+    -------
+    get_docstrings
     """
     def __init__(self, name: str, start: int = 0, end: int = 0) -> None:
         super().__init__(name, start=start, end=end)
@@ -140,9 +170,11 @@ class FunctionDef(Item):
     def get_docstrings(self) -> int:
         """Obtain the number of lines which are docstring inside the function.
 
+        The method must be called once a node is already registered.
+
         Returns
         -------
-
+        docs : int
         """
         if not self._get_docstrings_called:
             self.docstrings = get_docstring_lines(self.node)
@@ -150,29 +182,58 @@ class FunctionDef(Item):
 
 
 class MethodDef(FunctionDef):
-    """Equivalent to a FunctionDef, but obtained from a class.
+    """Equivalent to a FunctionDef.
 
-    The reason to keep it separated from FunctionDef is to add a distinction in the
-    name to avoid possible collisions. Always prepends __method__ to the name.
+    Defined in case a distinction between functions and methods is implemented.
+    NOT USED.
     """
     def __init__(self, name: str, start: int = 0, end: int = 0) -> None:
         super().__init__(name, start=start, end=end)
 
 
 def get_docstring_lines(node: Union[ast.Module, ast.FunctionDef]) -> int:
-    """Obtains the number of lines which are docstrings.
+    r"""Obtains the number of lines which are docstrings.
 
-    TODO: When the docstrings are not multiline, a 1 must be added?
+    Uses ast.get_docstring to extract the docstrings of an ast node.        
 
     Parameters
     ----------
     node : Union[ast.Module, ast.FunctionDef]
+        Node which may be a container of docstrings. Only defined for Module and
+        FunctionDed.
 
     Returns
     -------
     docstring_lines : int
-    """
+        Number of lines in the function or module which are docstrings.
 
+    Notes
+    -----
+    Reminder:
+        -
+        '''first '''
+        1
+        -
+        '''second
+        '''
+        2
+        -
+        '''
+
+        third'''
+        1
+        -
+        '''
+        fourth
+        '''
+        1
+        - 
+        '''docs
+
+
+        '''
+        4
+    """
     docs: str = ast.get_docstring(node)
 
     try:
