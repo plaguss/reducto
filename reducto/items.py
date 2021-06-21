@@ -76,23 +76,24 @@ class Item:
     def __ge__(self, other: Union['Item', int]) -> bool:
         return not self < other
 
-    def __contains__(self, item: Union['Item', int]) -> bool:
+    def __contains__(self, item: int) -> bool:
         """To check if a given line is contained in the item or not.
 
         Parameters
         ----------
-        item
+        item : int
+            Line position to check.
 
         Returns
         -------
-
+        contained : bool
+            Returns True if the line is between the bounds of the functions.
         """
         return self.start <= item <= self.end
 
     @property
     def docstrings(self) -> int:
         """Number of lines which are docstring in the item. """
-
         return self._docstrings
 
     @docstrings.setter
@@ -102,7 +103,6 @@ class Item:
     @property
     def comments(self) -> int:
         """Number of lines which are comments in the item. """
-
         return self._comments
 
     @comments.setter
@@ -112,7 +112,6 @@ class Item:
     @property
     def blank_lines(self) -> int:
         """Number of lines which are blank lines in the item. """
-
         return self._blank_lines
 
     @blank_lines.setter
@@ -121,9 +120,13 @@ class Item:
 
     @property
     def source_lines(self) -> int:
-        """
-        Computes the total number of lines of the item, subtracts docstrings, and blank
-        lines if found.
+        """Computes the total number of lines of the item.
+
+        Returns
+        -------
+        source_lines : int
+            The total number of lines is the len of the function minus
+            docstrings, comment lines and blank lines.
         """
         return len(self) - self.docstrings - self.comments - self.blank_lines
 
