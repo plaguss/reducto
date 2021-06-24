@@ -143,6 +143,11 @@ class TestSourceFile:
     def test_src_instance(self, src_):
         assert isinstance(src_, src.SourceFile)
 
+    def test_read_file_by_lines(self, src_):
+        file = src_._read_file_by_lines()
+        assert isinstance(file, list)
+        assert all(isinstance(l, str) for l in file)
+
     def test_src_instance_file_not_found_error(self):
         with pytest.raises(FileNotFoundError):
             src.SourceFile('wrong_file.py')
@@ -154,6 +159,9 @@ class TestSourceFile:
         assert isinstance(src_.lines, list)
         assert isinstance(src_.lines[0], str)
 
+    def test_len(self, src_):
+        assert len(src_) == 128
+
     def test_ast(self, src_):
         assert isinstance(src_.ast, ast.Module)
 
@@ -161,6 +169,42 @@ class TestSourceFile:
         tokens = src_.tokens
         assert isinstance(tokens, list)
         assert isinstance(tokens[0], tokenize.TokenInfo)
+        assert len(tokens) == 399
 
-    def test_len(self, src_):
-        assert len(src_) == 128
+    def test_comment_lines(self, src_):
+        assert src_.comment_lines == 3
+
+    def test_comment_lines_positions(self, src_):
+        assert isinstance(src_.comment_lines_positions, list)
+        assert all(pos == corr for pos, corr in  zip(src_.comment_lines_positions, [6, 20, 36]))
+
+    def test_blank_lines(self, src_):
+        assert src_.blank_lines == 32
+
+    def test_blank_lines_positions(self, src_):
+        correct = [
+            5, 12, 13, 17, 18, 21, 25, 26, 29, 32, 34, 35, 37, 38, 43, 45, 48, 51, 55, 68, 70, 93, 95, 98, 105, 112,
+            114, 119, 120, 123, 124, 126
+        ]
+
+        assert isinstance(src_.blank_lines_positions, list)
+        assert all(pos == corr for pos, corr in  zip(src_.blank_lines_positions, correct))
+
+    def test_source_visitor(self, src_):
+        assert isinstance(src_.source_visitor, src.SourceVisitor)
+
+    def test_visit_source(self, src_):
+        src_visitor = src_._visit_source()
+        assert isinstance(src_visitor, src.SourceVisitor)
+        # Check the functions are obtained.
+        assert all(isinstance(f, it.FunctionDef) for f in src_visitor.functions)
+        # Check the functions are registered.
+        assert src_visitor.functions[0].docstrings == 1
+
+    def test_functions(self, src_):
+        funcs = src_.functions
+        assert len(funcs) == 11
+        assert all(isinstance(f, it.FunctionDef) for f in funcs)
+
+    def test_module_docstrings(self, src_):
+        assert src_.module_docstrings == 3
