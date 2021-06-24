@@ -46,6 +46,7 @@ class SourceFile:
 
         if not isinstance(filename, pathlib.Path):
             filename = pathlib.Path(filename)
+
         self._filename: pathlib.Path = filename
         self._lines: Optional[List[str]] = None
         self._ast: Optional[ast.Module] = None
@@ -105,13 +106,15 @@ class SourceFile:
 
     @property
     def comment_lines(self) -> int:
-        """
-
-        Obtained with tokens
+        """Returns the total number of lines which are comments.
 
         Returns
         -------
+        comments : int
 
+        See Also
+        --------
+        token_is_comment_line
         """
         if self._comment_lines_positions is None:
             self._comment_blank_lines_positions()
@@ -119,22 +122,29 @@ class SourceFile:
 
     @property
     def comment_lines_positions(self) -> List[int]:
+        """Returns the list of positions of the comment lines.
+
+        This is used to register the functions.
+
+        Returns
+        -------
+        comments_positions : List[int]
+        """
         if self._comment_lines_positions is None:
             self._comment_blank_lines_positions()
         return self._comment_lines_positions
 
     @property
     def blank_lines(self) -> int:
-        """
-        Obtained with tokens.
-
-        TODO:
-            Hace falta tener el total de blank lines tanto en número de blank lines
-            para el módulo, como la línea en la que está para restarlos de las funciones.
+        """Returns the total number of lines which are blank lines.
 
         Returns
         -------
+        blank_lines : int
 
+        See Also
+        --------
+        token_is_blank_line
         """
         if self._blank_lines_positions is None:
             self._comment_blank_lines_positions()
@@ -142,21 +152,24 @@ class SourceFile:
 
     @property
     def blank_lines_positions(self) -> List[int]:
+        """Returns the list of positions of the blank lines.
+
+        This is used to register the functions.
+
+        Returns
+        -------
+        blank_lines_positions : List[int]
+        """
         if self._blank_lines_positions is None:
             self._comment_blank_lines_positions()
         return self._blank_lines_positions
 
     def _comment_blank_lines_positions(self) -> None:
-        """
-        Grabs both comment lines and blank lines.
-        TODO:
-            Obtain the comments, as a list of tuples containing the
-            line number and the actual content.
-            Maybe differentiate if its a line with only comment?
+        """Grabs the blank lines and comments.
 
-        Returns
-        -------
-
+        Traverses the tokens and checks whether any is a comment line
+        or a blank line. If they are, the comment_lines and blank_lines
+        are grown, and the corresponding positions are registered.
         """
         self._comment_lines_positions = []
         self._blank_lines_positions = []
@@ -187,17 +200,14 @@ class SourceFile:
         return self._source_visitor
 
     def _visit_source(self) -> "SourceVisitor":
-        """
-        TODO:
-            Se encargará de llamar al SourceVisitor
-            Tiene que almacenar los diferentes objetos visitados
-            Dejar los diferentes métodos controlados para acceder a las funciones
-            y trabajar con ellas de forma sencilla.
-            Dejar todo ese contenido dentro de SourceVisitor
+        """Calls the SourceVisitor on the parsed ast.
+
+        Registers the functions with the comments and blank lines obtained
+        from the tokens.
 
         Returns
         -------
-        source_vistor :
+        source_visitor : SourceVisitor
         """
         tree: ast.Module = self.ast
         source_visitor = SourceVisitor()
@@ -415,13 +425,13 @@ class SourceVisitor(ast.NodeVisitor):
             self._register_elements(positions, attribute)
 
 
-if __name__ == '__main__':
-    EXAMPLE = os.path.join(os.getcwd(), 'tests', 'data', 'example.py')
-
-    path = pathlib.Path(EXAMPLE)
-    src = SourceFile(path)
-    tree = src.ast
-    tokens = src.tokens
-    functions = src.functions
-    comments = src.comment_lines_positions
-    blank_lines = src.blank_lines_positions
+# if __name__ == '__main__':
+#     EXAMPLE = os.path.join(os.getcwd(), 'tests', 'data', 'example.py')
+#
+#     path = pathlib.Path(EXAMPLE)
+#     src = SourceFile(path)
+#     tree = src.ast
+#     tokens = src.tokens
+#     functions = src.functions
+#     comments = src.comment_lines_positions
+#     blank_lines = src.blank_lines_positions
