@@ -18,6 +18,7 @@ import pathlib
 from bisect import bisect_left
 
 import reducto.items as it
+import reducto.reports as rp
 
 
 NL_CHAR: str = '\n'  # New line character
@@ -63,6 +64,16 @@ class SourceFile:
     def __len__(self) -> int:
         """Return the total number of lines in the file. """
         return len(self.lines)
+
+    @property
+    def name(self) -> str:
+        """Returns the name of the file.
+
+        Returns
+        -------
+        name : str
+        """
+        return self._filename.name
 
     def _read_file_by_lines(self) -> List[str]:
         """Read a file using tokenize.open and return the lines.
@@ -242,6 +253,35 @@ class SourceFile:
             Lines of docstrings in the module.
         """
         return it.get_docstring_lines(self.ast)
+
+    @property
+    def total_docstrings(self) -> int:
+        """Get the total number of docstring lines.
+
+        The total number of docstrings are the module level docstrings
+        plus the ones recorded from the functions.
+
+        Returns
+        -------
+        total_docstrings : int
+        """
+        module_docs: int = self.module_docstrings
+        funcs_docs: int = sum([f.docstrings for f in self.functions])
+        return module_docs + funcs_docs
+
+    def report(self) -> rp.SourceReport:
+        """Obtain the reporter class.
+
+        Returns
+        -------
+        reporter : rp.SourceReport.
+
+        See Also
+        --------
+        rp.SourceReport
+        """
+        report: rp.SourceReport = rp.SourceReport(self)
+        return report
 
 
 def token_is_comment_line(tok: tokenize.TokenInfo) -> bool:
