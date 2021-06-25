@@ -10,7 +10,7 @@ import tokenize
 
 import reducto.src as src
 import reducto.items as it
-
+import reducto.reports as rp
 
 PARENT_DIR = os.path.dirname(os.path.abspath(__file__))
 SAMPLE_DATA = os.path.join(PARENT_DIR, 'data')
@@ -208,3 +208,12 @@ class TestSourceFile:
 
     def test_module_docstrings(self, src_):
         assert src_.module_docstrings == 3
+
+    def test_total_docstrings(self, src_):
+        func_docs = sum([f.docstrings for f in src_.functions])
+        assert src_.total_docstrings == src_.module_docstrings + func_docs
+        assert src_.total_docstrings == 29
+
+    def test_report_dict(self, src_):
+        report = src_.report()
+        assert isinstance(report, rp.SourceReport)
