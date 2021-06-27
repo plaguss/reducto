@@ -12,7 +12,7 @@ import statistics
 # This is done to avoid circular imports.
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
-    from .src import SourceFile
+    from .src import SourceFile  # pragma: no cover, only to avoid circular imports
 
 
 ReportDict = Dict[str, Dict[str, int]]
