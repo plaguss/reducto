@@ -35,17 +35,16 @@ def test_constants():
 
 class TestSourceVisitor:
 
-    # TODO
-    #   Insert test for source file without content.
-
     @pytest.fixture(scope='class')
     def visitor(self):
         visitor = src.SourceVisitor()
         visitor.visit(ast_parsed())
         return visitor
 
+    def test_repr(self, visitor):
+        assert repr(visitor) == 'SourceVisitor'
+
     def test_len_items(self, visitor):
-        print(visitor.items)
         assert len(visitor.items) == 11
 
     def test_visit_FunctionDef(self, visitor):
