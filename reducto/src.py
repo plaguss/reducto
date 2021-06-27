@@ -158,7 +158,7 @@ class SourceFile:
         token_is_blank_line
         """
         if self._blank_lines_positions is None:
-            self._comment_blank_lines_positions()
+            self._comment_blank_lines_positions()  # pragma: no cover, call to a tested method.
         return self._blank_lines
 
     @property
@@ -172,7 +172,7 @@ class SourceFile:
         blank_lines_positions : List[int]
         """
         if self._blank_lines_positions is None:
-            self._comment_blank_lines_positions()
+            self._comment_blank_lines_positions()  # pragma: no cover, call to a tested method.
         return self._blank_lines_positions
 
     def _comment_blank_lines_positions(self) -> None:
