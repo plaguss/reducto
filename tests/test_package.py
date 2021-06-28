@@ -39,6 +39,10 @@ def test_tmp(sample_package):
     assert sample_package.is_file()
 
 
+def test_is_package():
+    assert 1 == 0
+
+
 class TestPackage:
     @pytest.fixture(scope='class')
     def package(self, sample_package):
