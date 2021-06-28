@@ -44,11 +44,11 @@ def sample_package():
         shutil.copy(example_src_file, tmp_path / 'subproj' /'help.py')
 
         # Nested dir (package) with files
-        (tmp_path / 'nested').mkdir()
-        (tmp_path / 'nested' / 'ext').mkdir()
-        (tmp_path / 'nested' / 'ext' / '__init__.py').write_text("\n")
-        (tmp_path / 'nested' / 'ext' / 'ext.c').write_text("\n")
-        shutil.copy(example_src_file, tmp_path / 'nested' / 'ext' / 'ext.py')
+        (tmp_path / 'src').mkdir()
+        (tmp_path / 'src' / 'ext').mkdir()
+        (tmp_path / 'src' / 'ext' / '__init__.py').write_text("\n")
+        (tmp_path / 'src' / 'ext' / 'ext.c').write_text("\n")
+        shutil.copy(example_src_file, tmp_path / 'src' / 'ext' / 'ext.py')
 
         yield tmp_path
 
