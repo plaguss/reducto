@@ -18,7 +18,7 @@ import pathlib
 from bisect import bisect_left
 
 import reducto.items as it
-import reducto as rp
+import reducto.reports as rp
 
 NL_CHAR: str = '\n'  # New line character
 COMMENT_CHAR: str = '#'  # Comment character
