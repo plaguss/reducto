@@ -139,6 +139,15 @@ class TestSourceFile:
     def src_(self):
         return src.SourceFile(get_sample_file('example.py'))
 
+    def test_src_validate(self, sample_package):
+        with pytest.raises(src.SourceFileError):
+            src.SourceFile(sample_package / 'extension.cpp')
+        print(list(sample_package.iterdir()))
+        with pytest.raises(src.SourceFileError):
+            src.SourceFile(sample_package / 'data')
+
+        src.SourceFile(sample_package / '__init__.py')
+
     def test_src_instance(self, src_):
         assert isinstance(src_, src.SourceFile)
 
@@ -146,10 +155,6 @@ class TestSourceFile:
         file = src_._read_file_by_lines()
         assert isinstance(file, list)
         assert all(isinstance(l, str) for l in file)
-
-    def test_src_instance_file_not_found_error(self):
-        with pytest.raises(FileNotFoundError):
-            src.SourceFile('wrong_file.py')
 
     def test_src_repr(self, src_):
         assert f"SourceFile(example.py)" == repr(src_)
