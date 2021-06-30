@@ -3,8 +3,8 @@ Contains the tests for reports module.
 """
 import pytest
 
-import reducto.reports as rp
-import reducto.src as src
+import reducto as rp
+from reducto import src as src
 import os
 import pathlib
 
