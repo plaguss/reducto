@@ -54,3 +54,23 @@ def sample_package():
 
     finally:
         tmp_dir.cleanup()  # Remove everything at end.
+
+
+@pytest.fixture()
+def src_sample_package():
+    # Creates a sample python package with subdirectories
+    try:
+        # Create a temporary directory
+        tmp_dir = tempfile.TemporaryDirectory()
+        tmp_path = pathlib.Path(tmp_dir.name).resolve()
+
+        # Nested dir (package) with files
+        (tmp_path / 'src').mkdir()
+        (tmp_path / 'src' / '__init__.py').write_text("\n")
+        (tmp_path / 'src' / 'ext.c').write_text("\n")
+        (tmp_path / 'src' / 'ext.py').write_text("\n")
+
+        yield tmp_path
+
+    finally:
+        tmp_dir.cleanup()  # Remove everything at end.
