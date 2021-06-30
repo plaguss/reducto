@@ -137,7 +137,7 @@ def test_token_is_blank_line():
 class TestSourceFile:
     @pytest.fixture(scope='class')
     def src_(self):
-        return src.SourceFile(get_sample_file('example.py'))
+        return src.SourceFile(pathlib.Path(get_sample_file('example.py')))
 
     def test_src_validate(self, sample_package):
         with pytest.raises(src.SourceFileError):
@@ -158,6 +158,9 @@ class TestSourceFile:
 
     def test_src_repr(self, src_):
         assert f"SourceFile(example.py)" == repr(src_)
+
+    def test_str(self, src_):
+        assert str(src_) == get_sample_file('example.py')
 
     def test_lines_are_read(self, src_):
         assert isinstance(src_.lines, list)
