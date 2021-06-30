@@ -2,7 +2,20 @@
 Code controlling python package traversal.
 """
 
+from typing import Iterator, Optional, List, Dict
 from pathlib import Path
+
+import reducto.src as src
+import reducto.items as it
+
+
+class PackageError(Exception):
+    """Error raised when a directory is not a valid python package. """
+    pass
+
+
+# File that makes a directory a python package.
+PKG_FILE: str = '__init__.py'
 
 
 class Package:
@@ -35,10 +48,49 @@ class Package:
         path : Path
             Full path pointing to the package.
         """
+        self.validate(path)
         self._path: Path = path
+        self._source_files: Optional[List[src.SourceFile]] = None
+        self._blank_lines: Optional[List[int]] = None
+        self._comment_lines: Optional[List[int]] = None
+        self._docstrings: Optional[List[int]] = None
+        self._functions: Optional[List[List[it.FunctionDef]]] = None
+        self._average_function_length: Optional[List[int]] = None
 
     def __repr__(self) -> str:
         return type(self).__name__ + f'({self.name})'
+
+    def __len__(self) -> int:
+        """Returns the total number of lines of the package.
+
+        Returns
+        -------
+        lines : int
+        """
+        return sum(self.source_lines)
+
+    @staticmethod
+    def validate(path: Path) -> None:
+        """Check if the input path is a proper python package.
+
+        If the directory is either a package or an src package, returns
+        None, otherwise raises PackageError.
+
+        Parameters
+        ----------
+        path : Path
+
+        Raises
+        ------
+        PackageError
+            When the directory is not a valid python package.
+        """
+        if is_package(path):
+            return
+        elif is_src_package(path):
+            return
+        else:
+            raise PackageError(path)
 
     @property
     def path(self) -> Path:
@@ -64,45 +116,65 @@ class Package:
 
         Inspired by trailrunner.Trailrunner.walk.
         """
-        raise NotImplementedError
+        def walk(path: Path) -> Iterator[Optional[src.SourceFile]]:
+            for child in path.iterdir():
 
-    def __len__(self) -> int:
-        """Returns the total number of source files contained.
+                try:
+                    yield src.SourceFile(child)
+                except src.SourceFileError:
+                    pass
 
-        Accounts for *.py files under the root self.path.
+                # Maybe regenerate a package to crawl itself
+                # if self.validate(child):
+                #     yield Package(child)
 
-        Returns
-        -------
-        length : int
-        """
-        raise NotImplementedError
+                if child.is_dir():
+                    yield from walk(child)
 
-    @property
-    def source_file(self) -> int:
-        raise NotImplementedError
-
-    @property
-    def blank_lines(self) -> int:
-        raise NotImplementedError
+        self._source_files = list(walk(self.path))
 
     @property
-    def comment_lines(self) -> int:
-        raise NotImplementedError
+    def source_files(self) -> List[src.SourceFile]:
+        # FIXME: Check when no files are found
+        if self._source_files is None:
+            self._walk()
+        return self._source_files
 
     @property
-    def docstrings(self) -> int:
-        raise NotImplementedError
+    def lines(self) -> List[int]:
+        return [len(file) for file in self.source_files]
 
     @property
-    def source_lines(self) -> int:
-        raise NotImplementedError
+    def blank_lines(self) -> List[int]:
+        if self._blank_lines is None:
+            self._walk()
+        return [file.blank_lines for file in self.source_files]
 
     @property
-    def functions(self) -> int:
-        raise NotImplementedError
+    def comment_lines(self) -> List[int]:
+        if self._comment_lines is None:
+            self._walk()
+        return [file.comment_lines for file in self.source_files]
 
     @property
-    def average_function_length(self) -> int:
+    def docstrings(self) -> List[int]:
+        if self._docstrings is None:
+            self._walk()
+        return [file.total_docstrings for file in self.source_files]
+
+    @property
+    def source_lines(self) -> List[int]:
+        return [sum([func.source_lines for func in file.functions]) for file in self.source_files]
+
+    @property
+    def functions(self) -> List[List[it.FunctionDef]]:
+        # FIXME: For the moment returns a list of list of functions
+        if self._functions is None:
+            self._functions = [file.functions for file in self.source_files]
+        return self._functions
+
+    @property
+    def average_function_length(self) -> List[int]:
         raise NotImplementedError
 
 
@@ -115,13 +187,18 @@ def is_package(path: Path) -> bool:
 
     Parameters
     ----------
-    path
+    path : Path
 
     Returns
     -------
-
+    check : bool
+        Returns True if a path is a directory and contains an __init__.py file
+        inside, False otherwise.
     """
-    raise NotImplementedError
+    is_init: bool = False
+    if path.is_dir():
+        is_init = any(f.name == PKG_FILE for f in path.iterdir())
+    return is_init
 
 
 def is_src_package(path: Path) -> bool:
@@ -135,12 +212,26 @@ def is_src_package(path: Path) -> bool:
     │  └─ ...
     └─ setup.py
 
+    The check for the path will be if its a directory with only one subdirectory
+    containing an __init__.py file.
+
     Parameters
     ----------
-    path
+    path : Path
+        Full path pointing to a dir.
 
     Returns
     -------
+    check : bool
+        If the package is an src package, returns True, False otherwise.
 
+    See Also
+    --------
+    is_package
     """
-    raise NotImplementedError
+    check: bool = False
+    if path.is_dir():
+        maybe_subdirs = list(path.iterdir())
+        if len(maybe_subdirs) == 1:
+            check = is_package(path / maybe_subdirs[0])
+    return check
