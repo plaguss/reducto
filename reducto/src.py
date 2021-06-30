@@ -24,6 +24,11 @@ NL_CHAR: str = '\n'  # New line character
 COMMENT_CHAR: str = '#'  # Comment character
 
 
+class SourceFileError(Exception):
+    """Error raised when a path is not a valid python path. """
+    pass
+
+
 class SourceFile:
     """Class representing a .py source file.
 
@@ -41,11 +46,13 @@ class SourceFile:
         FileNotFoundError
             If the file doesn't exists.
         """
-        if not os.path.isfile(filename):
-            raise FileNotFoundError(f"No file found called: {filename}.")
+        # if not os.path.isfile(filename):
+        #     raise FileNotFoundError(f"No file found called: {filename}.")
 
         if not isinstance(filename, pathlib.Path):
             filename = pathlib.Path(filename)
+
+        self.validate(filename)
 
         self._filename: pathlib.Path = filename
         self._lines: Optional[List[str]] = None
@@ -63,6 +70,23 @@ class SourceFile:
     def __len__(self) -> int:
         """Return the total number of lines in the file. """
         return len(self.lines)
+
+    @staticmethod
+    def validate(path: pathlib.Path) -> None:
+        """Check if the path is a valid python file.
+
+        Parameters
+        ----------
+        path : Path
+
+        Returns
+        -------
+        check : bool
+        """
+        if path.is_file():
+            if path.name.endswith('.py'):
+                return
+        raise SourceFileError(path)
 
     @property
     def name(self) -> str:
