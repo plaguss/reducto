@@ -64,6 +64,9 @@ class SourceFile:
     def __repr__(self) -> str:
         return type(self).__name__ + f"({self._filename.name})"
 
+    def __str__(self) -> str:
+        return str(self._filename)
+
     def __len__(self) -> int:
         """Return the total number of lines in the file. """
         return len(self.lines)
