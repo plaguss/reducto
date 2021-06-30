@@ -4,8 +4,6 @@ Code controlling python package traversal.
 
 from pathlib import Path
 
-import reducto.src as src
-
 
 class Package:
     """Class controlling a package.
