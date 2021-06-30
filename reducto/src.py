@@ -46,9 +46,6 @@ class SourceFile:
         FileNotFoundError
             If the file doesn't exists.
         """
-        # if not os.path.isfile(filename):
-        #     raise FileNotFoundError(f"No file found called: {filename}.")
-
         if not isinstance(filename, pathlib.Path):
             filename = pathlib.Path(filename)
 
