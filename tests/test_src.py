@@ -224,3 +224,26 @@ class TestSourceFile:
     def test_report_dict(self, src_):
         report = src_.report()
         assert isinstance(report, rp.SourceReport)
+
+    def test_src_no_functions(self, source_file_no_functions):
+        # Test when a file contains no functions
+        source_file = src.SourceFile(source_file_no_functions)
+        assert len(source_file.functions) == 0
+        report = source_file.report().report()
+        print('rep-->', report['no_functions.py'])
+        assert report['no_functions.py']['lines'] == 1
+        assert report['no_functions.py']['number_of_functions'] == 0
+        assert report['no_functions.py']['average_function_length'] == 0
+        assert report['no_functions.py']['docstring_lines'] == 0
+        assert report['no_functions.py']['blank_lines'] == 1
+
+    def test_src_one_function(self, source_file_one_function):
+        # Test when a file contains only one functions
+        source_file = src.SourceFile(source_file_one_function)
+        assert len(source_file.functions) == 1
+        report = source_file.report().report()
+        assert report['one_function.py']['lines'] == 3
+        assert report['one_function.py']['number_of_functions'] == 1
+        assert report['one_function.py']['average_function_length'] == 1
+        assert report['one_function.py']['docstring_lines'] == 0
+        assert report['one_function.py']['blank_lines'] == 1
