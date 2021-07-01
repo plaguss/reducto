@@ -8,6 +8,7 @@ import pathlib
 
 import reducto.package as pkg
 import reducto.src as src
+import reducto.items as it
 
 
 def listdir_recursive(folder: pathlib.Path) -> List[pathlib.Path]:
@@ -64,8 +65,7 @@ class TestPackage:
         assert repr(package) == f'Package({sample_package.name})'
 
     def test_package_len(self, package):
-
-        assert len(package) == 528
+        assert len(package) == 513
 
     def test_source_files(self, package):
         assert isinstance(package.source_files, list)
@@ -77,7 +77,8 @@ class TestPackage:
         assert all(a == b for a, b in zip(package.lines, [0, 128, 1, 128, 128, 128]))
 
     def test_package_docstrings(self, package):
-        assert package.docstrings == 30  # Sum of docstring lines from every SourceFile
+        assert isinstance(package.docstrings, list)
+        assert all(a == b for a, b in zip(package.docstrings, [0, 29, 0, 29, 29, 29]))
 
     def test_package_comments(self, package):
         assert isinstance(package.blank_lines, list)
@@ -88,13 +89,23 @@ class TestPackage:
         assert all(a == b for a, b in zip(package.blank_lines, [0, 32, 1, 32, 32, 32]))
 
     def test_package_source_lines(self, package):
-        assert package.source_lines == 30  # Sum of docstring lines from every SourceFile
+        assert isinstance(package.source_lines, list)
+        assert all(a == b for a, b in zip(package.source_lines, [0, 36, 0, 36, 36, 36]))
+
+    def test_package_functions(self, package):
+        assert isinstance(package.functions, list)
+        assert all([isinstance(f, it.FunctionDef) or f is None for func_list in package.functions for f in func_list])
+        assert package.number_of_functions == [0, 11, 0, 11, 11, 11]
 
     def test_package_number_of_functions(self, package):
-        assert package.functions == 30
+        assert isinstance(package.number_of_functions, list)
+        assert package.number_of_functions == [0, 11, 0, 11, 11, 11]
 
     def test_package_average_function_length(self, package):
-        assert package.average_function_length == 30
+        assert package.average_function_length == 3
+
+    def test_package_average_function_lengths(self, package):
+        assert package.average_function_lengths == [0, 3, 0, 3, 3, 3]
 
     def test_package_walk(self, package):
         walked = package._walk()
