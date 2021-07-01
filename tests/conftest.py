@@ -18,6 +18,40 @@ def get_sample_file(name: str) -> str:
 
 
 @pytest.fixture()
+def source_file_no_functions():
+    try:
+        # Create a temporary directory
+        tmp_dir = tempfile.TemporaryDirectory()
+        tmp_path = pathlib.Path(tmp_dir.name).resolve()
+
+        source_file = (tmp_path / 'no_functions.py')
+        source_file.write_text('\n')
+
+        yield source_file
+
+    finally:
+        tmp_dir.cleanup()  # Remove everything at end.
+
+
+@pytest.fixture()
+def source_file_one_function():
+    try:
+        # Create a temporary directory
+        tmp_dir = tempfile.TemporaryDirectory()
+        tmp_path = pathlib.Path(tmp_dir.name).resolve()
+
+        function = "\ndef foo():\n    return\n"
+
+        source_file = (tmp_path / 'one_function.py')
+        source_file.write_text(function)
+
+        yield source_file
+
+    finally:
+        tmp_dir.cleanup()  # Remove everything at end.
+
+
+@pytest.fixture()
 def sample_package():
     # Creates a sample python package with subdirectories
     try:
