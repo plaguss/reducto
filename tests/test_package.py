@@ -9,6 +9,7 @@ import pathlib
 import reducto.package as pkg
 import reducto.src as src
 import reducto.items as it
+import reducto.reports as rp
 
 
 def listdir_recursive(folder: pathlib.Path) -> List[pathlib.Path]:
@@ -30,13 +31,6 @@ def listdir_recursive(folder: pathlib.Path) -> List[pathlib.Path]:
         if f.is_dir():
             yield from listdir_recursive(f)
         yield f
-
-
-def test_tmp(sample_package):
-    # Used only to check some fixtures for the tests
-    print('sp ', sample_package)
-    print([i for i in listdir_recursive(sample_package)])
-    assert sample_package.is_file()
 
 
 def test_is_package(sample_package):
@@ -107,8 +101,6 @@ class TestPackage:
     def test_package_average_function_lengths(self, package):
         assert package.average_function_lengths == [0, 3, 0, 3, 3, 3]
 
-    def test_package_walk(self, package):
-        walked = package._walk()
-        print(list(walked))
-        print([str(f) for f in package._walk()])
-        assert 1 == 0
+    def test_package_report(self, package):
+        report = package.report()
+        assert isinstance(report, rp.PackageReport)
