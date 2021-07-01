@@ -110,3 +110,11 @@ class SourceReport:
         }
 
         return {self.source_file.name: data}
+
+
+class PackageReport:
+    """
+    Define report for a package, gets a pkg.Package as input.
+    """
+    def __init__(self):
+        pass
