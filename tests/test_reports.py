@@ -1,12 +1,15 @@
 """
 Contains the tests for reports module.
 """
-import pytest
 
-import reducto as rp
-from reducto import src as src
+import pytest
 import os
 import pathlib
+
+import reducto.reports as rp
+import reducto.src as src
+import reducto.package as pkg
+
 
 PARENT_DIR = os.path.dirname(os.path.abspath(__file__))
 SAMPLE_DATA = os.path.join(PARENT_DIR, 'data')
@@ -56,3 +59,50 @@ class TestModuleReport:
         assert report_dict['example.py']['average_function_length'] == 3
         assert report_dict['example.py']['docstring_lines'] == 29
         assert report_dict['example.py']['blank_lines'] == 32
+
+
+class PackageReport:
+    @pytest.fixture(scope='class')
+    def reporter(self, sample_package):
+        pack = pkg.Package(sample_package)
+        return rp.PackageReport(pack)
+
+    def test_report_repr(self, reporter):
+        assert repr(reporter) == 'PackageReport'
+
+    def test_package(self, reporter):
+        assert isinstance(reporter.package, pkg.Package)
+
+    def test_report_error(self, reporter):
+        with pytest.raises(rp.ReportFormatError):
+            reporter.report(fmt='wrong')
+
+    def test_report(self, reporter):
+        assert reporter.report(fmt=rp.ReportFormats.DICT) == reporter._report_dict()
+
+    def test_report_grouped(self, reporter):
+        # report = reporter.report(group=True)
+        keys = list(reporter.keys())
+        assert len(keys) == 1
+        name = keys[0]
+        assert name == reporter.name
+        info = reporter[name]
+        info['lines'] == 513
+        info['docstrings'] == 513
+        info['comment_lines'] == 513
+        info['blank_lines'] == 513
+        info['source_lines'] == 513
+        info['source_files'] == 513
+        info['number_of_functions'] == 513
+        info['average_function_length'] == 3
+
+        assert 1 == 0
+
+    def test_report_ungrouped(self, reporter):
+        assert 1 == 0
+
+    def test_report_package_void(self):
+        assert 1 == 0
+
+    def test_report_package_percentage(self, package):
+        assert 1 == 0
