@@ -94,7 +94,12 @@ class SourceReport:
         -------
         dict_report : ReportDict
         """
-        avg_func_length: float = statistics.mean([f.source_lines for f in self.source_file.functions])
+        # Check whether any function was found
+        if len(self.source_file.functions) == 0:
+            avg_func_length = 0
+        else:
+            avg_func_length: int = statistics.mean([f.source_lines for f in self.source_file.functions])
+
         data: Dict[str, int] = {
             'lines': len(self.source_file),
             'number_of_functions': len(self.source_file.functions),
