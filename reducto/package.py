@@ -1,7 +1,7 @@
 """
 Code controlling python package traversal.
 """
-
+import statistics
 from typing import Iterator, Optional, List, Dict
 from pathlib import Path
 
@@ -67,7 +67,7 @@ class Package:
         -------
         lines : int
         """
-        return sum(self.source_lines)
+        return sum(self.lines)
 
     @staticmethod
     def validate(path: Path) -> None:
@@ -151,6 +151,12 @@ class Package:
         return [file.blank_lines for file in self.source_files]
 
     @property
+    def docstrings(self) -> List[int]:
+        if self._docstrings is None:
+            self._walk()
+        return [file.total_docstrings for file in self.source_files]
+
+    @property
     def comment_lines(self) -> List[int]:
         if self._comment_lines is None:
             self._walk()
@@ -174,8 +180,31 @@ class Package:
         return self._functions
 
     @property
-    def average_function_length(self) -> List[int]:
-        raise NotImplementedError
+    def number_of_functions(self) -> List[int]:
+        return [len(func_list) for func_list in self.functions]
+
+    @property
+    def average_function_length(self) -> int:
+        source_lines: List[float] = []
+        for function_list in self.functions:
+            for function in function_list:
+                source_lines.append(function.source_lines)
+
+        average: int = round(statistics.mean(source_lines)) if len(source_lines) > 0 else 0
+
+        return average
+
+    @property
+    def average_function_lengths(self) -> List[int]:
+        averages: List[int] = []
+        for function_list in self.functions:
+            if len(function_list) == 0:
+                avg_func_length = 0
+            else:
+                avg_func_length: int = round(statistics.mean([f.source_lines for f in function_list]))
+            averages.append(avg_func_length)
+
+        return averages
 
 
 def is_package(path: Path) -> bool:
