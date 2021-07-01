@@ -252,6 +252,7 @@ class SourceFile:
             'comments': self.comment_lines_positions,
             'blank_lines': self.blank_lines_positions
         }
+        print('CONTENT ', content)
         source_visitor.register_functions(content)
 
         return source_visitor
@@ -484,8 +485,9 @@ class SourceVisitor(ast.NodeVisitor):
         >>> content = {'comments': [1, 4, 5, 6, 22], 'blank_lines': [12, 46]}
         >>> visitor.register_functions(content)
         """
-        for attribute, positions in content.items():
-            self._register_elements(positions, attribute)
+        if len(self.functions) > 0:  # Only run when at least one function was
+            for attribute, positions in content.items():
+                self._register_elements(positions, attribute)
 
 
 # if __name__ == '__main__':
