@@ -4,7 +4,7 @@ build-backend = "flit_core.buildapi"
 
 [tool.flit.metadata]
 module = "reducto"
-author = "agustin"
+author = "Agustín Piqueres"
 author-email = "agustin.piqueres@gmail.com"
 home-page = "https://github.com/plaguss/reducto"
 requires-python=">=3.8"
