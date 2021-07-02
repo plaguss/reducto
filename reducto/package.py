@@ -163,12 +163,6 @@ class Package:
         return [file.comment_lines for file in self.source_files]
 
     @property
-    def docstrings(self) -> List[int]:
-        if self._docstrings is None:
-            self._walk()
-        return [file.total_docstrings for file in self.source_files]
-
-    @property
     def source_lines(self) -> List[int]:
         return [sum([func.source_lines for func in file.functions]) for file in self.source_files]
 
