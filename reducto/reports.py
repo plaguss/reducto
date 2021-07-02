@@ -13,9 +13,11 @@ import statistics
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from .src import SourceFile  # pragma: no cover, only to avoid circular imports
+    from .package import Package  # pragma: no cover, only to avoid circular imports
 
 
 ReportDict = Dict[str, Dict[str, int]]
+ReportPackageDict = Dict[str, ReportDict]
 
 Reporting = Union[ReportDict]
 
@@ -116,5 +118,85 @@ class PackageReport:
     """
     Define report for a package, gets a pkg.Package as input.
     """
-    def __init__(self):
+    def __init__(self, package: Package) -> None:
+        """
+        Parameters
+        ----------
+        package : Package
+            Package containing the data to be reported
+        """
+        self._package: Package = package
+
+    @property
+    def package(self) -> Package:
+        """Returns the package given as input.
+
+        Returns
+        -------
+        package : Package
+        """
+        return self._package
+
+    def report(
+            self,
+            fmt: ReportFormats = ReportFormats.DICT,
+            grouped: bool = False
+    ) -> Reporting:
+        """
+
+        Parameters
+        ----------
+        fmt : ReportFormats
+            Format to return the information. Defaults to ReportFormats.DICT.
+        grouped : bool
+            Whether to return the information by source files, or grouped at
+            the package level (resumes the package). Defaults to False, returns
+            the information per source file.
+
+        Returns
+        -------
+
+        """
         pass
+
+    def _report_grouped(self) -> ReportDict:
+        pass
+
+    def _report_ungrouped(self) -> ReportPackageDict:
+        # FIXME, how to type if the depth is unknown at first?
+        # FIXME: Reformat, use the SourceReport to get the report from it
+        report: ReportDict = {}
+        for file in self.package.source_files:
+            report[file.name] = SourceReport(file).report(fmt=ReportFormats.DICT)[file.name]
+
+        return {self.package.name: report}
+
+    def _report_dict(self) -> ReportDict:
+        """Report of a file with a dict format.
+
+        The reporting is a dict with the source file name as a key,
+        and an inner key with the following data:
+        lines (total lines of the file), number of functions,
+        average function length, docstring lines, comment lines,
+        blank lines.
+
+        Returns
+        -------
+        dict_report : ReportDict
+        """
+        # Check whether any function was found
+        if len(self.source_file.functions) == 0:
+            avg_func_length = 0
+        else:
+            avg_func_length: int = statistics.mean([f.source_lines for f in self.source_file.functions])
+
+        data: Dict[str, int] = {
+            'lines': len(self.source_file),
+            'number_of_functions': len(self.source_file.functions),
+            'average_function_length': round(avg_func_length),
+            'docstring_lines': self.source_file.total_docstrings,
+            'comment_lines': self.source_file.comment_lines,
+            'blank_lines': self.source_file.blank_lines
+        }
+
+        return {self.source_file.name: data}
