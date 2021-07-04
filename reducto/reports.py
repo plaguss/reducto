@@ -19,7 +19,7 @@ if TYPE_CHECKING:
 ReportDict = Dict[str, Dict[str, int]]
 ReportPackageDict = Dict[str, ReportDict]
 
-Reporting = Union[ReportDict]
+Reporting = Union[ReportDict, ReportPackageDict]
 
 
 class ReportFormats(Enum):
@@ -128,6 +128,9 @@ class PackageReport:
         """
         self._package: Package = package
 
+    def __repr__(self) -> str:
+        return type(self).__name__ + f'({self.package.name})'
+
     @property
     def package(self) -> Package:
         """Returns the package given as input.
@@ -158,7 +161,18 @@ class PackageReport:
         -------
 
         """
-        pass
+        # FIXME: Add functionality for different formats
+        if grouped:
+            report: ReportDict = self._report_grouped()
+        else:
+            report: ReportPackageDict = self._report_ungrouped()
+
+        if fmt == ReportFormats.DICT:
+            pass
+        else:  # Other formats may modify the report here
+            raise ReportFormatError(fmt)
+
+        return report
 
     def _report_grouped(self) -> ReportDict:
         """Obtain the reporting information grouped for the whole package.
@@ -182,7 +196,7 @@ class PackageReport:
             lines += reporting['lines']
             number_of_functions += reporting['number_of_functions']
             # Weight for the average function length across the whole package.
-            weight: float = lines / package_lines
+            weight: float = reporting['lines'] / package_lines
             average_function_length += reporting['average_function_length'] * weight
             docstring_lines += reporting['docstring_lines']
             comment_lines += reporting['comment_lines']
