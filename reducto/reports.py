@@ -108,7 +108,8 @@ class SourceReport:
             'average_function_length': round(avg_func_length),
             'docstring_lines': self.source_file.total_docstrings,
             'comment_lines': self.source_file.comment_lines,
-            'blank_lines': self.source_file.blank_lines
+            'blank_lines': self.source_file.blank_lines,
+            # 'source_lines': self.source_file  # FIXME: Add source lines to src.py
         }
 
         return {self.source_file.name: data}
@@ -160,7 +161,39 @@ class PackageReport:
         pass
 
     def _report_grouped(self) -> ReportDict:
+
         report_ungrouped: ReportPackageDict = self._report_ungrouped()
+        package_lines: int = len(self.package)
+
+        lines: int = 0
+        number_of_functions: int = 0
+        average_function_length: int = 0
+        docstring_lines: int = 0
+        comment_lines: int = 0
+        blank_lines: int = 0
+
+        for reporting in report_ungrouped[self.package.name].values():
+            lines += reporting['lines']
+            number_of_functions += reporting['number_of_functions']
+            # Weight for the average function length across the whole package.
+            weight: float = lines / package_lines
+            average_function_length += reporting['average_function_length'] * weight
+            docstring_lines += reporting['docstring_lines']
+            comment_lines += reporting['comment_lines']
+            blank_lines += reporting['blank_lines']
+
+        report_grouped: Dict[str, int] = {
+            'lines': lines,
+            'number_of_functions': number_of_functions,
+            'average_function_length': round(average_function_length),
+            'docstring_lines': docstring_lines,
+            'comment_lines': comment_lines,
+            'blank_lines': blank_lines,
+            'source_files': len(self.package.source_files)
+            # 'source_lines':
+        }
+
+        return {self.package.name: report_grouped}
 
     def _report_ungrouped(self) -> ReportPackageDict:
         """Obtain the reporting information per source file.
