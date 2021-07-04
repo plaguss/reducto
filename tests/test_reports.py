@@ -48,10 +48,10 @@ class TestModuleReport:
             reporter.report(fmt='wrong')
 
     def test_report(self, reporter):
-        assert reporter.report(fmt=rp.ReportFormats.DICT) == reporter._report_dict()
+        assert reporter.report(fmt=rp.ReportFormats.DICT) == reporter._as_dict()
 
-    def test_report_dict(self, reporter):
-        report_dict = reporter._report_dict()
+    def test_as_dict(self, reporter):
+        report_dict = reporter._as_dict()
         assert isinstance(report_dict, dict)
         assert isinstance(report_dict['example.py'], dict)
         assert report_dict['example.py']['lines'] == 128
@@ -78,7 +78,7 @@ class PackageReport:
             reporter.report(fmt='wrong')
 
     def test_report(self, reporter):
-        assert reporter.report(fmt=rp.ReportFormats.DICT) == reporter._report_dict()
+        assert reporter.report(fmt=rp.ReportFormats.DICT) == reporter._as_dict()
 
     def test_report_grouped(self, reporter):
         # report = reporter.report(group=True)

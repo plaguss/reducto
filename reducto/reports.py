@@ -77,13 +77,13 @@ class SourceReport:
         report : Reporting
         """
         if fmt == ReportFormats.DICT:
-            report_ = self._report_dict()
+            report_ = self._as_dict()
         else:
             raise ReportFormatError(fmt)
 
         return report_
 
-    def _report_dict(self) -> ReportDict:
+    def _as_dict(self) -> ReportDict:
         """Report of a file with a dict format.
 
         The reporting is a dict with the source file name as a key,
@@ -160,43 +160,25 @@ class PackageReport:
         pass
 
     def _report_grouped(self) -> ReportDict:
-        pass
+        report_ungrouped: ReportPackageDict = self._report_ungrouped()
 
     def _report_ungrouped(self) -> ReportPackageDict:
-        # FIXME, how to type if the depth is unknown at first?
-        # FIXME: Reformat, use the SourceReport to get the report from it
+        """Obtain the reporting information per source file.
+
+        Returns
+        -------
+        report : ReportPackageDict
+            Dict ordered as:
+            {package_name:
+                {source_file_1:
+                    {source_file_report},
+                source_file_2:
+                    {source_file_report}
+                }
+            }
+        """
         report: ReportDict = {}
         for file in self.package.source_files:
             report[file.name] = SourceReport(file).report(fmt=ReportFormats.DICT)[file.name]
 
         return {self.package.name: report}
-
-    def _report_dict(self) -> ReportDict:
-        """Report of a file with a dict format.
-
-        The reporting is a dict with the source file name as a key,
-        and an inner key with the following data:
-        lines (total lines of the file), number of functions,
-        average function length, docstring lines, comment lines,
-        blank lines.
-
-        Returns
-        -------
-        dict_report : ReportDict
-        """
-        # Check whether any function was found
-        if len(self.source_file.functions) == 0:
-            avg_func_length = 0
-        else:
-            avg_func_length: int = statistics.mean([f.source_lines for f in self.source_file.functions])
-
-        data: Dict[str, int] = {
-            'lines': len(self.source_file),
-            'number_of_functions': len(self.source_file.functions),
-            'average_function_length': round(avg_func_length),
-            'docstring_lines': self.source_file.total_docstrings,
-            'comment_lines': self.source_file.comment_lines,
-            'blank_lines': self.source_file.blank_lines
-        }
-
-        return {self.source_file.name: data}
