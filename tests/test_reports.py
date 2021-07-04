@@ -61,14 +61,14 @@ class TestModuleReport:
         assert report_dict['example.py']['blank_lines'] == 32
 
 
-class PackageReport:
-    @pytest.fixture(scope='class')
+class TestPackageReport:
+    @pytest.fixture
     def reporter(self, sample_package):
         pack = pkg.Package(sample_package)
         return rp.PackageReport(pack)
 
-    def test_report_repr(self, reporter):
-        assert repr(reporter) == 'PackageReport'
+    def test_report_repr(self, reporter, sample_package):
+        assert repr(reporter) == f'PackageReport({sample_package.name})'
 
     def test_package(self, reporter):
         assert isinstance(reporter.package, pkg.Package)
@@ -78,31 +78,47 @@ class PackageReport:
             reporter.report(fmt='wrong')
 
     def test_report(self, reporter):
-        assert reporter.report(fmt=rp.ReportFormats.DICT) == reporter._as_dict()
+        assert reporter.report(fmt=rp.ReportFormats.DICT) == reporter._report_ungrouped()
+        assert reporter.report(fmt=rp.ReportFormats.DICT, grouped=True) == reporter._report_grouped()
 
     def test_report_grouped(self, reporter):
-        # report = reporter.report(group=True)
-        keys = list(reporter.keys())
+        report = reporter.report(grouped=True)
+        keys = list(report.keys())
         assert len(keys) == 1
         name = keys[0]
-        assert name == reporter.name
-        info = reporter[name]
-        info['lines'] == 513
-        info['docstrings'] == 513
-        info['comment_lines'] == 513
-        info['blank_lines'] == 513
-        info['source_lines'] == 513
-        info['source_files'] == 513
-        info['number_of_functions'] == 513
-        info['average_function_length'] == 3
-
-        assert 1 == 0
+        assert name == reporter.package.name
+        info = report[name]
+        assert info['lines'] == 513
+        assert info['docstring_lines'] == 116
+        assert info['comment_lines'] == 12
+        assert info['blank_lines'] == 129
+        # info['source_lines'] == 513
+        assert info['source_files'] == 6
+        assert info['number_of_functions'] == 44
+        assert info['average_function_length'] == 3
 
     def test_report_ungrouped(self, reporter):
+        report = reporter.report(grouped=False)
+        keys = list(report.keys())
+        assert len(keys) == 1
+        name = keys[0]
+        assert name == reporter.package.name
+        info = report[name]
+        example = info['pyfile.py']
+        # Only tested one source file
+        assert example
+        assert example['lines'] == 128
+        assert example['number_of_functions'] == 11
+        assert example['average_function_length'] == 3
+        assert example['docstring_lines'] == 29
+        assert example['blank_lines'] == 32
+
+    @pytest.mark.skip('NOT IMPLEMENTED')
+    def test_report_package_void(self, reporter):
+        # Test a package without content
         assert 1 == 0
 
-    def test_report_package_void(self):
-        assert 1 == 0
-
-    def test_report_package_percentage(self, package):
+    @pytest.mark.skip('NOT IMPLEMENTED')
+    def test_report_package_percentage(self, reporter):
+        # Test a package with results formatted as percentages
         assert 1 == 0
