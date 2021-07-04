@@ -161,7 +161,13 @@ class PackageReport:
         pass
 
     def _report_grouped(self) -> ReportDict:
+        """Obtain the reporting information grouped for the whole package.
 
+        Returns
+        -------
+        report : ReportDict
+            Dict ordered as: {package_name: {source_file_report}}.
+        """
         report_ungrouped: ReportPackageDict = self._report_ungrouped()
         package_lines: int = len(self.package)
 
