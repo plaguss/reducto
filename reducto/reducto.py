@@ -2,8 +2,9 @@
 
 """
 
-from typing import List
+from typing import List, Optional
 import argparse
+import pathlib
 
 
 class Reducto:
@@ -11,6 +12,17 @@ class Reducto:
     """
     def __init__(self) -> None:
         self.parser: argparse.ArgumentParser = argparse.ArgumentParser()
+
+    def add_argument_target(self) -> None:
+        """Target argument.
+
+        Expects the path pointing to a python package or source file.
+        """
+        self.parser.add_argument(
+            'target',
+            type=pathlib.Path,
+            default=pathlib.Path.cwd()
+        )
 
     def add_argument_format(self) -> None:
         """Adds the argument for the type of output format.
@@ -25,20 +37,27 @@ class Reducto:
         )
 
     def add_argument_exclude(self):
+        """Add argument to exclude paths, files, methods (private or dunder). """
         pass
 
     def add_argument_grouped(self):
-        pass
+        """Whether to group the package report or not. """
+        self.parser.add_argument(
+            '-g',
+            '--grouped',
+            default=False
+        )
 
-    def run(self, arguments: List[str]):
-        """
+    def run(self, argv: Optional[List[str]] = None):
+        """Execute reducto
 
         Parameters
         ----------
-        arguments
+        argv
 
         Returns
         -------
 
         """
-        pass
+        self.parser.parse_args(argv)
+        print('hey!')
