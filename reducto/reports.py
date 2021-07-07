@@ -24,7 +24,10 @@ Reporting = Union[ReportDict, ReportPackageDict]
 
 class ReportFormats(Enum):
     """Formats allowed for the reports. """
-    DICT = 0
+    RAW = 'raw'
+
+    def __str__(self) -> str:
+        return self.value
 
 
 class ReportFormatError(Exception):
@@ -64,19 +67,19 @@ class SourceReport:
         """
         return self._src_file
 
-    def report(self, fmt: ReportFormats = ReportFormats.DICT) -> Reporting:
+    def report(self, fmt: ReportFormats = ReportFormats.RAW) -> Reporting:
         """Report of a source file.
 
         Parameters
         ----------
         fmt : ReportFormats
-            Must be one of ReportFormats. Defaults to ReportFormats.DICT.
+            Must be one of ReportFormats. Defaults to ReportFormats.RAW.
 
         Returns
         -------
         report : Reporting
         """
-        if fmt == ReportFormats.DICT:
+        if fmt == ReportFormats.RAW:
             report_ = self._as_dict()
         else:
             raise ReportFormatError(fmt)
@@ -143,7 +146,7 @@ class PackageReport:
 
     def report(
             self,
-            fmt: ReportFormats = ReportFormats.DICT,
+            fmt: ReportFormats = ReportFormats.RAW,
             grouped: bool = False
     ) -> Reporting:
         """
@@ -151,7 +154,7 @@ class PackageReport:
         Parameters
         ----------
         fmt : ReportFormats
-            Format to return the information. Defaults to ReportFormats.DICT.
+            Format to return the information. Defaults to ReportFormats.RAW.
         grouped : bool
             Whether to return the information by source files, or grouped at
             the package level (resumes the package). Defaults to False, returns
@@ -167,7 +170,7 @@ class PackageReport:
         else:
             report: ReportPackageDict = self._report_ungrouped()
 
-        if fmt == ReportFormats.DICT:
+        if fmt == ReportFormats.RAW:
             pass
         else:  # Other formats may modify the report here
             raise ReportFormatError(fmt)
@@ -232,6 +235,6 @@ class PackageReport:
         """
         report: ReportDict = {}
         for file in self.package.source_files:
-            report[file.name] = SourceReport(file).report(fmt=ReportFormats.DICT)[file.name]
+            report[file.name] = SourceReport(file).report(fmt=ReportFormats.RAW)[file.name]
 
         return {self.package.name: report}
