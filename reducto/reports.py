@@ -22,7 +22,7 @@ ReportPackageDict = Dict[str, ReportDict]
 Reporting = Union[ReportDict, ReportPackageDict]
 
 
-class ReportFormats(Enum):
+class ReportFormat(Enum):
     """Formats allowed for the reports. """
     RAW = 'raw'
 
@@ -32,9 +32,9 @@ class ReportFormats(Enum):
 
 class ReportFormatError(Exception):
     """Error raised on wrong reporting format. """
-    def __init__(self, fmt: ReportFormats) -> None:
+    def __init__(self, fmt: ReportFormat) -> None:
         msg = f'Report format not defined: {fmt}. ' \
-              f'Must be one defined in {ReportFormats}.'
+              f'Must be one defined in {ReportFormat}.'
         super().__init__(msg)
 
 
@@ -67,19 +67,19 @@ class SourceReport:
         """
         return self._src_file
 
-    def report(self, fmt: ReportFormats = ReportFormats.RAW) -> Reporting:
+    def report(self, fmt: ReportFormat = ReportFormat.RAW) -> Reporting:
         """Report of a source file.
 
         Parameters
         ----------
-        fmt : ReportFormats
+        fmt : ReportFormat
             Must be one of ReportFormats. Defaults to ReportFormats.RAW.
 
         Returns
         -------
         report : Reporting
         """
-        if fmt == ReportFormats.RAW:
+        if fmt == ReportFormat.RAW:
             report_ = self._as_dict()
         else:
             raise ReportFormatError(fmt)
@@ -146,14 +146,14 @@ class PackageReport:
 
     def report(
             self,
-            fmt: ReportFormats = ReportFormats.RAW,
+            fmt: ReportFormat = ReportFormat.RAW,
             grouped: bool = False
     ) -> Reporting:
         """
 
         Parameters
         ----------
-        fmt : ReportFormats
+        fmt : ReportFormat
             Format to return the information. Defaults to ReportFormats.RAW.
         grouped : bool
             Whether to return the information by source files, or grouped at
@@ -170,7 +170,7 @@ class PackageReport:
         else:
             report: ReportPackageDict = self._report_ungrouped()
 
-        if fmt == ReportFormats.RAW:
+        if fmt == ReportFormat.RAW:
             pass
         else:  # Other formats may modify the report here
             raise ReportFormatError(fmt)
@@ -235,6 +235,6 @@ class PackageReport:
         """
         report: ReportDict = {}
         for file in self.package.source_files:
-            report[file.name] = SourceReport(file).report(fmt=ReportFormats.RAW)[file.name]
+            report[file.name] = SourceReport(file).report(fmt=ReportFormat.RAW)[file.name]
 
         return {self.package.name: report}
