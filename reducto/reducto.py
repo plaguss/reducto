@@ -1,5 +1,11 @@
 """Module containing the application abstraction.
 
+Test the app for development.
+
+From the path containing the pyproject.toml, run:
+$ flit install --deps production
+
+Then execute against a package or source file.
 """
 
 from typing import List, Optional
@@ -91,6 +97,9 @@ class Reducto:
 
     def add_argument_exclude(self):
         """Add argument to exclude paths, files, methods (private or dunder). """
+        pass
+
+    def add_argument_as_percentage(self) -> None:
         pass
 
     def add_argument_output_file(self) -> None:
