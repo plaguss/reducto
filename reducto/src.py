@@ -252,7 +252,6 @@ class SourceFile:
             'comments': self.comment_lines_positions,
             'blank_lines': self.blank_lines_positions
         }
-        print('CONTENT ', content)
         source_visitor.register_functions(content)
 
         return source_visitor
