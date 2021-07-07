@@ -7,6 +7,7 @@ from pathlib import Path
 
 import reducto.src as src
 import reducto.items as it
+import reducto.reports as rp
 
 
 class PackageError(Exception):
@@ -199,6 +200,22 @@ class Package:
             averages.append(avg_func_length)
 
         return averages
+
+    def report(self) -> rp.PackageReport:
+        """Obtain the reporter class.
+
+        Returns
+        -------
+        reporter : rp.PackageReport.
+            Reporter object to obtain a proper data structure
+            to present the results.
+
+        See Also
+        --------
+        rp.PackageReport
+        """
+        report: rp.PackageReport = rp.PackageReport(self)
+        return report
 
 
 def is_package(path: Path) -> bool:
