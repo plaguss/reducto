@@ -20,8 +20,8 @@ def test_err():
 
 
 def test_assert_report_formats():
-    assert len(rp.ReportFormats.__members__.items()) == 1
-    assert rp.ReportFormats.RAW.value == 'raw'
+    assert len(rp.ReportFormat.__members__.items()) == 1
+    assert rp.ReportFormat.RAW.value == 'raw'
 
 
 def get_sample_file(name: str) -> str:
@@ -48,7 +48,7 @@ class TestModuleReport:
             reporter.report(fmt='wrong')
 
     def test_report(self, reporter):
-        assert reporter.report(fmt=rp.ReportFormats.RAW) == reporter._as_dict()
+        assert reporter.report(fmt=rp.ReportFormat.RAW) == reporter._as_dict()
 
     def test_as_dict(self, reporter):
         report_dict = reporter._as_dict()
@@ -78,8 +78,8 @@ class TestPackageReport:
             reporter.report(fmt='wrong')
 
     def test_report(self, reporter):
-        assert reporter.report(fmt=rp.ReportFormats.RAW) == reporter._report_ungrouped()
-        assert reporter.report(fmt=rp.ReportFormats.RAW, grouped=True) == reporter._report_grouped()
+        assert reporter.report(fmt=rp.ReportFormat.RAW) == reporter._report_ungrouped()
+        assert reporter.report(fmt=rp.ReportFormat.RAW, grouped=True) == reporter._report_grouped()
 
     def test_report_grouped(self, reporter):
         report = reporter.report(grouped=True)
