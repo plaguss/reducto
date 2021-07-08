@@ -88,10 +88,10 @@ class TestPackageReport:
         name = keys[0]
         assert name == reporter.package.name
         info = report[name]
-        assert info['lines'] == 513
+        assert info['lines'] == 514
         assert info['docstring_lines'] == 116
         assert info['comment_lines'] == 12
-        assert info['blank_lines'] == 129
+        assert info['blank_lines'] == 130
         # info['source_lines'] == 513
         assert info['source_files'] == 7
         assert info['number_of_functions'] == 44
@@ -104,7 +104,7 @@ class TestPackageReport:
         name = keys[0]
         assert name == reporter.package.name
         info = report[name]
-        example = info['pyfile.py']
+        example = info[str(pathlib.Path(name) / 'pyfile.py')]
         # Only tested one source file
         assert example
         assert example['lines'] == 128
@@ -118,8 +118,7 @@ class TestPackageReport:
         name = reporter.package.name
         info = report[name]
         relnames = sorted(info.keys())
-        print(relnames)
-        correct_names = [
+        correct_names = sorted([
             str(pathlib.Path(name) / '__init__.py'),
             str(pathlib.Path(name) / 'pyfile.py'),
             str(pathlib.Path(name) / 'subproj' / '__init__.py'),
@@ -127,7 +126,7 @@ class TestPackageReport:
             str(pathlib.Path(name) / 'subproj' / 'help.py'),
             str(pathlib.Path(name) / 'src' / 'ext' / '__init__.py'),
             str(pathlib.Path(name) / 'src' / 'ext' / 'ext.py'),
-        ]
+        ])
         assert all(rel == corr for rel, corr in zip(relnames, correct_names))
 
     @pytest.mark.skip('NOT IMPLEMENTED')
