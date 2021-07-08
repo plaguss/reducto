@@ -302,7 +302,7 @@ class SourceFile:
             Source lines are computed as the total number of lines
             minus the docstrings and minus the comment lines.
         """
-        return len(self) - self.total_docstrings - self.comment_lines
+        return len(self) - self.total_docstrings - self.comment_lines - self.blank_lines
 
     def report(self) -> rp.SourceReport:
         """Obtain the reporter class.
