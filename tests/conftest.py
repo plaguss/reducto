@@ -74,6 +74,7 @@ def sample_package():
 
         # Subdir with code
         (tmp_path / 'subproj').mkdir()
+        (tmp_path / 'subproj' / '__init__.py').write_text("\n")
         shutil.copy(example_src_file, tmp_path / 'subproj' /'main.py')
         shutil.copy(example_src_file, tmp_path / 'subproj' /'help.py')
 
