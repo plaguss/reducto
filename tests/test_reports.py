@@ -143,3 +143,7 @@ class TestPackageReport:
     def test_report_package_percentage(self, reporter):
         # Test a package with results formatted as percentages
         assert 1 == 0
+
+    def test_sample(self, reporter):
+        print(reporter.table(reporter.report()))
+        assert 1 == 0
