@@ -118,7 +118,7 @@ class SourceReport:
             'docstring_lines': self.source_file.total_docstrings,
             'comment_lines': self.source_file.comment_lines,
             'blank_lines': self.source_file.blank_lines,
-            # 'source_lines': self.source_file  # FIXME: Add source lines to src.py
+            'source_lines': self.source_file.source_lines  # FIXME: Add source lines to src.py
         }
 
         return {self.source_file.name: data}
