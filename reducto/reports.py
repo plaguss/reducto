@@ -4,7 +4,11 @@ Module storing the different reports presented by the package.
 
 from __future__ import annotations
 
-from typing import List, Dict, Union
+import pathlib
+from typing import (
+    Dict,
+    Union
+)
 from enum import Enum
 import statistics
 # from tabulate import tabulate
@@ -14,6 +18,8 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from .src import SourceFile  # pragma: no cover, only to avoid circular imports
     from .package import Package  # pragma: no cover, only to avoid circular imports
+
+import os
 
 
 ReportDict = Dict[str, Dict[str, int]]
@@ -235,6 +241,30 @@ class PackageReport:
         """
         report: ReportDict = {}
         for file in self.package.source_files:
-            report[file.name] = SourceReport(file).report(fmt=ReportFormat.RAW)[file.name]
+            report[self._get_relname(str(file))] = SourceReport(file).report(fmt=ReportFormat.RAW)[file.name]
 
         return {self.package.name: report}
+
+    def _get_relname(self, file: str) -> str:
+        """Obtain the relative name of a file in the package.
+
+        Parameters
+        ----------
+        file : str
+            Name of the file.
+
+        Returns
+        -------
+        relname : str
+            Relative path of the file starting on the package.
+
+        Examples
+        --------
+        For a given __init__.py file at the top of a package
+        named my_package:
+
+        >>> package_report._package_relname('__init__.py')
+        'my_package/__init__.py'
+        """
+        relname: str = os.path.relpath(file, start=self.package.path)
+        return str(pathlib.Path(self.package.name) / relname)
