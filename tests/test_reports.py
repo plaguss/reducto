@@ -96,6 +96,7 @@ class TestPackageReport:
         assert info['blank_lines'] == 130
         # info['source_lines'] == 513
         assert info['source_files'] == 7
+        assert info['source_lines'] == 256
         assert info['number_of_functions'] == 44
         assert info['average_function_length'] == 3
 
@@ -114,6 +115,8 @@ class TestPackageReport:
         assert example['average_function_length'] == 3
         assert example['docstring_lines'] == 29
         assert example['blank_lines'] == 32
+        assert example['comment_lines'] == 3
+        assert example['source_lines'] == 64
 
     def test_report_relpaths(self, reporter):
         report = reporter.report(grouped=False)
