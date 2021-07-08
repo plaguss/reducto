@@ -292,6 +292,18 @@ class SourceFile:
         funcs_docs: int = sum([f.docstrings for f in self.functions])
         return module_docs + funcs_docs
 
+    @property
+    def source_lines(self) -> int:
+        """Computes the total number of source code lines of the file.
+
+        Returns
+        -------
+        source_lines : int
+            Source lines are computed as the total number of lines
+            minus the docstrings and minus the comment lines.
+        """
+        return len(self) - self.total_docstrings - self.comment_lines
+
     def report(self) -> rp.SourceReport:
         """Obtain the reporter class.
 
