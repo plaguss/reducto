@@ -221,6 +221,10 @@ class TestSourceFile:
         assert src_.total_docstrings == src_.module_docstrings + func_docs
         assert src_.total_docstrings == 29
 
+    def test_source_lines(self, src_):
+        source_lines = len(src_) - src_.total_docstrings - src_.comment_lines
+        assert src_.source_lines == source_lines
+
     def test_report_dict(self, src_):
         report = src_.report()
         assert isinstance(report, rp.SourceReport)
