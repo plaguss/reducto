@@ -200,6 +200,7 @@ class PackageReport:
         docstring_lines: int = 0
         comment_lines: int = 0
         blank_lines: int = 0
+        source_lines: int = 0
 
         for reporting in report_ungrouped[self.package.name].values():
             lines += reporting['lines']
@@ -210,6 +211,7 @@ class PackageReport:
             docstring_lines += reporting['docstring_lines']
             comment_lines += reporting['comment_lines']
             blank_lines += reporting['blank_lines']
+            source_lines += reporting['source_lines']
 
         report_grouped: Dict[str, int] = {
             'lines': lines,
@@ -218,8 +220,8 @@ class PackageReport:
             'docstring_lines': docstring_lines,
             'comment_lines': comment_lines,
             'blank_lines': blank_lines,
-            'source_files': len(self.package.source_files)
-            # 'source_lines':
+            'source_files': len(self.package.source_files),
+            'source_lines': source_lines
         }
 
         return {self.package.name: report_grouped}
