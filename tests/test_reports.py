@@ -93,7 +93,7 @@ class TestPackageReport:
         assert info['comment_lines'] == 12
         assert info['blank_lines'] == 129
         # info['source_lines'] == 513
-        assert info['source_files'] == 6
+        assert info['source_files'] == 7
         assert info['number_of_functions'] == 44
         assert info['average_function_length'] == 3
 
@@ -112,6 +112,23 @@ class TestPackageReport:
         assert example['average_function_length'] == 3
         assert example['docstring_lines'] == 29
         assert example['blank_lines'] == 32
+
+    def test_report_relpaths(self, reporter):
+        report = reporter.report(grouped=False)
+        name = reporter.package.name
+        info = report[name]
+        relnames = sorted(info.keys())
+        print(relnames)
+        correct_names = [
+            str(pathlib.Path(name) / '__init__.py'),
+            str(pathlib.Path(name) / 'pyfile.py'),
+            str(pathlib.Path(name) / 'subproj' / '__init__.py'),
+            str(pathlib.Path(name) / 'subproj' / 'main.py'),
+            str(pathlib.Path(name) / 'subproj' / 'help.py'),
+            str(pathlib.Path(name) / 'src' / 'ext' / '__init__.py'),
+            str(pathlib.Path(name) / 'src' / 'ext' / 'ext.py'),
+        ]
+        assert all(rel == corr for rel, corr in zip(relnames, correct_names))
 
     @pytest.mark.skip('NOT IMPLEMENTED')
     def test_report_package_void(self, reporter):
