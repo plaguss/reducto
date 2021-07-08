@@ -59,6 +59,8 @@ class TestModuleReport:
         assert report_dict['example.py']['average_function_length'] == 3
         assert report_dict['example.py']['docstring_lines'] == 29
         assert report_dict['example.py']['blank_lines'] == 32
+        assert report_dict['example.py']['comment_lines'] == 3
+        assert report_dict['example.py']['source_lines'] == 64
 
 
 class TestPackageReport:
