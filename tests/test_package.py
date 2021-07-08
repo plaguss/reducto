@@ -59,47 +59,48 @@ class TestPackage:
         assert repr(package) == f'Package({sample_package.name})'
 
     def test_package_len(self, package):
-        assert len(package) == 513
+        assert len(package) == 514
 
     def test_source_files(self, package):
         assert isinstance(package.source_files, list)
         assert all(isinstance(f, src.SourceFile) for f in package.source_files)
-        assert len(package.source_files) == 6
+        assert len(package.source_files) == 7
 
     def test_package_lines(self, package):
         assert isinstance(package.lines, list)
-        assert all(a == b for a, b in zip(package.lines, [0, 128, 1, 128, 128, 128]))
+        print(sorted(package.lines))
+        assert all(a == b for a, b in zip(sorted(package.lines), [0, 1, 1, 128, 128, 128, 128]))
 
     def test_package_docstrings(self, package):
         assert isinstance(package.docstrings, list)
-        assert all(a == b for a, b in zip(package.docstrings, [0, 29, 0, 29, 29, 29]))
+        assert all(a == b for a, b in zip(sorted(package.docstrings), [0, 0, 0, 29, 29, 29, 29]))
 
     def test_package_comments(self, package):
         assert isinstance(package.blank_lines, list)
-        assert all(a == b for a, b in zip(package.comment_lines, [0, 3, 0, 3, 3, 3]))
+        assert all(a == b for a, b in zip(sorted(package.comment_lines), [0, 0, 0, 3, 3, 3, 3]))
 
     def test_package_blank_lines(self, package):
         assert isinstance(package.blank_lines, list)
-        assert all(a == b for a, b in zip(package.blank_lines, [0, 32, 1, 32, 32, 32]))
+        assert all(a == b for a, b in zip(sorted(package.blank_lines), [0, 1, 1, 32, 32, 32, 32]))
 
     def test_package_source_lines(self, package):
         assert isinstance(package.source_lines, list)
-        assert all(a == b for a, b in zip(package.source_lines, [0, 36, 0, 36, 36, 36]))
+        assert all(a == b for a, b in zip(sorted(package.source_lines), [0, 0, 0, 36, 36, 36, 36]))
 
     def test_package_functions(self, package):
         assert isinstance(package.functions, list)
         assert all([isinstance(f, it.FunctionDef) or f is None for func_list in package.functions for f in func_list])
-        assert package.number_of_functions == [0, 11, 0, 11, 11, 11]
+        assert sorted(package.number_of_functions) == [0, 0, 0, 11, 11, 11, 11]
 
     def test_package_number_of_functions(self, package):
         assert isinstance(package.number_of_functions, list)
-        assert package.number_of_functions == [0, 11, 0, 11, 11, 11]
+        assert sorted(package.number_of_functions) == [0, 0, 0, 11, 11, 11, 11]
 
     def test_package_average_function_length(self, package):
         assert package.average_function_length == 3
 
     def test_package_average_function_lengths(self, package):
-        assert package.average_function_lengths == [0, 3, 0, 3, 3, 3]
+        assert sorted(package.average_function_lengths) == [0, 0, 0, 3, 3, 3, 3]
 
     def test_package_report(self, package):
         report = package.report()
