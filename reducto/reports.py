@@ -7,11 +7,12 @@ from __future__ import annotations
 import pathlib
 from typing import (
     Dict,
-    Union
+    Union,
+    List
 )
 from enum import Enum
 import statistics
-# from tabulate import tabulate
+from tabulate import tabulate
 
 # This is done to avoid circular imports.
 from typing import TYPE_CHECKING
@@ -29,8 +30,36 @@ Reporting = Union[ReportDict, ReportPackageDict]
 
 
 class ReportFormat(Enum):
-    """Formats allowed for the reports. """
+    """Formats allowed for the reports.
+
+    RAW corresponds to the base dict format, the remaining
+    formats correspond to the ones defined in tabulate package.
+    """
     RAW = 'raw'
+    # Tabulate formats:
+    SIMPLE = 'simple'
+    PLAIN = 'plain'
+    GRID = 'grid'
+    FANCY_GRID = 'fancy_grid'
+    GITHUB = 'github'
+    PIPE = 'pipe'
+    ORGTBL = 'orgtbl'
+    JIRA = 'jira'
+    PRESTO = 'presto'
+    PRETTY = 'pretty'
+    PSQL = 'psql'
+    RST = 'rst'
+    MEDIAWIKI = 'mediawiki'
+    MOINMOIN = 'moinmoin'
+    YOUTRACK = 'youtrack'
+    HTML = 'html'
+    UNSAFEHTML = 'unsafehtml'
+    LATEX = 'latex'
+    LATEX_RAW = 'latex_raw'
+    LATEX_BOOKTABS = 'latex_booktabs'
+    LATEX_LONGTABLE = 'latex_longtable'
+    TSV = 'tsv'
+    TEXTILE = 'textile'
 
     def __str__(self) -> str:
         return self.value
@@ -136,6 +165,10 @@ class PackageReport:
             Package containing the data to be reported
         """
         self._package: Package = package
+        self.columns: List[str] = [
+            'lines', 'number_of_functions', 'source_lines',
+            'docstring_lines', 'comment_lines', 'blank_lines', 'average_function_length'
+        ]
 
     def __repr__(self) -> str:
         return type(self).__name__ + f'({self.package.name})'
@@ -178,6 +211,8 @@ class PackageReport:
 
         if fmt == ReportFormat.RAW:
             pass
+        elif fmt in set(str(fmt) for fmt in ReportFormat):
+            raise NotImplementedError('IMPLEMENT TABLE TRANSFORMATION.')
         else:  # Other formats may modify the report here
             raise ReportFormatError(fmt)
 
@@ -270,3 +305,25 @@ class PackageReport:
         """
         relname: str = os.path.relpath(file, start=self.package.path)
         return str(pathlib.Path(self.package.name) / relname)
+
+    def _table(self, report: Union[ReportDict, ReportPackageDict]) -> List[List[Union[str, int]]]:
+        """Create a table format to be passed to tabulate.
+
+        The first row corresponds to the header.
+        """
+        # FIXME: Detect correct format depending on grouped report or not.
+        grouped = False
+        name = self.package.name
+        if not grouped:
+            first_row = ['filename']
+            first_row.extend(self.columns)
+            rows: List[List[Union[str, int]]] = [first_row]
+            inner = report[name]
+            for filename in inner:
+                row = [filename]
+                row.extend([inner[filename][col] for col in self.columns])
+                rows.append(row)
+            print(tabulate(rows, headers='firstrow'))
+            return rows
+        else:
+            pass
