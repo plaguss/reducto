@@ -19,11 +19,6 @@ def test_err():
     assert isinstance(rp.ReportFormatError('aa'), Exception)
 
 
-def test_assert_report_formats():
-    assert len(rp.ReportFormat.__members__.items()) == 1
-    assert rp.ReportFormat.RAW.value == 'raw'
-
-
 def get_sample_file(name: str) -> str:
     return os.path.join(SAMPLE_DATA, name)
 
@@ -144,6 +139,7 @@ class TestPackageReport:
         # Test a package with results formatted as percentages
         assert 1 == 0
 
+    @pytest.mark.skip('NOT IMPLEMENTED')
     def test_sample(self, reporter):
         print(reporter.table(reporter.report()))
         assert 1 == 0

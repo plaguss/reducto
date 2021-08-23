@@ -183,15 +183,20 @@ class TestSourceFile:
 
     def test_comment_lines_positions(self, src_):
         assert isinstance(src_.comment_lines_positions, list)
-        assert all(pos == corr for pos, corr in  zip(src_.comment_lines_positions, [6, 20, 36]))
+        assert all(
+            pos == corr for pos, corr in zip(
+                src_.comment_lines_positions,
+                [6, 20, 36]
+            )
+        )
 
     def test_blank_lines(self, src_):
         assert src_.blank_lines == 32
 
     def test_blank_lines_positions(self, src_):
         correct = [
-            5, 12, 13, 17, 18, 21, 25, 26, 29, 32, 34, 35, 37, 38, 43, 45, 48, 51, 55, 68, 70, 93, 95, 98, 105, 112,
-            114, 119, 120, 123, 124, 126
+            5, 12, 13, 17, 18, 21, 25, 26, 29, 32, 34, 35, 37, 38, 43, 45, 48,
+            51, 55, 68, 70, 93, 95, 98, 105, 112, 114, 119, 120, 123, 124, 126
         ]
 
         assert isinstance(src_.blank_lines_positions, list)
@@ -222,7 +227,8 @@ class TestSourceFile:
         assert src_.total_docstrings == 29
 
     def test_source_lines(self, src_):
-        source_lines = len(src_) - src_.total_docstrings - src_.comment_lines
+        source_lines = len(src_) - src_.total_docstrings \
+                       - src_.comment_lines - src_.blank_lines
         assert src_.source_lines == source_lines
 
     def test_report_dict(self, src_):
