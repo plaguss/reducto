@@ -5,17 +5,14 @@ Module storing the different reports presented by the package.
 from __future__ import annotations
 
 import pathlib
-from typing import (
-    Dict,
-    Union,
-    List
-)
+from typing import Dict, Union, List
 from enum import Enum
 import statistics
 from tabulate import tabulate
 
 # This is done to avoid circular imports.
 from typing import TYPE_CHECKING
+
 if TYPE_CHECKING:
     from .src import SourceFile  # pragma: no cover, only to avoid circular imports
     from .package import Package  # pragma: no cover, only to avoid circular imports
@@ -35,41 +32,45 @@ class ReportFormat(Enum):
     RAW corresponds to the base dict format, the remaining
     formats correspond to the ones defined in tabulate package.
     """
-    RAW = 'raw'
+
+    RAW = "raw"
     # Tabulate formats:
-    SIMPLE = 'simple'
-    PLAIN = 'plain'
-    GRID = 'grid'
-    FANCY_GRID = 'fancy_grid'
-    GITHUB = 'github'
-    PIPE = 'pipe'
-    ORGTBL = 'orgtbl'
-    JIRA = 'jira'
-    PRESTO = 'presto'
-    PRETTY = 'pretty'
-    PSQL = 'psql'
-    RST = 'rst'
-    MEDIAWIKI = 'mediawiki'
-    MOINMOIN = 'moinmoin'
-    YOUTRACK = 'youtrack'
-    HTML = 'html'
-    UNSAFEHTML = 'unsafehtml'
-    LATEX = 'latex'
-    LATEX_RAW = 'latex_raw'
-    LATEX_BOOKTABS = 'latex_booktabs'
-    LATEX_LONGTABLE = 'latex_longtable'
-    TSV = 'tsv'
-    TEXTILE = 'textile'
+    SIMPLE = "simple"
+    PLAIN = "plain"
+    GRID = "grid"
+    FANCY_GRID = "fancy_grid"
+    GITHUB = "github"
+    PIPE = "pipe"
+    ORGTBL = "orgtbl"
+    JIRA = "jira"
+    PRESTO = "presto"
+    PRETTY = "pretty"
+    PSQL = "psql"
+    RST = "rst"
+    MEDIAWIKI = "mediawiki"
+    MOINMOIN = "moinmoin"
+    YOUTRACK = "youtrack"
+    HTML = "html"
+    UNSAFEHTML = "unsafehtml"
+    LATEX = "latex"
+    LATEX_RAW = "latex_raw"
+    LATEX_BOOKTABS = "latex_booktabs"
+    LATEX_LONGTABLE = "latex_longtable"
+    TSV = "tsv"
+    TEXTILE = "textile"
 
     def __str__(self) -> str:
         return self.value
 
 
 class ReportFormatError(Exception):
-    """Error raised on wrong reporting format. """
+    """Error raised on wrong reporting format."""
+
     def __init__(self, fmt: ReportFormat) -> None:
-        msg = f'Report format not defined: {fmt}. ' \
-              f'Must be one defined in {ReportFormat}.'
+        msg = (
+            f"Report format not defined: {fmt}. "
+            f"Must be one defined in {ReportFormat}."
+        )
         super().__init__(msg)
 
 
@@ -80,6 +81,7 @@ class SourceReport:
     -------
     report
     """
+
     def __init__(self, src_file: SourceFile) -> None:
         """
         Parameters
@@ -138,16 +140,18 @@ class SourceReport:
         if len(self.source_file.functions) == 0:
             avg_func_length = 0
         else:
-            avg_func_length: int = statistics.mean([f.source_lines for f in self.source_file.functions])
+            avg_func_length: int = statistics.mean(
+                [f.source_lines for f in self.source_file.functions]
+            )
 
         data: Dict[str, int] = {
-            'lines': len(self.source_file),
-            'number_of_functions': len(self.source_file.functions),
-            'average_function_length': round(avg_func_length),
-            'docstring_lines': self.source_file.total_docstrings,
-            'comment_lines': self.source_file.comment_lines,
-            'blank_lines': self.source_file.blank_lines,
-            'source_lines': self.source_file.source_lines  # FIXME: Add source lines to src.py
+            "lines": len(self.source_file),
+            "number_of_functions": len(self.source_file.functions),
+            "average_function_length": round(avg_func_length),
+            "docstring_lines": self.source_file.total_docstrings,
+            "comment_lines": self.source_file.comment_lines,
+            "blank_lines": self.source_file.blank_lines,
+            "source_lines": self.source_file.source_lines,  # FIXME: Add source lines to src.py
         }
 
         return {self.source_file.name: data}
@@ -157,6 +161,7 @@ class PackageReport:
     """
     Define report for a package, gets a pkg.Package as input.
     """
+
     def __init__(self, package: Package) -> None:
         """
         Parameters
@@ -166,12 +171,17 @@ class PackageReport:
         """
         self._package: Package = package
         self.columns: List[str] = [
-            'lines', 'number_of_functions', 'source_lines',
-            'docstring_lines', 'comment_lines', 'blank_lines', 'average_function_length'
+            "lines",
+            "number_of_functions",
+            "source_lines",
+            "docstring_lines",
+            "comment_lines",
+            "blank_lines",
+            "average_function_length",
         ]
 
     def __repr__(self) -> str:
-        return type(self).__name__ + f'({self.package.name})'
+        return type(self).__name__ + f"({self.package.name})"
 
     @property
     def package(self) -> Package:
@@ -184,9 +194,7 @@ class PackageReport:
         return self._package
 
     def report(
-            self,
-            fmt: ReportFormat = ReportFormat.RAW,
-            grouped: bool = False
+        self, fmt: ReportFormat = ReportFormat.RAW, grouped: bool = False
     ) -> Reporting:
         """
 
@@ -212,7 +220,7 @@ class PackageReport:
         if fmt == ReportFormat.RAW:
             pass
         elif fmt in set(str(fmt) for fmt in ReportFormat):
-            raise NotImplementedError('IMPLEMENT TABLE TRANSFORMATION.')
+            raise NotImplementedError("IMPLEMENT TABLE TRANSFORMATION.")
         else:  # Other formats may modify the report here
             raise ReportFormatError(fmt)
 
@@ -238,25 +246,25 @@ class PackageReport:
         source_lines: int = 0
 
         for reporting in report_ungrouped[self.package.name].values():
-            lines += reporting['lines']
-            number_of_functions += reporting['number_of_functions']
+            lines += reporting["lines"]
+            number_of_functions += reporting["number_of_functions"]
             # Weight for the average function length across the whole package.
-            weight: float = reporting['lines'] / package_lines
-            average_function_length += reporting['average_function_length'] * weight
-            docstring_lines += reporting['docstring_lines']
-            comment_lines += reporting['comment_lines']
-            blank_lines += reporting['blank_lines']
-            source_lines += reporting['source_lines']
+            weight: float = reporting["lines"] / package_lines
+            average_function_length += reporting["average_function_length"] * weight
+            docstring_lines += reporting["docstring_lines"]
+            comment_lines += reporting["comment_lines"]
+            blank_lines += reporting["blank_lines"]
+            source_lines += reporting["source_lines"]
 
         report_grouped: Dict[str, int] = {
-            'lines': lines,
-            'number_of_functions': number_of_functions,
-            'average_function_length': round(average_function_length),
-            'docstring_lines': docstring_lines,
-            'comment_lines': comment_lines,
-            'blank_lines': blank_lines,
-            'source_files': len(self.package.source_files),
-            'source_lines': source_lines
+            "lines": lines,
+            "number_of_functions": number_of_functions,
+            "average_function_length": round(average_function_length),
+            "docstring_lines": docstring_lines,
+            "comment_lines": comment_lines,
+            "blank_lines": blank_lines,
+            "source_files": len(self.package.source_files),
+            "source_lines": source_lines,
         }
 
         return {self.package.name: report_grouped}
@@ -278,7 +286,9 @@ class PackageReport:
         """
         report: ReportDict = {}
         for file in self.package.source_files:
-            report[self._get_relname(str(file))] = SourceReport(file).report(fmt=ReportFormat.RAW)[file.name]
+            report[self._get_relname(str(file))] = SourceReport(file).report(
+                fmt=ReportFormat.RAW
+            )[file.name]
 
         return {self.package.name: report}
 
@@ -306,7 +316,9 @@ class PackageReport:
         relname: str = os.path.relpath(file, start=self.package.path)
         return str(pathlib.Path(self.package.name) / relname)
 
-    def _table(self, report: Union[ReportDict, ReportPackageDict]) -> List[List[Union[str, int]]]:
+    def _table(
+        self, report: Union[ReportDict, ReportPackageDict]
+    ) -> List[List[Union[str, int]]]:
         """Create a table format to be passed to tabulate.
 
         The first row corresponds to the header.
@@ -315,7 +327,7 @@ class PackageReport:
         grouped = False
         name = self.package.name
         if not grouped:
-            first_row = ['filename']
+            first_row = ["filename"]
             first_row.extend(self.columns)
             rows: List[List[Union[str, int]]] = [first_row]
             inner = report[name]
@@ -323,7 +335,7 @@ class PackageReport:
                 row = [filename]
                 row.extend([inner[filename][col] for col in self.columns])
                 rows.append(row)
-            print(tabulate(rows, headers='firstrow'))
+            print(tabulate(rows, headers="firstrow"))
             return rows
         else:
             pass

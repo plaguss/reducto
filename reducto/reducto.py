@@ -19,8 +19,8 @@ import reducto.reports as rp
 
 
 class Reducto:
-    """Class defining the package application.
-    """
+    """Class defining the package application."""
+
     def __init__(self) -> None:
         self.parser: argparse.ArgumentParser = argparse.ArgumentParser()
         self.args: Optional[argparse.Namespace] = None
@@ -38,13 +38,13 @@ class Reducto:
         Expects the path pointing to a python package or source file.
         """
         self.parser.add_argument(
-            'target',
+            "target",
             type=pathlib.Path,
             default=pathlib.Path.cwd(),
-            help='Path to execute the program into. '
-                 'Must be either a python package (REF?) '
-                 'or a python source file <SRC.py>',
-            nargs='?'
+            help="Path to execute the program into. "
+            "Must be either a python package (REF?) "
+            "or a python source file <SRC.py>",
+            nargs="?",
         )
 
     def add_argument_format(self) -> None:
@@ -59,13 +59,13 @@ class Reducto:
         choices: List[str] = [str(rep) for rep in rp.ReportFormat]
 
         self.parser.add_argument(
-            '-f',
-            '--format',
+            "-f",
+            "--format",
             type=rp.ReportFormat,
             default=rp.ReportFormat.RAW,
             choices=list(rp.ReportFormat),
-            dest='format',
-            help=f'Format for the report type. Options are: {choices}.'
+            dest="format",
+            help=f"Format for the report type. Options are: {choices}.",
         )
 
     def add_argument_grouped(self):
@@ -76,27 +76,26 @@ class Reducto:
         The implementation for the boolean argument is taken from:
         https://stackoverflow.com/questions/15008758/parsing-boolean-values-with-argparse
         """
-        help_: str = 'Return the results separated by ' \
-                     'source files, or grouped for the ' \
-                     'whole package. Only used when the ' \
-                     'target path is a package.'
+        help_: str = (
+            "Return the results separated by "
+            "source files, or grouped for the "
+            "whole package. Only used when the "
+            "target path is a package."
+        )
         grouped_parser = self.parser.add_mutually_exclusive_group(required=False)
         grouped_parser.add_argument(
-            '--grouped',
-            dest='grouped',
-            action='store_true',
-            help=help_
+            "--grouped", dest="grouped", action="store_true", help=help_
         )
         grouped_parser.add_argument(
-            '--ungrouped',
-            dest='grouped',
-            action='store_false',
-            help='Opposite of --grouped.'
+            "--ungrouped",
+            dest="grouped",
+            action="store_false",
+            help="Opposite of --grouped.",
         )
         self.parser.set_defaults(grouped=False)
 
     def add_argument_exclude(self):
-        """Add argument to exclude paths, files, methods (private or dunder). """
+        """Add argument to exclude paths, files, methods (private or dunder)."""
         pass
 
     def add_argument_as_percentage(self) -> None:

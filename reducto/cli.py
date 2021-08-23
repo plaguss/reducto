@@ -8,7 +8,7 @@ from reducto import reducto
 
 
 def main(argv: Optional[List[str]] = None) -> None:
-    """Execute the reducto application. """
+    """Execute the reducto application."""
     if argv is None:
         argv = sys.argv[1:]
 
