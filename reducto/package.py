@@ -11,12 +11,13 @@ import reducto.reports as rp
 
 
 class PackageError(Exception):
-    """Error raised when a directory is not a valid python package. """
+    """Error raised when a directory is not a valid python package."""
+
     pass
 
 
 # File that makes a directory a python package.
-PKG_FILE: str = '__init__.py'
+PKG_FILE: str = "__init__.py"
 
 
 class Package:
@@ -42,6 +43,7 @@ class Package:
     -------
 
     """
+
     def __init__(self, path: Path) -> None:
         """
         Parameters
@@ -59,7 +61,7 @@ class Package:
         self._average_function_length: Optional[List[int]] = None
 
     def __repr__(self) -> str:
-        return type(self).__name__ + f'({self.name})'
+        return type(self).__name__ + f"({self.name})"
 
     def __len__(self) -> int:
         """Returns the total number of lines of the package.
@@ -95,7 +97,7 @@ class Package:
 
     @property
     def path(self) -> Path:
-        """Returns the full path pointing to the package. """
+        """Returns the full path pointing to the package."""
         return self._path
 
     @property
@@ -117,6 +119,7 @@ class Package:
 
         Inspired by trailrunner.Trailrunner.walk.
         """
+
         def walk(path: Path) -> Iterator[Optional[src.SourceFile]]:
             for child in path.iterdir():
 
@@ -165,7 +168,10 @@ class Package:
 
     @property
     def source_lines(self) -> List[int]:
-        return [sum([func.source_lines for func in file.functions]) for file in self.source_files]
+        return [
+            sum([func.source_lines for func in file.functions])
+            for file in self.source_files
+        ]
 
     @property
     def functions(self) -> List[List[it.FunctionDef]]:
@@ -185,7 +191,9 @@ class Package:
             for function in function_list:
                 source_lines.append(function.source_lines)
 
-        average: int = round(statistics.mean(source_lines)) if len(source_lines) > 0 else 0
+        average: int = (
+            round(statistics.mean(source_lines)) if len(source_lines) > 0 else 0
+        )
 
         return average
 
@@ -196,7 +204,9 @@ class Package:
             if len(function_list) == 0:
                 avg_func_length = 0
             else:
-                avg_func_length: int = round(statistics.mean([f.source_lines for f in function_list]))
+                avg_func_length: int = round(
+                    statistics.mean([f.source_lines for f in function_list])
+                )
             averages.append(avg_func_length)
 
         return averages

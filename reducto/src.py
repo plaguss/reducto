@@ -20,12 +20,13 @@ from bisect import bisect_left
 import reducto.items as it
 import reducto.reports as rp
 
-NL_CHAR: str = '\n'  # New line character
-COMMENT_CHAR: str = '#'  # Comment character
+NL_CHAR: str = "\n"  # New line character
+COMMENT_CHAR: str = "#"  # Comment character
 
 
 class SourceFileError(Exception):
-    """Error raised when a path is not a valid python path. """
+    """Error raised when a path is not a valid python path."""
+
     pass
 
 
@@ -34,6 +35,7 @@ class SourceFile:
 
     Allows to read a file, obtain the tokens and the ast.
     """
+
     def __init__(self, filename: pathlib.Path) -> None:
         """
         Parameters
@@ -68,7 +70,7 @@ class SourceFile:
         return str(self._filename)
 
     def __len__(self) -> int:
-        """Return the total number of lines in the file. """
+        """Return the total number of lines in the file."""
         return len(self.lines)
 
     @staticmethod
@@ -84,7 +86,7 @@ class SourceFile:
         check : bool
         """
         if path.is_file():
-            if path.name.endswith('.py'):
+            if path.name.endswith(".py"):
                 return
         raise SourceFileError(path)
 
@@ -111,7 +113,7 @@ class SourceFile:
 
     @property
     def lines(self) -> List[str]:
-        """Contains the lines of the file as initially parsed with tokenize module. """
+        """Contains the lines of the file as initially parsed with tokenize module."""
         if self._lines is None:
             self._lines: List[str] = self._read_file_by_lines()
         return self._lines
@@ -131,7 +133,7 @@ class SourceFile:
 
     @property
     def tokens(self) -> List[tokenize.TokenInfo]:
-        """Return the complete set of tokens for a file. """
+        """Return the complete set of tokens for a file."""
         if self._tokens is None:
             line_iter = iter(self.lines)
             self._tokens = list(tokenize.generate_tokens(lambda: next(line_iter)))
@@ -249,8 +251,8 @@ class SourceFile:
 
         # Register comments and blank lines on the functions.
         content: Dict[str, List[int]] = {
-            'comments': self.comment_lines_positions,
-            'blank_lines': self.blank_lines_positions
+            "comments": self.comment_lines_positions,
+            "blank_lines": self.blank_lines_positions,
         }
         source_visitor.register_functions(content)
 
@@ -433,9 +435,11 @@ class SourceVisitor(ast.NodeVisitor):
 
     @property
     def functions(self) -> List[it.FunctionDef]:
-        """Returns the items which are functions from the list of items obtained. """
+        """Returns the items which are functions from the list of items obtained."""
         if len(self._functions) == 0:
-            self._functions = [item for item in self.items if isinstance(item, it.FunctionDef)]
+            self._functions = [
+                item for item in self.items if isinstance(item, it.FunctionDef)
+            ]
             [func.get_docstrings() for func in self._functions]
         return self._functions
 

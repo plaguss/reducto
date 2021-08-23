@@ -27,6 +27,7 @@ class Item:
     The nodes are inserted as an attribute instead of doing it on the initialization
     to simplify the unit tests.
     """
+
     def __init__(self, name: str, start: int = 0, end: int = 0) -> None:
         """
         Parameters
@@ -52,7 +53,7 @@ class Item:
 
     @property
     def node(self) -> ast.AST:
-        """Returns the node itself. """
+        """Returns the node itself."""
         return self._node
 
     @node.setter
@@ -61,24 +62,24 @@ class Item:
 
     @property
     def name(self) -> str:
-        """Name the node. """
+        """Name the node."""
         return self._name
 
     @property
     def start(self) -> int:
-        """Line of the source file where the item starts. """
+        """Line of the source file where the item starts."""
         return self._start
 
     @property
     def end(self) -> int:
-        """Line of the source file where the item ends. """
+        """Line of the source file where the item ends."""
         return self._end
 
     def __len__(self) -> int:
-        """Computes the total number of lines of the function. """
+        """Computes the total number of lines of the function."""
         return self.end - self.start
 
-    def __lt__(self, other: Union['Item', int]) -> bool:
+    def __lt__(self, other: Union["Item", int]) -> bool:
         """Lower than operator to allow the objects to be sorted in a list.
 
         Parameters
@@ -91,13 +92,15 @@ class Item:
         elif isinstance(other, int):
             other_start = other
         else:
-            msg = f"Operator defined only for {self.__class__.__name__}" \
-                  f" instances. You gave: {type(other)}."
+            msg = (
+                f"Operator defined only for {self.__class__.__name__}"
+                f" instances. You gave: {type(other)}."
+            )
             raise TypeError(msg)
 
         return self.start < other_start
 
-    def __ge__(self, other: Union['Item', int]) -> bool:
+    def __ge__(self, other: Union["Item", int]) -> bool:
         return not self < other
 
     def __contains__(self, item: int) -> bool:
@@ -117,7 +120,7 @@ class Item:
 
     @property
     def docstrings(self) -> int:
-        """Number of lines which are docstring in the item. """
+        """Number of lines which are docstring in the item."""
         return self._docstrings
 
     @docstrings.setter
@@ -126,7 +129,7 @@ class Item:
 
     @property
     def comments(self) -> int:
-        """Number of lines which are comments in the item. """
+        """Number of lines which are comments in the item."""
         return self._comments
 
     @comments.setter
@@ -135,7 +138,7 @@ class Item:
 
     @property
     def blank_lines(self) -> int:
-        """Number of lines which are blank lines in the item. """
+        """Number of lines which are blank lines in the item."""
         return self._blank_lines
 
     @blank_lines.setter
@@ -164,6 +167,7 @@ class FunctionDef(Item):
     -------
     get_docstrings
     """
+
     def __init__(self, name: str, start: int = 0, end: int = 0) -> None:
         super().__init__(name, start=start, end=end)
 
@@ -187,6 +191,7 @@ class MethodDef(FunctionDef):
     Defined in case a distinction between functions and methods is implemented.
     NOT USED.
     """
+
     def __init__(self, name: str, start: int = 0, end: int = 0) -> None:
         super().__init__(name, start=start, end=end)
 
@@ -194,7 +199,7 @@ class MethodDef(FunctionDef):
 def get_docstring_lines(node: Union[ast.Module, ast.FunctionDef]) -> int:
     r"""Obtains the number of lines which are docstrings.
 
-    Uses ast.get_docstring to extract the docstrings of an ast node.        
+    Uses ast.get_docstring to extract the docstrings of an ast node.
 
     Parameters
     ----------
@@ -227,7 +232,7 @@ def get_docstring_lines(node: Union[ast.Module, ast.FunctionDef]) -> int:
         fourth
         '''
         1
-        - 
+        -
         '''docs
 
 
@@ -237,7 +242,7 @@ def get_docstring_lines(node: Union[ast.Module, ast.FunctionDef]) -> int:
     docs: str = ast.get_docstring(node)
 
     try:
-        docstrings: int = len(docs.split('\n'))
+        docstrings: int = len(docs.split("\n"))
     except AttributeError:  # When there are no docstrings, returns None.
         docstrings: int = 0
 
