@@ -27,3 +27,13 @@ Installation
 About the title
 ---------------
 Explain the name of the project.
+
+The API Documentation
+---------------------
+
+In case you are wondering anything about the source code, watch here.
+
+.. toctree::
+   :maxdepth: 2
+
+   developer_guide
