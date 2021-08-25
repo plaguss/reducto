@@ -104,7 +104,7 @@ class SourceReport:
         """
         return self._src_file
 
-    def report(self, fmt: ReportFormat = ReportFormat.RAW) -> Reporting:
+    def report(self, fmt: ReportFormat = ReportFormat.RAW) -> ReportDict:
         """Report of a source file.
 
         Parameters
@@ -195,7 +195,7 @@ class PackageReport:
 
     def report(
         self, fmt: ReportFormat = ReportFormat.RAW, grouped: bool = False
-    ) -> Reporting:
+    ) -> ReportPackageDict:
         """
 
         Parameters
@@ -323,6 +323,7 @@ class PackageReport:
 
         The first row corresponds to the header.
         """
+        raise NotImplementedError
         # FIXME: Detect correct format depending on grouped report or not.
         grouped = False
         name = self.package.name

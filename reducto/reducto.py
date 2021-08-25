@@ -8,14 +8,18 @@ $ flit install --deps production
 Then execute against a package or source file.
 """
 
-from typing import List, Optional
+from typing import List, Optional, Dict, Union
 import argparse
 import pathlib
-import pprint
+import json
 
 import reducto.package as pkg
 import reducto.src as src
 import reducto.reports as rp
+
+
+# Emoji list: https://unicode.org/emoji/charts/full-emoji-list.html
+MAGIC_WAND: str = "\U0001FA84"
 
 
 class Reducto:
@@ -26,13 +30,12 @@ class Reducto:
         self.args: Optional[argparse.Namespace] = None
 
         # Add arguments
-        self.add_argument_target()
-        self.add_argument_format()
-        self.add_argument_grouped()
-        self.add_argument_exclude()
-        self.add_argument_output_file()
+        self._add_argument_target()
+        self._add_argument_format()
+        self._add_argument_grouped()
+        self._add_argument_output_file()
 
-    def add_argument_target(self) -> None:
+    def _add_argument_target(self) -> None:
         """Target argument.
 
         Expects the path pointing to a python package or source file.
@@ -47,7 +50,7 @@ class Reducto:
             nargs="?",
         )
 
-    def add_argument_format(self) -> None:
+    def _add_argument_format(self) -> None:
         """Adds the argument for the type of output format.
 
         The current implementation only allows for raw format (a dict).
@@ -65,10 +68,10 @@ class Reducto:
             default=rp.ReportFormat.RAW,
             choices=list(rp.ReportFormat),
             dest="format",
-            help=f"Format for the report type. Options are: {choices}.",
+            help="Format for the report type.",
         )
 
-    def add_argument_grouped(self):
+    def _add_argument_grouped(self):
         """Whether to group the package report or not.
 
         Notes
@@ -92,19 +95,32 @@ class Reducto:
             action="store_false",
             help="Opposite of --grouped.",
         )
-        self.parser.set_defaults(grouped=False)
+        self.parser.set_defaults(grouped=True)
 
-    def add_argument_exclude(self):
+    def _add_argument_output_file(self) -> None:
+        """Argument to insert the output file (if applies).
+
+        Returns
+        -------
+
+        """
+        default: pathlib.Path = pathlib.Path.cwd() / "reducto_report.json"
+        self.parser.add_argument(
+            "-o",
+            "--output",
+            type=pathlib.Path,
+            default=default,
+            help=f"Full path of the report to be generated. Defaults to {default}",
+        )
+
+    def _add_argument_exclude(self):
         """Add argument to exclude paths, files, methods (private or dunder)."""
-        pass
+        raise NotImplementedError
 
-    def add_argument_as_percentage(self) -> None:
-        pass
+    def _add_argument_as_percentage(self) -> None:
+        raise NotImplementedError
 
-    def add_argument_output_file(self) -> None:
-        pass
-
-    def _report_source_file(self, target: pathlib.Path) -> None:
+    def _report_source_file(self, target: pathlib.Path) -> rp.ReportDict:
         """
 
         Parameters
@@ -114,9 +130,9 @@ class Reducto:
         """
         src_file: src.SourceFile = src.SourceFile(target)
         reporter: rp.SourceReport = src_file.report()
-        pprint.pprint(reporter.report(fmt=self.args.format))
+        return reporter.report(fmt=self.args.format)
 
-    def _report_package(self, target: pathlib.Path) -> None:
+    def _report_package(self, target: pathlib.Path) -> rp.ReportPackageDict:
         """
 
         Parameters
@@ -127,18 +143,36 @@ class Reducto:
         # TODO: Add extra info for packages, as resume of source files ungrouped
         package: pkg.Package = pkg.Package(target)
         reporter: rp.PackageReport = package.report()
-        pprint.pprint(reporter.report(fmt=self.args.format, grouped=self.args.grouped))
+        return reporter.report(fmt=self.args.format, grouped=self.args.grouped)
 
-    def report(self) -> None:
+    def report(self) -> Union[rp.ReportDict, rp.ReportPackageDict]:
         """Detects whether the input target is a file or a directory.
 
         Calls the corresponding method depending on the target.
         """
         target: pathlib.Path = self.args.target
         if target.is_file():
-            self._report_source_file(target)
+            report = self._report_source_file(target)
         else:
-            self._report_package(target)
+            report = self._report_package(target)
+
+        return report
+
+    def _write_report(self, report: dict) -> None:
+        """
+
+        Parameters
+        ----------
+        filename
+
+        Returns
+        -------
+
+        """
+        output_file = self.args.output
+        with open(output_file, "w") as f:
+            json.dump(report, f, indent=4)
+        print(f"Report generated: {output_file}")
 
     def run(self, argv: Optional[List[str]] = None):
         """Execute reducto.
@@ -148,4 +182,8 @@ class Reducto:
         argv
         """
         self.args: argparse.Namespace = self.parser.parse_args(argv)
-        self.report()
+
+        # TODO: Use the output file in the report
+        print("Reducto ", MAGIC_WAND)
+        report = self.report()
+        self._write_report(report)
