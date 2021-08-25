@@ -214,7 +214,7 @@ def get_docstring_lines(node: Union[ast.Module, ast.FunctionDef]) -> int:
 
     Notes
     -----
-    Reminder:
+        Reminder:
         -
         '''first '''
         1
@@ -238,6 +238,7 @@ def get_docstring_lines(node: Union[ast.Module, ast.FunctionDef]) -> int:
 
         '''
         4
+
     """
     docs: str = ast.get_docstring(node)
 
