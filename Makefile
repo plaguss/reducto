@@ -4,8 +4,9 @@
 black:
 	black reducto
 
-check_black:
+lint:
 	black --check reducto
+	mypy --strict reducto
 
 documentation:
 	(cd ${PWD}/docs && make html)
