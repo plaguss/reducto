@@ -1,11 +1,14 @@
 
 .PHONY: help lint test deps
 
-lint:
-	echo "Not defined"
+black:
+	black reducto
 
-docs:
-	echo "Not defined"
+check_black:
+	black --check reducto
+
+documentation:
+	(cd ${PWD}/docs && make html)
 
 deps:  ## Install dependencies
 	python -m pip install --upgrade pip
