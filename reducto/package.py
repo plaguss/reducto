@@ -1,8 +1,7 @@
-"""
-Code controlling python package traversal.
-"""
+"""Module containing code to control python package crawling. """
+
 import statistics
-from typing import Iterator, Optional, List, Dict
+from typing import Iterator, Optional, List
 from pathlib import Path
 
 import reducto.src as src
