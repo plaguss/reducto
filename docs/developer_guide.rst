@@ -6,19 +6,26 @@
 Developer Guide
 ===============
 
-Here resides the doc for the reducto modules.
+Here resides the documentation for the reducto modules.
+This may be interesting if you are curious of how it works reducto
+under the hoods.
 
-
-CLI
+cli
 ---
+
+Contains a single function which would be generated when running
+*flit install* locally, or when pip installing the package.
 
 .. automodule:: reducto.cli
 
 .. autofunction:: reducto.cli.main
 
-
-Reducto
+reducto
 -------
+
+Contains the class representing the application.
+When the program is invoked, the code called from main is defined
+in this module.
 
 .. automodule:: reducto.reducto
 
@@ -26,8 +33,12 @@ Reducto
    :members:
 
 
-Reports
+reports
 -------
+
+This module defines the reporting facilities defined.
+There are two classes, SourceReport for single files, and
+PackageReport to deal with a whole package.
 
 .. automodule:: reducto.reports
 
@@ -41,7 +52,7 @@ Reports
    :members:
 
 
-Package
+package
 -------
 
 .. automodule:: reducto.package
@@ -77,7 +88,7 @@ src
    :noindex:
 
 
-Items
+items
 -----
 
 .. automodule:: reducto.items
