@@ -1,6 +1,4 @@
-"""
-Module storing the different reports presented by the package.
-"""
+"""Module storing the different reports presented by the package. """
 
 from __future__ import annotations
 
@@ -29,7 +27,7 @@ Reporting = Union[ReportDict, ReportPackageDict]
 class ReportFormat(Enum):
     """Formats allowed for the reports.
 
-    RAW corresponds to the base dict format, the remaining
+    JSON corresponds to the base dict format, the remaining
     formats correspond to the ones defined in tabulate package.
     """
 
@@ -114,7 +112,7 @@ class SourceReport:
 
         Returns
         -------
-        report : Reporting
+        report : ReportDict
         """
         if fmt == ReportFormat.JSON:
             report_ = self._as_dict()
