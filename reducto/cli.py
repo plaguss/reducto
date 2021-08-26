@@ -8,7 +8,11 @@ from reducto import reducto
 
 
 def main(argv: Optional[List[str]] = None) -> None:
-    """Execute the reducto application."""
+    """Execute the reducto application.
+
+    Instantiates the Reducto class, and passes the command
+    line arguments to the run method.
+    """
     if argv is None:
         argv = sys.argv[1:]
 
