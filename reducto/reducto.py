@@ -187,8 +187,6 @@ class Reducto:
         argv
         """
         self.args: argparse.Namespace = self.parser.parse_args(argv)
-
-        # TODO: Use the output file in the report
-        print("Reducto ", BANNER)
+        print(BANNER)
         report = self.report()
         self._write_report(report)
