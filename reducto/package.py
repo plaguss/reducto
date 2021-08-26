@@ -93,7 +93,7 @@ class Package:
         elif is_src_package(path):
             return
         else:
-            raise PackageError(path)
+            raise PackageError(f'{path} is not a valid python package.')
 
     @property
     def path(self) -> Path:
