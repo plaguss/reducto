@@ -98,6 +98,7 @@ related to comments and blank lines.
 .. autoclass:: reducto.src.SourceVisitor
    :members:
    :noindex:
+   :show-inheritance:
 
 
 items
