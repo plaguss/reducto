@@ -26,21 +26,6 @@ class Package:
     Controls what a python package is and generates the associated source
     files to be parsed.
     The general content of a package is grabbed from here.
-
-    Attributes
-    ----------
-    source_files
-    lines
-    functions
-    source_lines
-    docstrings
-    comments
-    blank_lines
-    average_function_length
-
-    Methods
-    -------
-
     """
 
     def __init__(self, path: Path) -> None:
