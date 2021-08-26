@@ -76,7 +76,7 @@ class SourceReport:
     """Reporting class per a source (.py) file.
 
     Contains a report method to obtain the proper report format
-    from a SourceFile object
+    from a SourceFile object.
 
     Methods
     -------
@@ -163,8 +163,14 @@ class SourceReport:
 
 
 class PackageReport:
-    """
-    Define report for a package, gets a pkg.Package as input.
+    """Define report for a package, gets a pkg.Package as input.
+
+    Contains a report method to obtain the proper report format
+    from a SourceFile object.
+
+    See Also
+    --------
+    Package
     """
 
     def __init__(self, package: Package) -> None:
@@ -201,7 +207,13 @@ class PackageReport:
     def report(
         self, fmt: ReportFormat = ReportFormat.JSON, grouped: bool = False
     ) -> ReportPackageDict:
-        """
+        """Report method for a package.
+
+        Generates the report for a Package made of Source files.
+        Initially gets the info either grouped or ungrouped,
+        if the format chosen is json its returned directly.
+
+        TODO: No more formats are defined yet.
 
         Parameters
         ----------
@@ -214,7 +226,12 @@ class PackageReport:
 
         Returns
         -------
+        report : ReportPackageDict
 
+        Raises
+        ------
+        ReportFormatError
+            When a report format is not defined
         """
         # FIXME: Add functionality for different formats
         if grouped:
