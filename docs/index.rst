@@ -9,8 +9,8 @@ reducto - Python source code features in a command
 .. toctree::
    :titlesonly:
 
-   changelog
    command_line_interface
+   changelog
 
 Quickstart
 ----------
@@ -19,7 +19,12 @@ Hands on example
 Installation
 ------------
 
-  python -m pip install reducto
+To install the package, use pip, preferably inside a virtual
+environment.
+
+.. code-block::
+
+   $ pip install reducto
 
 reducto requires version 3.8 at least.
 
