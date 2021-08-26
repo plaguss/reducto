@@ -43,7 +43,7 @@ class TestModuleReport:
             reporter.report(fmt='wrong')
 
     def test_report(self, reporter):
-        assert reporter.report(fmt=rp.ReportFormat.RAW) == reporter._as_dict()
+        assert reporter.report(fmt=rp.ReportFormat.JSON) == reporter._as_dict()
 
     def test_as_dict(self, reporter):
         report_dict = reporter._as_dict()
@@ -75,8 +75,8 @@ class TestPackageReport:
             reporter.report(fmt='wrong')
 
     def test_report(self, reporter):
-        assert reporter.report(fmt=rp.ReportFormat.RAW) == reporter._report_ungrouped()
-        assert reporter.report(fmt=rp.ReportFormat.RAW, grouped=True) == reporter._report_grouped()
+        assert reporter.report(fmt=rp.ReportFormat.JSON) == reporter._report_ungrouped()
+        assert reporter.report(fmt=rp.ReportFormat.JSON, grouped=True) == reporter._report_grouped()
 
     def test_report_grouped(self, reporter):
         report = reporter.report(grouped=True)
