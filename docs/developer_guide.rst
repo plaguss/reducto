@@ -55,6 +55,10 @@ PackageReport to deal with a whole package.
 package
 -------
 
+Contains the code which deals with a python package traversal.
+Package class parses a directory tree to obtain the python source
+files, instantiating the corresponding *SourceFile*s.
+
 .. automodule:: reducto.package
 
 .. autoexception:: reducto.package.PackageError
