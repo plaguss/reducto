@@ -70,8 +70,9 @@ class Reducto:
             "-f",
             "--format",
             type=rp.ReportFormat,
-            default=rp.ReportFormat.RAW,
-            choices=list(rp.ReportFormat),
+            default=rp.ReportFormat.JSON,
+            # choices=list(rp.ReportFormat),
+            choices="json",
             dest="format",
             help="Format for the report type.",
         )

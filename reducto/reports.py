@@ -33,7 +33,7 @@ class ReportFormat(Enum):
     formats correspond to the ones defined in tabulate package.
     """
 
-    RAW = "raw"
+    JSON = "json"
     # Tabulate formats:
     SIMPLE = "simple"
     PLAIN = "plain"
@@ -104,19 +104,19 @@ class SourceReport:
         """
         return self._src_file
 
-    def report(self, fmt: ReportFormat = ReportFormat.RAW) -> ReportDict:
+    def report(self, fmt: ReportFormat = ReportFormat.JSON) -> ReportDict:
         """Report of a source file.
 
         Parameters
         ----------
         fmt : ReportFormat
-            Must be one of ReportFormats. Defaults to ReportFormats.RAW.
+            Must be one of ReportFormats. Defaults to ReportFormats.JSON.
 
         Returns
         -------
         report : Reporting
         """
-        if fmt == ReportFormat.RAW:
+        if fmt == ReportFormat.JSON:
             report_ = self._as_dict()
         else:
             raise ReportFormatError(fmt)
@@ -194,14 +194,14 @@ class PackageReport:
         return self._package
 
     def report(
-        self, fmt: ReportFormat = ReportFormat.RAW, grouped: bool = False
+        self, fmt: ReportFormat = ReportFormat.JSON, grouped: bool = False
     ) -> ReportPackageDict:
         """
 
         Parameters
         ----------
         fmt : ReportFormat
-            Format to return the information. Defaults to ReportFormats.RAW.
+            Format to return the information. Defaults to ReportFormats.JSON.
         grouped : bool
             Whether to return the information by source files, or grouped at
             the package level (resumes the package). Defaults to False, returns
@@ -217,7 +217,7 @@ class PackageReport:
         else:
             report: ReportPackageDict = self._report_ungrouped()
 
-        if fmt == ReportFormat.RAW:
+        if fmt == ReportFormat.JSON:
             pass
         elif fmt in set(str(fmt) for fmt in ReportFormat):
             raise NotImplementedError("IMPLEMENT TABLE TRANSFORMATION.")
@@ -287,7 +287,7 @@ class PackageReport:
         report: ReportDict = {}
         for file in self.package.source_files:
             report[self._get_relname(str(file))] = SourceReport(file).report(
-                fmt=ReportFormat.RAW
+                fmt=ReportFormat.JSON
             )[file.name]
 
         return {self.package.name: report}
