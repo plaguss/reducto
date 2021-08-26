@@ -1,12 +1,4 @@
-"""Module containing the application abstraction.
-
-Test the app for development.
-
-From the path containing the pyproject.toml, run:
-$ flit install --deps production
-
-Then execute against a package or source file.
-"""
+"""Module containing the application abstraction. """
 
 from typing import List, Optional, Union
 import argparse
@@ -22,14 +14,20 @@ import reducto as rd
 # Emoji list: https://unicode.org/emoji/charts/full-emoji-list.html
 # MAGIC_WAND: str = "\U0001FA84"
 # https://manytools.org/hacker-tools/ascii-banner/
-BANNER = """
+BANNER: str = """
 ┬─┐┌─┐┌┬┐┬ ┬┌─┐┌┬┐┌─┐
 ├┬┘├┤  │││ ││   │ │ │
 ┴└─└─┘─┴┘└─┘└─┘ ┴ └─┘"""
 
 
 class Reducto:
-    """Class defining the package application."""
+    """Class defining the package application.
+
+    This class represents the reducto application.
+    Its made of an argparse.ArgumentParser.
+    The different arguments are defined as private methods to be
+    called on initialization.
+    """
 
     def __init__(self) -> None:
         self.parser: argparse.ArgumentParser = argparse.ArgumentParser()
@@ -50,9 +48,9 @@ class Reducto:
         self.parser.add_argument(
             "-v",
             "--version",
-            action='version',
-            version=f'reducto {rd.__version__}',
-            help="Show the version of the program."
+            action="version",
+            version=f"reducto {rd.__version__}",
+            help="Show the version of the program.",
         )
 
     def _add_argument_target(self) -> None:
@@ -79,7 +77,7 @@ class Reducto:
         -----
         Add redirection to tabulate methods.
         """
-        # TODO: Not developed yet
+        # TODO: Not developed yet other formats.
         # choices: List[str] = [str(rep) for rep in rp.ReportFormat]
 
         self.parser.add_argument(
@@ -120,12 +118,7 @@ class Reducto:
         self.parser.set_defaults(grouped=True)
 
     def _add_argument_output_file(self) -> None:
-        """Argument to insert the output file (if applies).
-
-        Returns
-        -------
-
-        """
+        """Argument to insert the output file (if applies)."""
         default: pathlib.Path = pathlib.Path.cwd() / "reducto_report.json"
         self.parser.add_argument(
             "-o",
@@ -143,24 +136,34 @@ class Reducto:
         raise NotImplementedError
 
     def _report_source_file(self, target: pathlib.Path) -> rp.ReportDict:
-        """
+        """Create a report of a single source file.
 
         Parameters
         ----------
         target : pathlib.Path
             Path to the source file.
+
+        Returns
+        -------
+        report : rp.ReportDict
+            Dict containing the report.
         """
         src_file: src.SourceFile = src.SourceFile(target)
         reporter: rp.SourceReport = src_file.report()
         return reporter.report(fmt=self.args.format)
 
     def _report_package(self, target: pathlib.Path) -> rp.ReportPackageDict:
-        """
+        """Create a report of a python package.
 
         Parameters
         ----------
         target : pathlib.Path
             Path to the package.
+
+        Returns
+        -------
+        report : rp.ReportPackageDict
+            Dict containing the report.
         """
         # TODO: Add extra info for packages, as resume of source files ungrouped
         package: pkg.Package = pkg.Package(target)
@@ -171,6 +174,10 @@ class Reducto:
         """Detects whether the input target is a file or a directory.
 
         Calls the corresponding method depending on the target.
+
+        See Also
+        --------
+        run
         """
         target: pathlib.Path = self.args.target
         if target.is_file():
@@ -180,16 +187,13 @@ class Reducto:
 
         return report
 
-    def _write_report(self, report: dict) -> None:
-        """
+    def _write_report(self, report: Union[rp.ReportDict, rp.ReportPackageDict]) -> None:
+        """Writes the report to a json file.
 
         Parameters
         ----------
-        filename
-
-        Returns
-        -------
-
+        report : Union[rp.ReportDict, rp.ReportPackageDict]
+            Contains the resulting report.
         """
         output_file = self.args.output
         with open(output_file, "w") as f:
@@ -199,9 +203,14 @@ class Reducto:
     def run(self, argv: Optional[List[str]] = None):
         """Execute reducto.
 
+        The only relevant public method.
+        Parses the terminal arguments, generates the report
+        and writes it to a file.
+
         Parameters
         ----------
-        argv
+        argv : Optional[List[str]]
+            Arguments passed from the terminal.
         """
         self.args: argparse.Namespace = self.parser.parse_args(argv)
         print(BANNER)
