@@ -75,6 +75,14 @@ files, instantiating the corresponding *SourceFile*s.
 src
 ---
 
+This module contains the definition of a python source file
+represented by the *SourceFile* class.
+
+The source files are parsed using the *ast* to obtain the information
+regarding the functions (and methods inside classes, treated as functions),
+as well as docstrings, and the *tokenize* module to obtain the information
+related to comments and blank lines.
+
 .. automodule:: reducto.src
 
 .. autoexception:: reducto.src.SourceFileError
