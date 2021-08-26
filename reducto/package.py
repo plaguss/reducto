@@ -24,7 +24,7 @@ class Package:
 
     Entry point for reducto.
     Controls what a python package is and generates the associated source
-    files to be then parsed.
+    files to be parsed.
     The general content of a package is grabbed from here.
 
     Attributes
@@ -92,11 +92,16 @@ class Package:
         elif is_src_package(path):
             return
         else:
-            raise PackageError(f'{path} is not a valid python package.')
+            raise PackageError(f"{path} is not a valid python package.")
 
     @property
     def path(self) -> Path:
-        """Returns the full path pointing to the package."""
+        """Returns the full path pointing to the package.
+
+        Returns
+        -------
+        path : Path
+        """
         return self._path
 
     @property
@@ -138,6 +143,12 @@ class Package:
 
     @property
     def source_files(self) -> List[src.SourceFile]:
+        """Returns the list of source files.
+
+        Returns
+        -------
+        source_files : List[src.SourceFile]
+        """
         # FIXME: Check when no files are found
         if self._source_files is None:
             self._walk()
@@ -145,28 +156,63 @@ class Package:
 
     @property
     def lines(self) -> List[int]:
+        """Returns the list of lines of each file.
+
+        Returns
+        -------
+        lines : List[int]
+            Number of lines of each of the source_files.
+        """
         return [len(file) for file in self.source_files]
 
     @property
     def blank_lines(self) -> List[int]:
+        """Returns a list with the number of blank lines per source file.
+
+        Returns
+        -------
+        blank_lines : List[int]
+            Number of blank lines per source_file.
+        """
         if self._blank_lines is None:
             self._walk()
         return [file.blank_lines for file in self.source_files]
 
     @property
     def docstrings(self) -> List[int]:
+        """Returns a list with the number of docstring lines per source file.
+
+        Returns
+        -------
+        docstrings : List[int]
+            Number of docstrings per source_file.
+        """
         if self._docstrings is None:
             self._walk()
         return [file.total_docstrings for file in self.source_files]
 
     @property
     def comment_lines(self) -> List[int]:
+        """Returns a list with the number of comment lines per source file.
+
+        Returns
+        -------
+        comment_lines : List[int]
+            Number of comment lines per source_file.
+        """
         if self._comment_lines is None:
             self._walk()
         return [file.comment_lines for file in self.source_files]
 
     @property
     def source_lines(self) -> List[int]:
+        """Returns a list with the number of source code lines per source file.
+
+        Returns
+        -------
+        source_lines : List[int]
+            Number of source lines of each source file.
+        """
         return [
             sum([func.source_lines for func in file.functions])
             for file in self.source_files
@@ -174,6 +220,17 @@ class Package:
 
     @property
     def functions(self) -> List[List[it.FunctionDef]]:
+        """Returns a list of lists of FunctionDef objects.
+
+        Returns
+        -------
+        functions : List[List[it.FunctionDef]]
+            FunctionDef obtained in each source_file.
+
+        See Also
+        --------
+        reducto.items.FunctionDef
+        """
         # FIXME: For the moment returns a list of list of functions
         if self._functions is None:
             self._functions = [file.functions for file in self.source_files]
@@ -181,10 +238,26 @@ class Package:
 
     @property
     def number_of_functions(self) -> List[int]:
+        """Returns a list of of number of functions per source_file.
+
+        Returns
+        -------
+        number_of_functions : List[int]
+            Number of FunctionDef per source_file.
+        """
         return [len(func_list) for func_list in self.functions]
 
     @property
     def average_function_length(self) -> int:
+        """Average function length for the package.
+
+        Only the source_lines are taken into account.
+
+        Returns
+        -------
+        average : int
+            Average function length, rounded to the closest int.
+        """
         source_lines: List[float] = []
         for function_list in self.functions:
             for function in function_list:
@@ -198,6 +271,13 @@ class Package:
 
     @property
     def average_function_lengths(self) -> List[int]:
+        """Average function lengths per surce file.
+
+        Returns
+        -------
+        averages : List[int]
+            Average length of the functions per source file.
+        """
         averages: List[int] = []
         for function_list in self.functions:
             if len(function_list) == 0:
@@ -211,7 +291,7 @@ class Package:
         return averages
 
     def report(self) -> rp.PackageReport:
-        """Obtain the reporter class.
+        """Obtains the PackageReport.
 
         Returns
         -------
@@ -221,7 +301,7 @@ class Package:
 
         See Also
         --------
-        rp.PackageReport
+        reducto.reports.PackageReport
         """
         report: rp.PackageReport = rp.PackageReport(self)
         return report
