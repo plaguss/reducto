@@ -73,11 +73,18 @@ class ReportFormatError(Exception):
 
 
 class SourceReport:
-    """Reporting class.
+    """Reporting class per a source (.py) file.
+
+    Contains a report method to obtain the proper report format
+    from a SourceFile object
 
     Methods
     -------
     report
+
+    See Also
+    --------
+    SourceFile
     """
 
     def __init__(self, src_file: SourceFile) -> None:
