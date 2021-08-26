@@ -8,7 +8,7 @@ $ flit install --deps production
 Then execute against a package or source file.
 """
 
-from typing import List, Optional, Dict, Union
+from typing import List, Optional, Union
 import argparse
 import pathlib
 import json
@@ -16,11 +16,12 @@ import json
 import reducto.package as pkg
 import reducto.src as src
 import reducto.reports as rp
+import reducto as rd
 
 
 # Emoji list: https://unicode.org/emoji/charts/full-emoji-list.html
 # MAGIC_WAND: str = "\U0001FA84"
-#https://manytools.org/hacker-tools/ascii-banner/
+# https://manytools.org/hacker-tools/ascii-banner/
 BANNER = """
 ┬─┐┌─┐┌┬┐┬ ┬┌─┐┌┬┐┌─┐
 ├┬┘├┤  │││ ││   │ │ │
@@ -35,10 +36,24 @@ class Reducto:
         self.args: Optional[argparse.Namespace] = None
 
         # Add arguments
+        self._add_argument_version()
         self._add_argument_target()
         self._add_argument_format()
         self._add_argument_grouped()
         self._add_argument_output_file()
+
+    def _add_argument_version(self) -> None:
+        """Version argument.
+
+        Returns the current version of the package.
+        """
+        self.parser.add_argument(
+            "-v",
+            "--version",
+            action='version',
+            version=f'reducto {rd.__version__}',
+            help="Show the version of the program."
+        )
 
     def _add_argument_target(self) -> None:
         """Target argument.
@@ -64,7 +79,8 @@ class Reducto:
         -----
         Add redirection to tabulate methods.
         """
-        choices: List[str] = [str(rep) for rep in rp.ReportFormat]
+        # TODO: Not developed yet
+        # choices: List[str] = [str(rep) for rep in rp.ReportFormat]
 
         self.parser.add_argument(
             "-f",
@@ -72,7 +88,7 @@ class Reducto:
             type=rp.ReportFormat,
             default=rp.ReportFormat.JSON,
             # choices=list(rp.ReportFormat),
-            choices="json",
+            choices=[rp.ReportFormat.JSON],
             dest="format",
             help="Format for the report type.",
         )
