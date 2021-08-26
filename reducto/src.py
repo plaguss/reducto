@@ -11,7 +11,6 @@ https://kamneemaran45.medium.com/python-ast-5789a1b60300
 """
 
 from typing import List, Optional, Dict
-import os
 import ast
 import tokenize
 import pathlib
