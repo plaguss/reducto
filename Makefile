@@ -19,7 +19,7 @@ install:  ## Install the package locally
 	flit install
 
 test:  ## Run tests
-	pytest --cov=reducto
+	pytest --cov=reducto --cov-report=xml
 
 help:
 	@echo "docs: Generate docs."
