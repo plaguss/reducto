@@ -19,7 +19,12 @@ import reducto.reports as rp
 
 
 # Emoji list: https://unicode.org/emoji/charts/full-emoji-list.html
-MAGIC_WAND: str = "\U0001FA84"
+# MAGIC_WAND: str = "\U0001FA84"
+#https://manytools.org/hacker-tools/ascii-banner/
+BANNER = """
+┬─┐┌─┐┌┬┐┬ ┬┌─┐┌┬┐┌─┐
+├┬┘├┤  │││ ││   │ │ │
+┴└─└─┘─┴┘└─┘└─┘ ┴ └─┘"""
 
 
 class Reducto:
@@ -184,6 +189,6 @@ class Reducto:
         self.args: argparse.Namespace = self.parser.parse_args(argv)
 
         # TODO: Use the output file in the report
-        print("Reducto ", MAGIC_WAND)
+        print("Reducto ", BANNER)
         report = self.report()
         self._write_report(report)
