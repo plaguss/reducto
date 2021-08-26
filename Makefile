@@ -13,9 +13,9 @@ documentation:
 
 deps:  ## Install dependencies
 	python -m pip install --upgrade pip
-	python -m pip install pytest==6.2.3 pytest-cov==2.11.1
+	pip install flit
 
-install:  ## Install the package locally
+install: deps  ## Install the package locally
 	flit install
 
 test:  ## Run tests
