@@ -4,10 +4,10 @@ Uses `ast` and `tokenize` builtin libraries.
 
 References
 ----------
-https://stackoverflow.com/questions/37514636/good-way-to-count-number-of-functions-of-a-python-file-given-path
-https://greentreesnakes.readthedocs.io/en/latest/manipulating.html#inspecting-nodes
-https://laptrinhx.com/julien-danjou-finding-definitions-from-a-source-file-and-a-line-number-in-python-468576127/
-https://kamneemaran45.medium.com/python-ast-5789a1b60300
+- https://stackoverflow.com/questions/37514636/good-way-to-count-number-of-functions-of-a-python-file-given-path
+- https://greentreesnakes.readthedocs.io/en/latest/manipulating.html#inspecting-nodes
+- https://laptrinhx.com/julien-danjou-finding-definitions-from-a-source-file-and-a-line-number-in-python-468576127/
+- https://kamneemaran45.medium.com/python-ast-5789a1b60300
 """
 
 from typing import List, Optional, Dict
@@ -76,13 +76,22 @@ class SourceFile:
     def validate(path: pathlib.Path) -> None:
         """Check if the path is a valid python file.
 
+        Called on instantiation. It must be a file with the extension .py.
+
         Parameters
         ----------
         path : Path
+            Path to validate.
 
         Returns
         -------
         check : bool
+            True if is a valid python file, false otherwise.
+
+        Raises
+        ------
+        SourceFileError
+            When the file is not a valid python file.
         """
         if path.is_file():
             if path.name.endswith(".py"):
@@ -132,7 +141,12 @@ class SourceFile:
 
     @property
     def tokens(self) -> List[tokenize.TokenInfo]:
-        """Return the complete set of tokens for a file."""
+        """Return the complete set of tokens for a file.
+
+        See Also
+        --------
+        tokenize.generate_tokens
+        """
         if self._tokens is None:
             line_iter = iter(self.lines)
             self._tokens = list(tokenize.generate_tokens(lambda: next(line_iter)))
@@ -164,6 +178,7 @@ class SourceFile:
         Returns
         -------
         comments_positions : List[int]
+            List with the line position of each comment line.
         """
         if self._comment_lines_positions is None:
             self._comment_blank_lines_positions()
@@ -194,6 +209,7 @@ class SourceFile:
         Returns
         -------
         blank_lines_positions : List[int]
+            List with the positions of the blank lines.
         """
         if self._blank_lines_positions is None:
             self._comment_blank_lines_positions()  # pragma: no cover, call to a tested method.
@@ -205,6 +221,11 @@ class SourceFile:
         Traverses the tokens and checks whether any is a comment line
         or a blank line. If they are, the comment_lines and blank_lines
         are grown, and the corresponding positions are registered.
+
+        See Also
+        --------
+        token_is_comment_line
+        token_is_blank_line
         """
         self._comment_lines_positions = []
         self._blank_lines_positions = []
@@ -222,13 +243,17 @@ class SourceFile:
     def source_visitor(self) -> "SourceVisitor":
         """Returns the SourceVisitor once visited.
 
-        Instantiates and calls the visit method to the SourceVisitor.
+        Instantiates and calls the visit method of the SourceVisitor.
         All the necessary info regarding the ast of the source file
         should be contained here.
 
         Returns
         -------
         source_visitor : SourceVisitor
+
+        See Also
+        --------
+        SourceVisitor
         """
         if self._source_visitor is None:
             self._source_visitor = self._visit_source()
@@ -264,6 +289,11 @@ class SourceFile:
         Returns
         -------
         functions : List[it.FunctionDef]
+            List of FunctionDef objects in the file.
+
+        See Also
+        --------
+        reducto.items.FunctionDef
         """
         return self.source_visitor.functions
 
@@ -301,7 +331,8 @@ class SourceFile:
         -------
         source_lines : int
             Source lines are computed as the total number of lines
-            minus the docstrings and minus the comment lines.
+            minus the docstrings, minus the comment lines and minus
+            the blank lines.
         """
         return len(self) - self.total_docstrings - self.comment_lines - self.blank_lines
 
@@ -314,7 +345,7 @@ class SourceFile:
 
         See Also
         --------
-        rp.SourceReport
+        reducto.reports.SourceReport
         """
         report: rp.SourceReport = rp.SourceReport(self)
         return report
@@ -502,15 +533,3 @@ class SourceVisitor(ast.NodeVisitor):
         if len(self.functions) > 0:  # Only run when at least one function was
             for attribute, positions in content.items():
                 self._register_elements(positions, attribute)
-
-
-# if __name__ == '__main__':
-#     EXAMPLE = os.path.join(os.getcwd(), 'tests', 'data', 'example.py')
-#
-#     path = pathlib.Path(EXAMPLE)
-#     src = SourceFile(path)
-#     tree = src.ast
-#     tokens = src.tokens
-#     functions = src.functions
-#     comments = src.comment_lines_positions
-#     blank_lines = src.blank_lines_positions
