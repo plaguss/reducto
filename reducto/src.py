@@ -402,17 +402,28 @@ def token_is_blank_line(tok: tokenize.TokenInfo) -> bool:
 
 
 class SourceVisitor(ast.NodeVisitor):
-    """
+    """Class inheriting from ast.NodeVisitor.
+
+    Defines the actions to be taken on the ast being parsed.
+    Obtains every FunctionDef in the source file, (included async ones)
+    and when a class is found, the corresponding methods are parsed
+    just like FunctionDef objects.
+    No other object is obtained from the SourceVisitor.
+    Instantiates the corresponding items and registers the content, like
+    the number of lines and docstrings.
+
         TODO:
         - Añadir la distinción entre método y función (método nuevo en lugar
         de generic_visit?)
-        - Método len para contar casos
-        - docstrings
 
     Notes
     -----
     For the moment, no distinction is done between functions and definitions,
     so between the items there will be only FunctionDef, no MethodDef items.
+
+    See Also
+    --------
+    ast.NodeVisitor
     """
 
     def __init__(self) -> None:
@@ -437,6 +448,10 @@ class SourceVisitor(ast.NodeVisitor):
         -------
         node : ast.FunctionDef
             Returns the node itself.
+
+        See Also
+        --------
+        reducto.items.FunctionDef
         """
         func_def = it.FunctionDef(node.name, start=node.lineno, end=node.end_lineno)
         func_def.node = node
@@ -446,8 +461,8 @@ class SourceVisitor(ast.NodeVisitor):
     visit_AsyncFunctionDef = visit_FunctionDef
 
     def visit_ClassDef(self, node: ast.ClassDef):
-        """
-        TODO: Review how to distinguish between functions and methods.
+        """Calls the general generic_visit method on itself, obtaining
+        the FunctionDef objects found.
         """
         self.generic_visit(node)
         return node
@@ -460,12 +475,23 @@ class SourceVisitor(ast.NodeVisitor):
         -------
         items : List[it.Item]
             Returns all the items found in the ast source.
+
+        See Also
+        --------
+        reducto.items.Item
         """
         return self._items
 
     @property
     def functions(self) -> List[it.FunctionDef]:
-        """Returns the items which are functions from the list of items obtained."""
+        """Returns the items which are functions from the list of items obtained.
+
+        When the functions are retrieved, the docstrings are obtained registered.
+
+        Returns
+        -------
+        functions : List[it.FunctionDef]
+        """
         if len(self._functions) == 0:
             self._functions = [
                 item for item in self.items if isinstance(item, it.FunctionDef)
