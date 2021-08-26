@@ -96,7 +96,7 @@ class SourceFile:
         if path.is_file():
             if path.name.endswith(".py"):
                 return
-        raise SourceFileError(path)
+        raise SourceFileError(f"{path} is not a valid python file.")
 
     @property
     def name(self) -> str:
