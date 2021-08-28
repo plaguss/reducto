@@ -1,6 +1,8 @@
-# reducto
+    ┬─┐┌─┐┌┬┐┬ ┬┌─┐┌┬┐┌─┐
+    ├┬┘├┤  │││ ││   │ │ │
+    ┴└─└─┘─┴┘└─┘└─┘ ┴ └─┘
 
-**reducto** is a command line utility to extract basic features from
+**Reducto** is a command line utility to extract basic features from
 your _python_ source code.
 
 ### Development status
