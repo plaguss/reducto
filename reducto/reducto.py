@@ -32,7 +32,7 @@ class Reducto:
         self._add_argument_grouped()
         self._add_argument_output_file()
 
-    def _add_argument_version(self) -> None:
+    def _add_argument_version(self) -> None:  # pragma: no cover
         """Version argument.
 
         Returns the current version of the package.
@@ -45,7 +45,7 @@ class Reducto:
             help="Show the version of the program.",
         )
 
-    def _add_argument_target(self) -> None:
+    def _add_argument_target(self) -> None:  # pragma: no cover
         """Target argument.
 
         Expects the path pointing to a python package or source file.
@@ -60,7 +60,7 @@ class Reducto:
             nargs="?",
         )
 
-    def _add_argument_format(self) -> None:
+    def _add_argument_format(self) -> None:  # pragma: no cover
         """Adds the argument for the type of output format.
 
         The current implementation only allows for raw format (a dict).
@@ -83,7 +83,7 @@ class Reducto:
             help="Format for the report type.",
         )
 
-    def _add_argument_grouped(self):
+    def _add_argument_grouped(self):  # pragma: no cover
         """Whether to group the package report or not.
 
         Notes
@@ -109,7 +109,7 @@ class Reducto:
         )
         self.parser.set_defaults(grouped=True)
 
-    def _add_argument_output_file(self) -> None:
+    def _add_argument_output_file(self) -> None:  # pragma: no cover
         """Argument to insert the output file (if applies)."""
         self.parser.add_argument(
             "-o",
@@ -120,11 +120,11 @@ class Reducto:
                  " given, redirects to stdout.",
         )
 
-    def _add_argument_exclude(self):
+    def _add_argument_exclude(self):  # pragma: no cover
         """Add argument to exclude paths, files, methods (private or dunder)."""
         raise NotImplementedError
 
-    def _add_argument_as_percentage(self) -> None:
+    def _add_argument_as_percentage(self) -> None:  # pragma: no cover
         raise NotImplementedError
 
     def _report_source_file(self, target: pathlib.Path) -> rp.ReportDict:
