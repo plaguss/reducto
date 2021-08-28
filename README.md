@@ -6,11 +6,9 @@ your _python_ source code.
 ### Development status
 
 TODO: Add badges:
-- ci
-- codecov
 - docs
 
-![example workflow](https://github.com/plaguss/reducto/actions/workflows/ci.yml/badge.svg)
+![ci workflow](https://github.com/plaguss/reducto/actions/workflows/ci.yml/badge.svg)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![codecov](https://codecov.io/gh/plaguss/reducto/branch/main/graph/badge.svg?token=AVKH6TS7G7)](https://codecov.io/gh/plaguss/reducto)
 
