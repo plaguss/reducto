@@ -1,6 +1,4 @@
-    ┬─┐┌─┐┌┬┐┬ ┬┌─┐┌┬┐┌─┐
-    ├┬┘├┤  │││ ││   │ │ │
-    ┴└─└─┘─┴┘└─┘└─┘ ┴ └─┘
+# Reducto
 
 **Reducto** is a command line utility to extract basic features from
 your _python_ source code.
@@ -36,9 +34,6 @@ Let's see an example running on the reducto source code as of the moment
 of writing this:
 
     $ reducto reducto
-    ┬─┐┌─┐┌┬┐┬ ┬┌─┐┌┬┐┌─┐
-    ├┬┘├┤  │││ ││   │ │ │
-    ┴└─└─┘─┴┘└─┘└─┘ ┴ └─┘
     Report generated: {PATH_TO_REDUCTO}/report_json.json
 
 And the resulting report may contain a report like the following:

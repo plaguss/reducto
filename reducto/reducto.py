@@ -11,15 +11,6 @@ import reducto.reports as rp
 import reducto as rd
 
 
-# Emoji list: https://unicode.org/emoji/charts/full-emoji-list.html
-# MAGIC_WAND: str = "\U0001FA84"
-# https://manytools.org/hacker-tools/ascii-banner/
-BANNER: str = """
-┬─┐┌─┐┌┬┐┬ ┬┌─┐┌┬┐┌─┐
-├┬┘├┤  │││ ││   │ │ │
-┴└─└─┘─┴┘└─┘└─┘ ┴ └─┘"""
-
-
 class Reducto:
     """Class defining the package application.
 
@@ -213,6 +204,5 @@ class Reducto:
             Arguments passed from the terminal.
         """
         self.args: argparse.Namespace = self.parser.parse_args(argv)
-        print(BANNER)
         report = self.report()
         self._write_report(report)
