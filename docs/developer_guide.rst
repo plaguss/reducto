@@ -104,6 +104,13 @@ related to comments and blank lines.
 items
 -----
 
+When a source file is parsed, the relevant elements obtained
+from the ast are represented as *items*. The only parsed ast
+node are functions and methods, both represented currently
+by FunctionDef. These items will carry the information to compute
+the source lines, docstrings, etc.
+
+
 .. automodule:: reducto.items
 
 .. autoclass:: reducto.items.Item

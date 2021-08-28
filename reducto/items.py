@@ -1,6 +1,4 @@
-"""Contains the the elements to be extracted from a source file.
-
-"""
+"""Contains the elements to be extracted from a source file. """
 
 from typing import Optional, Union
 import ast
@@ -10,17 +8,6 @@ class Item:
     """Base class for the items to be extracted from an ast parsed source file.
 
     A subclass of this Item corresponds to an ast Node.
-
-    Methods
-    -------
-    node
-    name
-    start
-    end
-    docstrings
-    comments
-    blank_lines
-    source_lines
 
     Notes
     -----
@@ -44,7 +31,7 @@ class Item:
         self._start = start
         self._end = end
         self._docstrings: int = 0
-        self._get_docstrings_called: bool = False  # Check attribute, TODO: EXPLAIN
+        self._get_docstrings_called: bool = False
         self._comments = 0
         self._blank_lines = 0
 
@@ -53,7 +40,12 @@ class Item:
 
     @property
     def node(self) -> ast.AST:
-        """Returns the node itself."""
+        """Returns the node itself.
+
+        Returns
+        -------
+        node : ast.AST
+        """
         return self._node
 
     @node.setter
@@ -62,17 +54,32 @@ class Item:
 
     @property
     def name(self) -> str:
-        """Name the node."""
+        """Name the node.
+
+        Returns
+        -------
+        name : str
+        """
         return self._name
 
     @property
     def start(self) -> int:
-        """Line of the source file where the item starts."""
+        """Line of the source file where the item starts.
+
+        Returns
+        -------
+        start : int
+        """
         return self._start
 
     @property
     def end(self) -> int:
-        """Line of the source file where the item ends."""
+        """Line of the source file where the item ends.
+
+        Returns
+        -------
+        end : int
+        """
         return self._end
 
     def __len__(self) -> int:
@@ -120,7 +127,12 @@ class Item:
 
     @property
     def docstrings(self) -> int:
-        """Number of lines which are docstring in the item."""
+        """Number of lines which are docstring in the item.
+
+        Returns
+        -------
+        docstrings : int
+        """
         return self._docstrings
 
     @docstrings.setter
@@ -129,7 +141,12 @@ class Item:
 
     @property
     def comments(self) -> int:
-        """Number of lines which are comments in the item."""
+        """Number of lines which are comments in the item.
+
+        Returns
+        -------
+        comments : int
+        """
         return self._comments
 
     @comments.setter
@@ -138,7 +155,12 @@ class Item:
 
     @property
     def blank_lines(self) -> int:
-        """Number of lines which are blank lines in the item."""
+        """Number of lines which are blank lines in the item.
+
+        Returns
+        -------
+        blank_lines : int
+        """
         return self._blank_lines
 
     @blank_lines.setter
@@ -159,13 +181,9 @@ class Item:
 
 
 class FunctionDef(Item):
-    """Implementation of an ast.FunctionDef in.
+    """Implementation of an ast.FunctionDef.
 
     No distinction to an AsyncFunctionDef is made.
-
-    Methods
-    -------
-    get_docstrings
     """
 
     def __init__(self, name: str, start: int = 0, end: int = 0) -> None:
@@ -179,6 +197,10 @@ class FunctionDef(Item):
         Returns
         -------
         docs : int
+
+        See Also
+        --------
+        get_docstring_lines
         """
         if not self._get_docstrings_called:
             self.docstrings = get_docstring_lines(self.node)
@@ -196,7 +218,7 @@ class MethodDef(FunctionDef):
         super().__init__(name, start=start, end=end)
 
 
-def get_docstring_lines(node: Union[ast.Module, ast.FunctionDef]) -> int:
+def get_docstring_lines(node: Union[ast.Module, ast.FunctionDef, ast.AST]) -> int:
     r"""Obtains the number of lines which are docstrings.
 
     Uses ast.get_docstring to extract the docstrings of an ast node.
