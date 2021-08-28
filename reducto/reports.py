@@ -189,6 +189,7 @@ class PackageReport:
             "comment_lines",
             "blank_lines",
             "average_function_length",
+            "source_files"
         ]
 
     def __repr__(self) -> str:

@@ -143,3 +143,23 @@ class TestPackageReport:
     def test_sample(self, reporter):
         print(reporter.table(reporter.report()))
         assert 1 == 0
+
+    def test_columns(self, reporter):
+        assert len(reporter.columns) == 8
+
+    def test_table_ungrouped(self, reporter):
+        assert 1==2
+
+    def test_table_grouped(self, reporter):
+        column_names = [
+            'Package',
+            'Lines',
+            'Source lines',
+            'Docstrings',
+            'Comments',
+            'Blank lines',
+            'Average function length',
+            'Number of Functions'
+            'Source files'
+        ]
+        assert 1==2
