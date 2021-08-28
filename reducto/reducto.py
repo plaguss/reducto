@@ -4,6 +4,7 @@ from typing import List, Optional, Union
 import argparse
 import pathlib
 import json
+import pprint
 
 import reducto.package as pkg
 import reducto.src as src
@@ -110,13 +111,13 @@ class Reducto:
 
     def _add_argument_output_file(self) -> None:
         """Argument to insert the output file (if applies)."""
-        default: pathlib.Path = pathlib.Path.cwd() / "reducto_report.json"
         self.parser.add_argument(
             "-o",
             "--output",
             type=pathlib.Path,
-            default=default,
-            help=f"Full path of the report to be generated. Defaults to {default}",
+            default=None,
+            help="Full path of the report to be generated. If not"
+                 " given, redirects to stdout.",
         )
 
     def _add_argument_exclude(self):
@@ -205,4 +206,7 @@ class Reducto:
         """
         self.args: argparse.Namespace = self.parser.parse_args(argv)
         report = self.report()
-        self._write_report(report)
+        if self.args.output is not None:
+            self._write_report(report)
+        else:
+            pprint.pprint(report)
