@@ -116,7 +116,6 @@ the source lines, docstrings, etc.
 .. autoclass:: reducto.items.Item
    :members:
    :noindex:
-   :show-inheritance:
 
 .. autoclass:: reducto.items.FunctionDef
    :members:
