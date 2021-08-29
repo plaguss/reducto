@@ -205,6 +205,11 @@ class PackageReport:
         """
         return self._package
 
+    @property
+    def name(self) -> str:
+        # Redirect name to simplify testing
+        return self.package.name
+
     def report(
         self, fmt: ReportFormat = ReportFormat.JSON, grouped: bool = False
     ) -> ReportPackageDict:
@@ -340,26 +345,38 @@ class PackageReport:
         return str(pathlib.Path(self.package.name) / relname)
 
     def _table(
-        self, report: Union[ReportDict, ReportPackageDict]
+            self,
+            report: Union[ReportDict, ReportPackageDict],
+            table_fmt: str = 'plain',
+            grouped: bool = True
     ) -> List[List[Union[str, int]]]:
         """Create a table format to be passed to tabulate.
 
         The first row corresponds to the header.
+
+        TODO: Explain better.
         """
-        raise NotImplementedError
-        # FIXME: Detect correct format depending on grouped report or not.
-        grouped = False
-        name = self.package.name
-        if not grouped:
-            first_row = ["filename"]
-            first_row.extend(self.columns)
-            rows: List[List[Union[str, int]]] = [first_row]
-            inner = report[name]
+        name: str = self.name
+        headers: List[str] = []
+        table: List[List[Union[str, int]]] = []
+        inner = report[name]
+        if grouped:
+            headers.extend(self.columns)
+            headers.insert(0, "package")
+            row = [name]
+            row.extend([inner[col] for col in self.columns])
+            table.append(row)
+
+        else:
+            columns = self.columns.copy()
+            columns.remove('source_files')
+            headers.extend(columns)
+            headers.insert(0, "filename")
+            rows: List[List[Union[str, int]]] = []
             for filename in inner:
                 row = [filename]
-                row.extend([inner[filename][col] for col in self.columns])
+                row.extend([inner[filename][col] for col in columns])
                 rows.append(row)
-            print(tabulate(rows, headers="firstrow"))
-            return rows
-        else:
-            pass
+            table.extend(rows)
+
+        return tabulate(table, headers=headers, tablefmt=table_fmt)
