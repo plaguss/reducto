@@ -131,21 +131,6 @@ class TestPackageReport:
         ])
         assert all(rel == corr for rel, corr in zip(relnames, correct_names))
 
-    @pytest.mark.skip('NOT IMPLEMENTED')
-    def test_report_package_void(self, reporter):
-        # Test a package without content
-        assert 1 == 0
-
-    @pytest.mark.skip('NOT IMPLEMENTED')
-    def test_report_package_percentage(self, reporter):
-        # Test a package with results formatted as percentages
-        assert 1 == 0
-
-    @pytest.mark.skip('NOT IMPLEMENTED')
-    def test_sample(self, reporter):
-        print(reporter.table(reporter.report()))
-        assert 1 == 0
-
     def test_columns(self, reporter):
         assert len(reporter.columns) == 8
 
@@ -241,3 +226,18 @@ class TestPackageReport:
                 "reducto/src.py           561                     32             226                279                3             53                          4"
             ])
             assert table == expected
+
+    def test_report_table(self, reporter):
+        table = reporter.report(fmt=rp.ReportFormat.PLAIN, grouped=False)
+        print(table)
+        assert table == 1
+
+    @pytest.mark.skip('NOT IMPLEMENTED')
+    def test_report_package_void(self, reporter):
+        # Test a package without content
+        assert 1 == 0
+
+    @pytest.mark.skip('NOT IMPLEMENTED')
+    def test_report_package_percentage(self, reporter):
+        # Test a package with results formatted as percentages
+        assert 1 == 0
