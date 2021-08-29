@@ -42,12 +42,12 @@ of the table can be seen here:
 I thought a package able to obtain those features and alike would be an
 interesting project (at least for me at the moment), and here it is.
 
-=========  =========  ============  ==============  =============  ==============  =================
-Package    License      Line count    Docstrings     Comments       Blank lines     Average function
-                                      (% of lines)   (% of lines)   (% of lines)    length
-=========  =========  ============  ==============  =============  ==============  =================
-reducto    MIT                1612             35%             2%             12%                  5
-=========  =========  ============  ==============  =============  ==============  =================
+=========  =========  ============ ============= ==============  =============  ==============  =================
+Package    License      Line count Source Lines   Docstrings     Comments       Blank lines     Average function
+                                                  (% of lines)   (% of lines)   (% of lines)    length
+=========  =========  ============ ============= ==============  =============  ==============  =================
+reducto    MIT                1612           51%            35%             2%             12%                  5
+=========  =========  ============ ============= ==============  =============  ==============  =================
 
 The API Documentation
 ---------------------
