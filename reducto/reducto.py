@@ -77,8 +77,8 @@ class Reducto:
             "--format",
             type=rp.ReportFormat,
             default=rp.ReportFormat.JSON,
-            # choices=list(rp.ReportFormat),
-            choices=[rp.ReportFormat.JSON],
+            choices=list(rp.ReportFormat),
+            # choices=[rp.ReportFormat.JSON],
             dest="format",
             help="Format for the report type.",
         )
@@ -208,5 +208,7 @@ class Reducto:
         report = self.report()
         if self.args.output is not None:
             self._write_report(report)
-        else:
+        elif self.args.format == rp.ReportFormat.JSON:
             pprint.pprint(report)
+        else:
+            print(report)
