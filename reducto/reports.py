@@ -67,7 +67,7 @@ class ReportFormatError(Exception):
     def __init__(self, fmt: ReportFormat) -> None:
         msg = (
             f"Report format not defined: {fmt}. "
-            f"Must be one defined in {ReportFormat}."
+            f"Must be one defined in {[str(fmt) for fmt in ReportFormat]}."
         )
         super().__init__(msg)
 
@@ -121,10 +121,13 @@ class SourceReport:
         -------
         report : ReportDict
         """
-        if fmt == ReportFormat.JSON:
-            report_ = self._as_dict()
-        else:
-            raise ReportFormatError(fmt)
+        report_ = self._as_dict()
+        import warnings
+        warnings.warn("SourceReport don't implement other formats than json.")
+        # if fmt == ReportFormat.JSON:
+        #     report_ = self._as_dict()
+        # else:
+        #     raise ReportFormatError(fmt)
 
         return report_
 
@@ -247,8 +250,9 @@ class PackageReport:
 
         if fmt == ReportFormat.JSON:
             pass
-        elif fmt in set(str(fmt) for fmt in ReportFormat):
-            raise NotImplementedError("IMPLEMENT TABLE TRANSFORMATION.")
+        elif fmt in set(fmt for fmt in ReportFormat):
+            return self._table(report, fmt=fmt, grouped=grouped)
+
         else:  # Other formats may modify the report here
             raise ReportFormatError(fmt)
 
@@ -347,14 +351,16 @@ class PackageReport:
     def _table(
             self,
             report: Union[ReportDict, ReportPackageDict],
-            table_fmt: str = 'plain',
+            fmt: str = 'plain',
             grouped: bool = True
     ) -> List[List[Union[str, int]]]:
         """Create a table format to be passed to tabulate.
 
         The first row corresponds to the header.
 
-        TODO: Explain better.
+        TODO:
+            Explain better.
+            Split in different methods.
         """
         name: str = self.name
         headers: List[str] = []
@@ -379,4 +385,4 @@ class PackageReport:
                 rows.append(row)
             table.extend(rows)
 
-        return tabulate(table, headers=headers, tablefmt=table_fmt)
+        return tabulate(table, headers=headers, tablefmt=fmt)
