@@ -5,6 +5,8 @@ Contains the tests for reports module.
 import pytest
 import os
 import pathlib
+from unittest import mock
+from unittest.mock import PropertyMock
 
 import reducto.reports as rp
 import reducto.src as src
@@ -147,19 +149,95 @@ class TestPackageReport:
     def test_columns(self, reporter):
         assert len(reporter.columns) == 8
 
-    def test_table_ungrouped(self, reporter):
-        assert 1==2
-
     def test_table_grouped(self, reporter):
-        column_names = [
-            'Package',
-            'Lines',
-            'Source lines',
-            'Docstrings',
-            'Comments',
-            'Blank lines',
-            'Average function length',
-            'Number of Functions'
-            'Source files'
-        ]
-        assert 1==2
+        report = {
+            "reducto": {
+                "lines": 1609,
+                "number_of_functions": 102,
+                "average_function_length": 5,
+                "docstring_lines": 557,
+                "comment_lines": 30,
+                "blank_lines": 196,
+                "source_files": 7,
+                "source_lines": 826
+            }
+        }
+        to_mock = 'reducto.reports.PackageReport.name'
+        with mock.patch(to_mock, new_callable=PropertyMock) as mocked:
+            mocked.return_value = 'reducto'
+            table = reporter._table(report)
+            expected = '\n'.join([
+                "package      lines    number_of_functions    source_lines    docstring_lines    comment_lines    blank_lines    average_function_length    source_files",
+                "reducto       1609                    102             826                557               30            196                          5               7"
+            ])
+            assert table == expected
+
+    def test_table_ungrouped(self, reporter):
+        report = {'reducto': {'reducto/__init__.py': {'average_function_length': 0,
+                                     'blank_lines': 2,
+                                     'comment_lines': 0,
+                                     'docstring_lines': 1,
+                                     'lines': 5,
+                                     'number_of_functions': 0,
+                                     'source_lines': 2},
+             'reducto/cli.py': {'average_function_length': 5,
+                                'blank_lines': 5,
+                                'comment_lines': 0,
+                                'docstring_lines': 5,
+                                'lines': 20,
+                                'number_of_functions': 1,
+                                'source_lines': 10},
+             'reducto/items.py': {'average_function_length': 3,
+                                  'blank_lines': 33,
+                                  'comment_lines': 0,
+                                  'docstring_lines': 121,
+                                  'lines': 272,
+                                  'number_of_functions': 22,
+                                  'source_lines': 118},
+             'reducto/package.py': {'average_function_length': 5,
+                                    'blank_lines': 39,
+                                    'comment_lines': 6,
+                                    'docstring_lines': 157,
+                                    'lines': 351,
+                                    'number_of_functions': 20,
+                                    'source_lines': 149},
+             'reducto/reducto.py': {'average_function_length': 7,
+                                    'blank_lines': 20,
+                                    'comment_lines': 5,
+                                    'docstring_lines': 67,
+                                    'lines': 212,
+                                    'number_of_functions': 13,
+                                    'source_lines': 120},
+             'reducto/reports.py': {'average_function_length': 8,
+                                    'blank_lines': 45,
+                                    'comment_lines': 7,
+                                    'docstring_lines': 106,
+                                    'lines': 378,
+                                    'number_of_functions': 16,
+                                    'source_lines': 220},
+             'reducto/src.py': {'average_function_length': 4,
+                                'blank_lines': 53,
+                                'comment_lines': 3,
+                                'docstring_lines': 279,
+                                'lines': 561,
+                                'number_of_functions': 32,
+                                'source_lines': 226}
+            }
+        }
+        to_mock = 'reducto.reports.PackageReport.name'
+        with mock.patch(to_mock, new_callable=PropertyMock) as mocked:
+            mocked.return_value = 'reducto'
+            table = reporter._table(report, grouped=False)
+            print('TABLE')
+            print(table)
+            expected = '\n'.join([
+                "filename               lines    number_of_functions    source_lines    docstring_lines    comment_lines    blank_lines    average_function_length",
+                "reducto/__init__.py        5                      0               2                  1                0              2                          0",
+                "reducto/cli.py            20                      1              10                  5                0              5                          5",
+                "reducto/items.py         272                     22             118                121                0             33                          3",
+                "reducto/package.py       351                     20             149                157                6             39                          5",
+                "reducto/reducto.py       212                     13             120                 67                5             20                          7",
+                "reducto/reports.py       378                     16             220                106                7             45                          8",
+                "reducto/src.py           561                     32             226                279                3             53                          4"
+            ])
+            assert table == expected
