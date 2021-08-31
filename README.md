@@ -19,6 +19,10 @@ To install **reducto**, run from your terminal:
 
     $ pip install reducto
 
+Install with extras to print tables:
+
+    $ pip install reducto[tabulate]
+
 Keep in mind it is tested on python 3.8.
 
 ### Usage
