@@ -7,7 +7,7 @@ from typing import Optional
 from reducto import reducto
 
 
-def main(argv: Optional[List[str]] = None) -> None:
+def main(argv: Optional[List[str]] = None) -> None:  # pragma: no cover, proxy
     """Execute the reducto application.
 
     Instantiates the Reducto class, and passes the command
