@@ -123,6 +123,7 @@ class SourceReport:
         """
         report_ = self._as_dict()
         import warnings
+
         warnings.warn("SourceReport don't implement other formats than json.")
         # if fmt == ReportFormat.JSON:
         #     report_ = self._as_dict()
@@ -192,7 +193,7 @@ class PackageReport:
             "comment_lines",
             "blank_lines",
             "average_function_length",
-            "source_files"
+            "source_files",
         ]
 
     def __repr__(self) -> str:
@@ -215,7 +216,9 @@ class PackageReport:
 
     def report(
         self, fmt: ReportFormat = ReportFormat.JSON, grouped: bool = False
-    ) -> ReportPackageDict:
+    ) -> List[List[str | int]] | Dict[str, Dict[str, int]] | Dict[
+        str, Dict[str, Dict[str, int]]
+    ]:
         """Report method for a package.
 
         Generates the report for a Package made of Source files.
@@ -250,8 +253,8 @@ class PackageReport:
 
         if fmt == ReportFormat.JSON:
             pass
-        elif fmt in set(fmt for fmt in ReportFormat):
-            return self._table(report, fmt=fmt, grouped=grouped)
+        elif fmt in set(fmt_ for fmt_ in ReportFormat):
+            return self._table(report, fmt=str(fmt), grouped=grouped)
 
         else:  # Other formats may modify the report here
             raise ReportFormatError(fmt)
@@ -349,10 +352,10 @@ class PackageReport:
         return str(pathlib.Path(self.package.name) / relname)
 
     def _table(
-            self,
-            report: Union[ReportDict, ReportPackageDict],
-            fmt: str = 'plain',
-            grouped: bool = True
+        self,
+        report: Union[ReportDict, ReportPackageDict],
+        fmt: str = "plain",
+        grouped: bool = True,
     ) -> List[List[Union[str, int]]]:
         """Create a table format to be passed to tabulate.
 
@@ -375,7 +378,7 @@ class PackageReport:
 
         else:
             columns = self.columns.copy()
-            columns.remove('source_files')
+            columns.remove("source_files")
             headers.extend(columns)
             headers.insert(0, "filename")
             rows: List[List[Union[str, int]]] = []

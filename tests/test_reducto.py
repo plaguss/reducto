@@ -34,3 +34,19 @@ class TestReducto:
         app._parse_args(['--format', 'plain'])
         report = app._report_package(sample_package)
         assert isinstance(report, str)
+
+    def test_report_package(self, app, sample_package):
+        app._parse_args([str(sample_package)])
+        report = app.report()
+        assert isinstance(report, dict)
+
+    def test_report_source(self, app, source_file_one_function):
+        app._parse_args([str(source_file_one_function)])
+        report = app.report()
+        assert isinstance(report, dict)
+
+    def test_run(self, app, sample_package):
+        app.run([str(sample_package), '--format', 'json'])
+        app.run([str(sample_package), '--format', 'plain'])
+        with pytest.raises(SystemExit):
+            app.run([str(sample_package), '--format', 'undefined_format'])
