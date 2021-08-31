@@ -21,7 +21,7 @@ class Reducto:
     called on initialization.
     """
 
-    def __init__(self) -> None:
+    def __init__(self) -> None:  # pragma: no cover, redirects methods
         self.parser: argparse.ArgumentParser = argparse.ArgumentParser()
         self.args: Optional[argparse.Namespace] = None
 
@@ -31,6 +31,10 @@ class Reducto:
         self._add_argument_format()
         self._add_argument_grouped()
         self._add_argument_output_file()
+
+    def _parse_args(self, argv: Optional[List[str]] = None) -> None:  # pragma: no cover
+        # proxy function to simplify testing
+        self.args: argparse.Namespace = self.parser.parse_args(argv)
 
     def _add_argument_version(self) -> None:  # pragma: no cover
         """Version argument.
@@ -117,7 +121,7 @@ class Reducto:
             type=pathlib.Path,
             default=None,
             help="Full path of the report to be generated. If not"
-                 " given, redirects to stdout.",
+            " given, redirects to stdout.",
         )
 
     def _add_argument_exclude(self):  # pragma: no cover
@@ -179,7 +183,10 @@ class Reducto:
 
         return report
 
-    def _write_report(self, report: Union[rp.ReportDict, rp.ReportPackageDict]) -> None:
+    def _write_report(
+            self,
+            report: Union[rp.ReportDict, rp.ReportPackageDict]
+    ) -> None:  # pragma: no cover, proxy to json dump
         """Writes the report to a json file.
 
         Parameters
@@ -192,7 +199,7 @@ class Reducto:
             json.dump(report, f, indent=4)
         print(f"Report generated: {output_file}")
 
-    def run(self, argv: Optional[List[str]] = None):
+    def run(self, argv: Optional[List[str]] = None) -> None:
         """Execute reducto.
 
         The only relevant public method.
@@ -204,11 +211,12 @@ class Reducto:
         argv : Optional[List[str]]
             Arguments passed from the terminal.
         """
-        self.args: argparse.Namespace = self.parser.parse_args(argv)
+        self._parse_args(argv)
         report = self.report()
-        if self.args.output is not None:
+        if self.args.output is not None:  # pragma: no cover
+            # Write file if output is given.
             self._write_report(report)
-        elif self.args.format == rp.ReportFormat.JSON:
+        elif self.args.format == rp.ReportFormat.JSON:  # pretty print dict result
             pprint.pprint(report)
-        else:
+        else:  # tabulate results are expected to be printed with print.
             print(report)
