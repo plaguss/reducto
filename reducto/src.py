@@ -47,8 +47,6 @@ class SourceFile:
         FileNotFoundError
             If the file doesn't exists.
         """
-        if not isinstance(filename, pathlib.Path):
-            filename = pathlib.Path(filename)
 
         self.validate(filename)
 
