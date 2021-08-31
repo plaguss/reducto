@@ -229,8 +229,11 @@ class TestPackageReport:
 
     def test_report_table(self, reporter):
         table = reporter.report(fmt=rp.ReportFormat.PLAIN, grouped=False)
-        print(table)
-        assert table == 1
+        expected = '\n'.join([
+            "package      lines    number_of_functions    source_lines    docstring_lines    comment_lines    blank_lines    average_function_length    source_files",
+            "reducto       1609                    102             826                557               30            196                          5               7"
+        ])
+        assert table == expected
 
     @pytest.mark.skip('NOT IMPLEMENTED')
     def test_report_package_void(self, reporter):
