@@ -14,6 +14,11 @@ Initial release.
      - Method added on ``reducto.reports.PackageReport``
      - Method added on ``reducto.reports.PackageReport``
 
+0.1.1
+-----
+
+- Coverage rised to 100%.
+
 0.1.0
 -----
 
