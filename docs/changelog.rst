@@ -7,12 +7,17 @@ Changelog
 
 Initial release.
 
+0.3.0
+-----
+
+- Argument as percentage added.
+     - Method ``reducto.reducto._add_argument_as_percentage``
+
 0.2.0
 -----
 
 - Table format added.
-     - Method added on ``reducto.reports.PackageReport``
-     - Method added on ``reducto.reports.PackageReport``
+    - ``tabulate_report`` method created.
 
 0.1.1
 -----
