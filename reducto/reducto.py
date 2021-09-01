@@ -24,7 +24,6 @@ class Reducto:
     def __init__(self) -> None:  # pragma: no cover, redirects methods
         self.parser: argparse.ArgumentParser = argparse.ArgumentParser()
         self.args: Optional[argparse.Namespace] = None
-
         # Add arguments
         self._add_argument_version()
         self._add_argument_target()
@@ -131,8 +130,8 @@ class Reducto:
             "-p",
             "--percentage",
             dest="percentage",
-            action="store_false",
-            help="Report the number of lines as percentage (%)."
+            action="store_true",
+            help="Report the number of lines as percentage."
         )
 
     def _report_source_file(self, target: pathlib.Path) -> rp.ReportDict:
