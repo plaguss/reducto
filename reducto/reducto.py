@@ -59,8 +59,8 @@ class Reducto:
             type=pathlib.Path,
             default=pathlib.Path.cwd(),
             help="Path to execute the program into. "
-            "Must be either a python package (REF?) "
-            "or a python source file <SRC.py>",
+            "Must be either a python package (directory containing an __init__.py) "
+            "or a python source file {SRC.py}",
             nargs="?",
         )
 
