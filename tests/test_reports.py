@@ -59,6 +59,18 @@ class TestModuleReport:
         assert report_dict['example.py']['comment_lines'] == 3
         assert report_dict['example.py']['source_lines'] == 64
 
+    def test_as_dict_percentage(self, reporter):
+        report_dict = reporter._as_dict(percentage=True)
+        assert isinstance(report_dict, dict)
+        assert isinstance(report_dict['example.py'], dict)
+        assert report_dict['example.py']['lines'] == 128
+        assert report_dict['example.py']['number_of_functions'] == 11
+        assert report_dict['example.py']['average_function_length'] == 3
+        assert report_dict['example.py']['docstring_lines'] == '23%'
+        assert report_dict['example.py']['blank_lines'] == '25%'
+        assert report_dict['example.py']['comment_lines'] == '2%'
+        assert report_dict['example.py']['source_lines'] == '50%'
+
 
 class TestPackageReport:
     @pytest.fixture
@@ -151,11 +163,6 @@ class TestPackageReport:
         with mock.patch(to_mock, new_callable=PropertyMock) as mocked:
             mocked.return_value = 'reducto'
             table = reporter._table(report, fmt='grid')
-            print('TAAAAB', table)
-            expected = '\n'.join([
-                "package      lines    number\nof\nfunctions    source_lines    docstring_lines    comment_lines    blank_lines    average_function_length    source_files",
-                "reducto       1609                    102             826                557               30            196                          5               7"
-            ])
             expected = '\n'.join([
                 "+-----------+---------+-------------+----------+-------------+-----------+---------+------------+----------+",
                 "| package   |   lines |      number |   source |   docstring |   comment |   blank |    average |   source |",
