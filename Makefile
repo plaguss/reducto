@@ -16,7 +16,7 @@ deps:  ## Install dependencies
 	pip install flit
 
 install: deps  ## Install the package locally
-	flit install
+	flit install --deps develop
 
 test:  ## Run tests
 	pytest --cov=reducto --cov-report=xml
