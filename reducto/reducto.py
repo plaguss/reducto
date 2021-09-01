@@ -24,13 +24,13 @@ class Reducto:
     def __init__(self) -> None:  # pragma: no cover, redirects methods
         self.parser: argparse.ArgumentParser = argparse.ArgumentParser()
         self.args: Optional[argparse.Namespace] = None
-
         # Add arguments
         self._add_argument_version()
         self._add_argument_target()
         self._add_argument_format()
         self._add_argument_grouped()
         self._add_argument_output_file()
+        self._add_argument_as_percentage()
 
     def _parse_args(self, argv: Optional[List[str]] = None) -> None:  # pragma: no cover
         # proxy function to simplify testing
@@ -73,16 +73,12 @@ class Reducto:
         -----
         Add redirection to tabulate methods.
         """
-        # TODO: Not developed yet other formats.
-        # choices: List[str] = [str(rep) for rep in rp.ReportFormat]
-
         self.parser.add_argument(
             "-f",
             "--format",
             type=rp.ReportFormat,
             default=rp.ReportFormat.JSON,
             choices=list(rp.ReportFormat),
-            # choices=[rp.ReportFormat.JSON],
             dest="format",
             help="Format for the report type.",
         )
@@ -129,7 +125,14 @@ class Reducto:
         raise NotImplementedError
 
     def _add_argument_as_percentage(self) -> None:  # pragma: no cover
-        raise NotImplementedError
+        """Add argument to report lines as percentage. """
+        self.parser.add_argument(
+            "-p",
+            "--percentage",
+            dest="percentage",
+            action="store_true",
+            help="Report the number of lines as percentage."
+        )
 
     def _report_source_file(self, target: pathlib.Path) -> rp.ReportDict:
         """Create a report of a single source file.
@@ -146,7 +149,11 @@ class Reducto:
         """
         src_file: src.SourceFile = src.SourceFile(target)
         reporter: rp.SourceReport = src_file.report()
-        return reporter.report(fmt=self.args.format, is_package=True)
+        return reporter.report(
+            fmt=self.args.format,
+            is_package=True,
+            percentage=self.args.percentage
+        )
 
     def _report_package(self, target: pathlib.Path) -> rp.ReportPackageDict:
         """Create a report of a python package.
@@ -161,10 +168,13 @@ class Reducto:
         report : rp.ReportPackageDict
             Dict containing the report.
         """
-        # TODO: Add extra info for packages, as resume of source files ungrouped
         package: pkg.Package = pkg.Package(target)
         reporter: rp.PackageReport = package.report()
-        return reporter.report(fmt=self.args.format, grouped=self.args.grouped)
+        return reporter.report(
+            fmt=self.args.format,
+            grouped=self.args.grouped,
+            percentage=self.args.percentage
+        )
 
     def report(self) -> Union[rp.ReportDict, rp.ReportPackageDict]:
         """Detects whether the input target is a file or a directory.
