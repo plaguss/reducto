@@ -34,7 +34,7 @@ class Reducto:
 
     def _parse_args(self, argv: Optional[List[str]] = None) -> None:  # pragma: no cover
         # proxy function to simplify testing
-        self.args: argparse.Namespace = self.parser.parse_args(argv)
+        self.args = self.parser.parse_args(argv)
 
     def _add_argument_version(self) -> None:  # pragma: no cover
         """Version argument.
@@ -83,7 +83,7 @@ class Reducto:
             help="Format for the report type.",
         )
 
-    def _add_argument_grouped(self):  # pragma: no cover
+    def _add_argument_grouped(self) -> None:  # pragma: no cover
         """Whether to group the package report or not.
 
         Notes
@@ -120,7 +120,7 @@ class Reducto:
             " given, redirects to stdout.",
         )
 
-    def _add_argument_exclude(self):  # pragma: no cover
+    def _add_argument_exclude(self) -> None:  # pragma: no cover
         """Add argument to exclude paths, files, methods (private or dunder)."""
         raise NotImplementedError
 
@@ -185,7 +185,9 @@ class Reducto:
         """
         target: pathlib.Path = self.args.target
         if target.is_file():
-            report = self._report_source_file(target)
+            report: Union[
+                rp.ReportDict, rp.ReportPackageDict
+            ] = self._report_source_file(target)
         else:
             report = self._report_package(target)
 
