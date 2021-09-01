@@ -195,7 +195,7 @@ class Reducto:
 
     def _write_report(
             self,
-            report: Union[rp.ReportDict, rp.ReportPackageDict]
+            report: Union[rp.ReportDict, rp.ReportPackageDict, str]
     ) -> None:  # pragma: no cover, proxy to json dump
         """Writes the report to a json file.
 
