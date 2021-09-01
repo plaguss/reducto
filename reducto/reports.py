@@ -20,7 +20,6 @@ import os
 
 ReportDict = Dict[str, Dict[str, int]]
 ReportPackageDict = Dict[str, ReportDict]
-
 Reporting = Union[ReportDict, ReportPackageDict]
 
 
