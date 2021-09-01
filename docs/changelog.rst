@@ -11,7 +11,9 @@ Initial release.
 -----
 
 - Argument as percentage added.
-     - Method ``reducto.reducto._add_argument_as_percentage``
+     - Method ``reducto.reducto.Reducto_add_argument_as_percentage``
+     - Method ``reducto.reports.PackageReport._report_grouped``
+     - Method ``reducto.reports.SourceReport._as_dict``
 
 0.2.0
 -----
