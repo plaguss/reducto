@@ -31,6 +31,7 @@ class Reducto:
         self._add_argument_format()
         self._add_argument_grouped()
         self._add_argument_output_file()
+        self._add_argument_as_percentage()
 
     def _parse_args(self, argv: Optional[List[str]] = None) -> None:  # pragma: no cover
         # proxy function to simplify testing
@@ -73,16 +74,12 @@ class Reducto:
         -----
         Add redirection to tabulate methods.
         """
-        # TODO: Not developed yet other formats.
-        # choices: List[str] = [str(rep) for rep in rp.ReportFormat]
-
         self.parser.add_argument(
             "-f",
             "--format",
             type=rp.ReportFormat,
             default=rp.ReportFormat.JSON,
             choices=list(rp.ReportFormat),
-            # choices=[rp.ReportFormat.JSON],
             dest="format",
             help="Format for the report type.",
         )
@@ -129,7 +126,14 @@ class Reducto:
         raise NotImplementedError
 
     def _add_argument_as_percentage(self) -> None:  # pragma: no cover
-        raise NotImplementedError
+        """Add argument to report lines as percentage. """
+        self.parser.add_argument(
+            "-p",
+            "--percentage",
+            dest="percentage",
+            action="store_false",
+            help="Report the number of lines as percentage (%)."
+        )
 
     def _report_source_file(self, target: pathlib.Path) -> rp.ReportDict:
         """Create a report of a single source file.
