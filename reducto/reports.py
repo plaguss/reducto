@@ -183,7 +183,7 @@ class SourceReport:
     def _table(
         self,
         report: Union[ReportDict, ReportPackageDict],
-        fmt: str = "plain"
+        fmt: str = "grid"
     ) -> str:  # pragma: no cover, proxy
         """Creates the report from tabulate. Proxy method for tabulate_report
         """
@@ -389,7 +389,7 @@ class PackageReport:
     def _table(
         self,
         report: Union[ReportDict, ReportPackageDict],
-        fmt: str = "plain",
+        fmt: str = "grid",
         grouped: bool = True,
     ) -> str:  # pragma: no cover, proxy
         """Creates the report from tabulate. Proxy method for tabulate_report
@@ -408,7 +408,7 @@ def tabulate_report(
         report: Union[ReportDict, ReportPackageDict],
         columns: List[str],
         grouped: bool = True,
-        fmt: str = "plain"
+        fmt: str = "grid"
 ) -> str:
     """
 
