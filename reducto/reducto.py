@@ -205,8 +205,13 @@ class Reducto:
             Contains the resulting report.
         """
         output_file = self.args.output
-        with open(output_file, "w") as f:
-            json.dump(report, f, indent=4)
+        if isinstance(report, dict):
+            with open(output_file, "w") as f:
+                json.dump(report, f, indent=4)
+        else:
+            with open(output_file, "w") as f:
+                f.write(report)
+
         print(f"Report generated: {output_file}")
 
     def run(self, argv: Optional[List[str]] = None) -> None:
