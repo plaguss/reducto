@@ -150,10 +150,20 @@ class TestPackageReport:
         to_mock = 'reducto.reports.PackageReport.name'
         with mock.patch(to_mock, new_callable=PropertyMock) as mocked:
             mocked.return_value = 'reducto'
-            table = reporter._table(report)
+            table = reporter._table(report, fmt='grid')
+            print('TAAAAB', table)
             expected = '\n'.join([
-                "package      lines    number_of_functions    source_lines    docstring_lines    comment_lines    blank_lines    average_function_length    source_files",
+                "package      lines    number\nof\nfunctions    source_lines    docstring_lines    comment_lines    blank_lines    average_function_length    source_files",
                 "reducto       1609                    102             826                557               30            196                          5               7"
+            ])
+            expected = '\n'.join([
+                "+-----------+---------+-------------+----------+-------------+-----------+---------+------------+----------+",
+                "| package   |   lines |      number |   source |   docstring |   comment |   blank |    average |   source |",
+                "|           |         |          of |    lines |       lines |     lines |   lines |   function |    files |",
+                "|           |         |   functions |          |             |           |         |     length |          |",
+                "+===========+=========+=============+==========+=============+===========+=========+============+==========+",
+                "| reducto   |    1609 |         102 |      826 |         557 |        30 |     196 |          5 |        7 |",
+                "+-----------+---------+-------------+----------+-------------+-----------+---------+------------+----------+"
             ])
             assert table == expected
 
@@ -212,18 +222,27 @@ class TestPackageReport:
         to_mock = 'reducto.reports.PackageReport.name'
         with mock.patch(to_mock, new_callable=PropertyMock) as mocked:
             mocked.return_value = 'reducto'
-            table = reporter._table(report, grouped=False)
-            print('TABLE')
-            print(table)
+            table = reporter._table(report, grouped=False, fmt='grid')
             expected = '\n'.join([
-                "filename               lines    number_of_functions    source_lines    docstring_lines    comment_lines    blank_lines    average_function_length",
-                "reducto/__init__.py        5                      0               2                  1                0              2                          0",
-                "reducto/cli.py            20                      1              10                  5                0              5                          5",
-                "reducto/items.py         272                     22             118                121                0             33                          3",
-                "reducto/package.py       351                     20             149                157                6             39                          5",
-                "reducto/reducto.py       212                     13             120                 67                5             20                          7",
-                "reducto/reports.py       378                     16             220                106                7             45                          8",
-                "reducto/src.py           561                     32             226                279                3             53                          4"
+                "+---------------------+---------+-------------+----------+-------------+-----------+---------+------------+",
+                "| filename            |   lines |      number |   source |   docstring |   comment |   blank |    average |",
+                "|                     |         |          of |    lines |       lines |     lines |   lines |   function |",
+                "|                     |         |   functions |          |             |           |         |     length |",
+                "+=====================+=========+=============+==========+=============+===========+=========+============+",
+                "| reducto/__init__.py |       5 |           0 |        2 |           1 |         0 |       2 |          0 |",
+                "+---------------------+---------+-------------+----------+-------------+-----------+---------+------------+",
+                "| reducto/cli.py      |      20 |           1 |       10 |           5 |         0 |       5 |          5 |",
+                "+---------------------+---------+-------------+----------+-------------+-----------+---------+------------+",
+                "| reducto/items.py    |     272 |          22 |      118 |         121 |         0 |      33 |          3 |",
+                "+---------------------+---------+-------------+----------+-------------+-----------+---------+------------+",
+                "| reducto/package.py  |     351 |          20 |      149 |         157 |         6 |      39 |          5 |",
+                "+---------------------+---------+-------------+----------+-------------+-----------+---------+------------+",
+                "| reducto/reducto.py  |     212 |          13 |      120 |          67 |         5 |      20 |          7 |",
+                "+---------------------+---------+-------------+----------+-------------+-----------+---------+------------+",
+                "| reducto/reports.py  |     378 |          16 |      220 |         106 |         7 |      45 |          8 |",
+                "+---------------------+---------+-------------+----------+-------------+-----------+---------+------------+",
+                "| reducto/src.py      |     561 |          32 |      226 |         279 |         3 |      53 |          4 |",
+                "+---------------------+---------+-------------+----------+-------------+-----------+---------+------------+"
             ])
             assert table == expected
 
@@ -243,3 +262,27 @@ class TestPackageReport:
     def test_report_package_percentage(self, reporter):
         # Test a package with results formatted as percentages
         assert 1 == 0
+
+
+def test_column_split():
+    columns = [
+        "lines",
+        "number_of_functions",
+        "source_lines",
+        "docstring_lines",
+        "comment_lines",
+        "blank_lines",
+        "average_function_length"
+    ]
+    expected = [
+        "lines",
+        "number\nof\nfunctions",
+        "source\nlines",
+        "docstring\nlines",
+        "comment\nlines",
+        "blank\nlines",
+        "average\nfunction\nlength"
+    ]
+    splitted = rp.column_split(columns)
+
+    assert expected == splitted
