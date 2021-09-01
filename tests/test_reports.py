@@ -109,6 +109,23 @@ class TestPackageReport:
         assert info['number_of_functions'] == 44
         assert info['average_function_length'] == 3
 
+    def test_report_grouped_percentage(self, reporter):
+        report = reporter.report(grouped=True, percentage=True)
+        keys = list(report.keys())
+        assert len(keys) == 1
+        name = keys[0]
+        assert name == reporter.package.name
+        info = report[name]
+        print(info)
+        assert info['lines'] == 514
+        assert info['docstring_lines'] == '23%'
+        assert info['comment_lines'] == '2%'
+        assert info['blank_lines'] == '25%'
+        assert info['source_files'] == 7
+        assert info['source_lines'] == '50%'
+        assert info['number_of_functions'] == 44
+        assert info['average_function_length'] == 3
+
     def test_report_ungrouped(self, reporter):
         report = reporter.report(grouped=False)
         keys = list(report.keys())
