@@ -112,7 +112,8 @@ class SourceReport:
     def report(
             self,
             fmt: ReportFormat = ReportFormat.JSON,
-            is_package: bool = False
+            is_package: bool = False,
+            percentage: bool = False
     ) -> ReportDict:
         """Report of a source file.
 
@@ -124,6 +125,8 @@ class SourceReport:
             Bool to determine if a SourceFile is the single entry point for an app.
             Defaults to False.
             It is used to
+        percentage : bool
+            Whether to report the lines as percentage or not. Defaults to False
 
         Returns
         -------
@@ -134,20 +137,19 @@ class SourceReport:
         ReportFormatError
             When the reporting required is not defined in ReportFormat enum.
         """
-        report_ = self._as_dict()
+        report_ = self._as_dict(percentage=percentage)
 
         if fmt == ReportFormat.JSON:
             pass
         elif fmt in set(fmt_ for fmt_ in ReportFormat):
             if is_package:
-                # raise NotImplementedError('Table method for SourceReport')
                 return self._table(report_, fmt=str(fmt))
         else:
             raise ReportFormatError(fmt)
 
         return report_
 
-    def _as_dict(self) -> ReportDict:
+    def _as_dict(self, percentage: bool = False) -> ReportDict:
         """Report of a file with a dict format.
 
         The reporting is a dict with the source file name as a key,
@@ -155,6 +157,11 @@ class SourceReport:
         lines (total lines of the file), number of functions,
         average function length, docstring lines, comment lines,
         blank lines.
+
+        Parameters
+        ----------
+        percentage : bool
+            Whether to report the lines as percentage or not. Defaults to False
 
         Returns
         -------
@@ -168,14 +175,26 @@ class SourceReport:
                 [f.source_lines for f in self.source_file.functions]
             )
 
+        docstring_lines = self.source_file.total_docstrings
+        comment_lines = self.source_file.comment_lines
+        blank_lines = self.source_file.blank_lines
+        source_lines = self.source_file.source_lines
+        lines = len(self.source_file)
+
+        if percentage:
+            docstring_lines = str(round(docstring_lines / lines * 100)) + '%'
+            comment_lines = str(round(comment_lines / lines * 100)) + '%'
+            blank_lines = str(round(blank_lines / lines * 100)) + '%'
+            source_lines = str(round(source_lines / lines * 100)) + '%'
+
         data: Dict[str, int] = {
-            "lines": len(self.source_file),
+            "lines": lines,
             "number_of_functions": len(self.source_file.functions),
             "average_function_length": round(avg_func_length),
-            "docstring_lines": self.source_file.total_docstrings,
-            "comment_lines": self.source_file.comment_lines,
-            "blank_lines": self.source_file.blank_lines,
-            "source_lines": self.source_file.source_lines,  # FIXME: Add source lines to src.py
+            "docstring_lines": docstring_lines,
+            "comment_lines": comment_lines,
+            "blank_lines": blank_lines,
+            "source_lines": source_lines
         }
 
         return {self.source_file.name: data}
@@ -254,7 +273,10 @@ class PackageReport:
         return self.package.name
 
     def report(
-        self, fmt: ReportFormat = ReportFormat.JSON, grouped: bool = False
+        self,
+            fmt: ReportFormat = ReportFormat.JSON,
+            grouped: bool = False,
+            percentage: bool = False
     ) -> List[List[str | int]] | Dict[str, Dict[str, int]] | Dict[
         str, Dict[str, Dict[str, int]]
     ]:
@@ -272,6 +294,8 @@ class PackageReport:
             Whether to return the information by source files, or grouped at
             the package level (resumes the package). Defaults to False, returns
             the information per source file.
+        percentage : bool
+            Whether to report the lines as percentage or not. Defaults to False
 
         Returns
         -------
@@ -283,9 +307,9 @@ class PackageReport:
             When a report format is not defined
         """
         if grouped:
-            report: ReportDict = self._report_grouped()
+            report: ReportDict = self._report_grouped(percentage=percentage)
         else:
-            report: ReportPackageDict = self._report_ungrouped()
+            report: ReportPackageDict = self._report_ungrouped(percentage=percentage)
 
         if fmt == ReportFormat.JSON:
             pass
@@ -296,8 +320,13 @@ class PackageReport:
 
         return report
 
-    def _report_grouped(self) -> ReportDict:
+    def _report_grouped(self, percentage: bool = False) -> ReportDict:
         """Obtain the reporting information grouped for the whole package.
+
+        Parameters
+        ----------
+        percentage : bool
+            Whether to report the lines as percentage. Defaults to False.
 
         Returns
         -------
@@ -310,10 +339,10 @@ class PackageReport:
         lines: int = 0
         number_of_functions: int = 0
         average_function_length: int = 0
-        docstring_lines: int = 0
-        comment_lines: int = 0
-        blank_lines: int = 0
-        source_lines: int = 0
+        docstring_lines: Union[int, str] = 0
+        comment_lines: Union[int, str] = 0
+        blank_lines: Union[int, str] = 0
+        source_lines: Union[int, str] = 0
 
         for reporting in report_ungrouped[self.package.name].values():
             lines += reporting["lines"]
@@ -325,6 +354,12 @@ class PackageReport:
             comment_lines += reporting["comment_lines"]
             blank_lines += reporting["blank_lines"]
             source_lines += reporting["source_lines"]
+
+        if percentage:
+            docstring_lines = str(round(docstring_lines / lines * 100)) + '%'
+            comment_lines = str(round(comment_lines / lines * 100)) + '%'
+            blank_lines = str(round(blank_lines / lines * 100)) + '%'
+            source_lines = str(round(source_lines / lines * 100)) + '%'
 
         report_grouped: Dict[str, int] = {
             "lines": lines,
@@ -339,8 +374,14 @@ class PackageReport:
 
         return {self.package.name: report_grouped}
 
-    def _report_ungrouped(self) -> ReportPackageDict:
+    def _report_ungrouped(self, percentage: bool = False) -> ReportPackageDict:
         """Obtain the reporting information per source file.
+
+        Parameters
+        ----------
+        percentage : bool
+            Whether to report the lines as percentage or not.
+            Passed to SourceReport.
 
         Returns
         -------
@@ -357,7 +398,7 @@ class PackageReport:
         report: ReportDict = {}
         for file in self.package.source_files:
             report[self._get_relname(str(file))] = SourceReport(file).report(
-                fmt=ReportFormat.JSON
+                fmt=ReportFormat.JSON, percentage=percentage
             )[file.name]
 
         return {self.package.name: report}
