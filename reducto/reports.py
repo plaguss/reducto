@@ -109,26 +109,41 @@ class SourceReport:
         """
         return self._src_file
 
-    def report(self, fmt: ReportFormat = ReportFormat.JSON) -> ReportDict:
+    def report(
+            self,
+            fmt: ReportFormat = ReportFormat.JSON,
+            is_package: bool = False
+    ) -> ReportDict:
         """Report of a source file.
 
         Parameters
         ----------
         fmt : ReportFormat
             Must be one of ReportFormats. Defaults to ReportFormats.JSON.
+        is_package : bool
+            Bool to determine if a SourceFile is the single entry point for an app.
+            Defaults to False.
+            It is used to
 
         Returns
         -------
         report : ReportDict
+
+        Raises
+        ------
+        ReportFormatError
+            When the reporting required is not defined in ReportFormat enum.
         """
         report_ = self._as_dict()
-        import warnings
 
-        warnings.warn("SourceReport don't implement other formats than json.")
-        # if fmt == ReportFormat.JSON:
-        #     report_ = self._as_dict()
-        # else:
-        #     raise ReportFormatError(fmt)
+        if fmt == ReportFormat.JSON:
+            pass
+        elif fmt in set(fmt_ for fmt_ in ReportFormat):
+            if is_package:
+                raise NotImplementedError('Table method for SourceReport')
+                # return self._table(report, fmt=str(fmt), grouped=grouped)
+        else:
+            raise ReportFormatError(fmt)
 
         return report_
 
@@ -225,8 +240,6 @@ class PackageReport:
         Initially gets the info either grouped or ungrouped,
         if the format chosen is json its returned directly.
 
-        TODO: No more formats are defined yet.
-
         Parameters
         ----------
         fmt : ReportFormat
@@ -245,7 +258,6 @@ class PackageReport:
         ReportFormatError
             When a report format is not defined
         """
-        # FIXME: Add functionality for different formats
         if grouped:
             report: ReportDict = self._report_grouped()
         else:
@@ -255,7 +267,6 @@ class PackageReport:
             pass
         elif fmt in set(fmt_ for fmt_ in ReportFormat):
             return self._table(report, fmt=str(fmt), grouped=grouped)
-
         else:  # Other formats may modify the report here
             raise ReportFormatError(fmt)
 
@@ -356,36 +367,60 @@ class PackageReport:
         report: Union[ReportDict, ReportPackageDict],
         fmt: str = "plain",
         grouped: bool = True,
-    ) -> List[List[Union[str, int]]]:
-        """Create a table format to be passed to tabulate.
-
-        The first row corresponds to the header.
-
-        TODO:
-            Explain better.
-            Split in different methods.
+    ) -> str:  # pragma: no cover, proxy
+        """Creates the report from tabulate. Proxy method for tabulate_report
         """
-        name: str = self.name
-        headers: List[str] = []
-        table: List[List[Union[str, int]]] = []
-        inner = report[name]
-        if grouped:
-            headers.extend(self.columns)
-            headers.insert(0, "package")
-            row = [name]
-            row.extend([inner[col] for col in self.columns])
-            table.append(row)
+        return tabulate_report(
+            self.name,
+            report,
+            self.columns,
+            grouped=grouped,
+            fmt=fmt
+        )
 
-        else:
-            columns = self.columns.copy()
-            columns.remove("source_files")
-            headers.extend(columns)
-            headers.insert(0, "filename")
-            rows: List[List[Union[str, int]]] = []
-            for filename in inner:
-                row = [filename]
-                row.extend([inner[filename][col] for col in columns])
-                rows.append(row)
-            table.extend(rows)
 
-        return tabulate(table, headers=headers, tablefmt=fmt)
+def tabulate_report(
+        name: str,
+        report: Union[ReportDict, ReportPackageDict],
+        columns: List[str],
+        grouped: bool = True,
+        fmt: str = "plain"
+) -> str:
+    """
+
+    Parameters
+    ----------
+    name
+    report
+    columns
+    grouped
+    fmt
+
+    Returns
+    -------
+
+    """
+    name: str = name
+    headers: List[str] = []
+    table: List[List[Union[str, int]]] = []
+    inner = report[name]
+    if grouped:
+        headers.extend(columns)
+        headers.insert(0, "package")
+        row = [name]
+        row.extend([inner[col] for col in columns])
+        table.append(row)
+
+    else:
+        columns = columns.copy()
+        columns.remove("source_files")
+        headers.extend(columns)
+        headers.insert(0, "filename")
+        rows: List[List[Union[str, int]]] = []
+        for filename in inner:
+            row = [filename]
+            row.extend([inner[filename][col] for col in columns])
+            rows.append(row)
+        table.extend(rows)
+
+    return tabulate(table, headers=headers, tablefmt=fmt)
