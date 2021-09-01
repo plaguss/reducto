@@ -146,7 +146,7 @@ class Reducto:
         """
         src_file: src.SourceFile = src.SourceFile(target)
         reporter: rp.SourceReport = src_file.report()
-        return reporter.report(fmt=self.args.format)
+        return reporter.report(fmt=self.args.format, is_package=True)
 
     def _report_package(self, target: pathlib.Path) -> rp.ReportPackageDict:
         """Create a report of a python package.
