@@ -140,8 +140,8 @@ class SourceReport:
             pass
         elif fmt in set(fmt_ for fmt_ in ReportFormat):
             if is_package:
-                raise NotImplementedError('Table method for SourceReport')
-                # return self._table(report, fmt=str(fmt), grouped=grouped)
+                # raise NotImplementedError('Table method for SourceReport')
+                return self._table(report_, fmt=str(fmt))
         else:
             raise ReportFormatError(fmt)
 
@@ -179,6 +179,30 @@ class SourceReport:
         }
 
         return {self.source_file.name: data}
+
+    def _table(
+        self,
+        report: Union[ReportDict, ReportPackageDict],
+        fmt: str = "plain"
+    ) -> str:  # pragma: no cover, proxy
+        """Creates the report from tabulate. Proxy method for tabulate_report
+        """
+        columns: List[str] = [
+            "lines",
+            "number_of_functions",
+            "source_lines",
+            "docstring_lines",
+            "comment_lines",
+            "blank_lines",
+            "average_function_length"
+        ]
+        return tabulate_report(
+            self.source_file.name,
+            report,
+            columns,
+            grouped=True,
+            fmt=fmt
+        )
 
 
 class PackageReport:
@@ -405,7 +429,7 @@ def tabulate_report(
     table: List[List[Union[str, int]]] = []
     inner = report[name]
     if grouped:
-        headers.extend(columns)
+        headers.extend(column_split(columns))
         headers.insert(0, "package")
         row = [name]
         row.extend([inner[col] for col in columns])
@@ -414,7 +438,7 @@ def tabulate_report(
     else:
         columns = columns.copy()
         columns.remove("source_files")
-        headers.extend(columns)
+        headers.extend(column_split(columns))
         headers.insert(0, "filename")
         rows: List[List[Union[str, int]]] = []
         for filename in inner:
@@ -424,3 +448,20 @@ def tabulate_report(
         table.extend(rows)
 
     return tabulate(table, headers=headers, tablefmt=fmt)
+
+
+def column_split(columns: List[str]) -> List[str]:
+    r"""Splits the columns to avoid longer formats for tabulate.
+
+    Replaces every `_` by `\n`
+
+    Parameters
+    ----------
+    columns : List[str]
+
+    Returns
+    -------
+    splitted : List[str]
+    """
+    return [column.replace('_', '\n') for column in columns]
+
