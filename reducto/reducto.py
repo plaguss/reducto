@@ -125,13 +125,13 @@ class Reducto:
         raise NotImplementedError
 
     def _add_argument_as_percentage(self) -> None:  # pragma: no cover
-        """Add argument to report lines as percentage. """
+        """Add argument to report lines as percentage."""
         self.parser.add_argument(
             "-p",
             "--percentage",
             dest="percentage",
             action="store_true",
-            help="Report the number of lines as percentage."
+            help="Report the number of lines as percentage.",
         )
 
     def _report_source_file(self, target: pathlib.Path) -> rp.ReportDict:
@@ -150,9 +150,7 @@ class Reducto:
         src_file: src.SourceFile = src.SourceFile(target)
         reporter: rp.SourceReport = src_file.report()
         return reporter.report(
-            fmt=self.args.format,
-            is_package=True,
-            percentage=self.args.percentage
+            fmt=self.args.format, is_package=True, percentage=self.args.percentage
         )
 
     def _report_package(self, target: pathlib.Path) -> rp.ReportPackageDict:
@@ -173,7 +171,7 @@ class Reducto:
         return reporter.report(
             fmt=self.args.format,
             grouped=self.args.grouped,
-            percentage=self.args.percentage
+            percentage=self.args.percentage,
         )
 
     def report(self) -> Union[rp.ReportDict, rp.ReportPackageDict]:
@@ -194,8 +192,7 @@ class Reducto:
         return report
 
     def _write_report(
-            self,
-            report: Union[rp.ReportDict, rp.ReportPackageDict, str]
+        self, report: Union[rp.ReportDict, rp.ReportPackageDict, str]
     ) -> None:  # pragma: no cover, proxy to json dump
         """Writes the report to a json file.
 

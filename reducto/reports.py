@@ -110,10 +110,10 @@ class SourceReport:
         return self._src_file
 
     def report(
-            self,
-            fmt: ReportFormat = ReportFormat.JSON,
-            is_package: bool = False,
-            percentage: bool = False
+        self,
+        fmt: ReportFormat = ReportFormat.JSON,
+        is_package: bool = False,
+        percentage: bool = False,
     ) -> ReportDict:
         """Report of a source file.
 
@@ -182,10 +182,10 @@ class SourceReport:
         lines = len(self.source_file)
 
         if percentage:
-            docstring_lines = str(round(docstring_lines / lines * 100)) + '%'
-            comment_lines = str(round(comment_lines / lines * 100)) + '%'
-            blank_lines = str(round(blank_lines / lines * 100)) + '%'
-            source_lines = str(round(source_lines / lines * 100)) + '%'
+            docstring_lines = str(round(docstring_lines / lines * 100)) + "%"
+            comment_lines = str(round(comment_lines / lines * 100)) + "%"
+            blank_lines = str(round(blank_lines / lines * 100)) + "%"
+            source_lines = str(round(source_lines / lines * 100)) + "%"
 
         data: Dict[str, int] = {
             "lines": lines,
@@ -194,18 +194,15 @@ class SourceReport:
             "docstring_lines": docstring_lines,
             "comment_lines": comment_lines,
             "blank_lines": blank_lines,
-            "source_lines": source_lines
+            "source_lines": source_lines,
         }
 
         return {self.source_file.name: data}
 
     def _table(
-        self,
-        report: Union[ReportDict, ReportPackageDict],
-        fmt: str = "grid"
+        self, report: Union[ReportDict, ReportPackageDict], fmt: str = "grid"
     ) -> str:  # pragma: no cover, proxy
-        """Creates the report from tabulate. Proxy method for tabulate_report
-        """
+        """Creates the report from tabulate. Proxy method for tabulate_report"""
         columns: List[str] = [
             "lines",
             "number_of_functions",
@@ -213,14 +210,10 @@ class SourceReport:
             "docstring_lines",
             "comment_lines",
             "blank_lines",
-            "average_function_length"
+            "average_function_length",
         ]
         return tabulate_report(
-            self.source_file.name,
-            report,
-            columns,
-            grouped=True,
-            fmt=fmt
+            self.source_file.name, report, columns, grouped=True, fmt=fmt
         )
 
 
@@ -274,9 +267,9 @@ class PackageReport:
 
     def report(
         self,
-            fmt: ReportFormat = ReportFormat.JSON,
-            grouped: bool = False,
-            percentage: bool = False
+        fmt: ReportFormat = ReportFormat.JSON,
+        grouped: bool = False,
+        percentage: bool = False,
     ) -> List[List[str | int]] | Dict[str, Dict[str, int]] | Dict[
         str, Dict[str, Dict[str, int]]
     ]:
@@ -356,10 +349,10 @@ class PackageReport:
             source_lines += reporting["source_lines"]
 
         if percentage:
-            docstring_lines = str(round(docstring_lines / lines * 100)) + '%'
-            comment_lines = str(round(comment_lines / lines * 100)) + '%'
-            blank_lines = str(round(blank_lines / lines * 100)) + '%'
-            source_lines = str(round(source_lines / lines * 100)) + '%'
+            docstring_lines = str(round(docstring_lines / lines * 100)) + "%"
+            comment_lines = str(round(comment_lines / lines * 100)) + "%"
+            blank_lines = str(round(blank_lines / lines * 100)) + "%"
+            source_lines = str(round(source_lines / lines * 100)) + "%"
 
         report_grouped: Dict[str, int] = {
             "lines": lines,
@@ -433,23 +426,18 @@ class PackageReport:
         fmt: str = "grid",
         grouped: bool = True,
     ) -> str:  # pragma: no cover, proxy
-        """Creates the report from tabulate. Proxy method for tabulate_report
-        """
+        """Creates the report from tabulate. Proxy method for tabulate_report"""
         return tabulate_report(
-            self.name,
-            report,
-            self.columns,
-            grouped=grouped,
-            fmt=fmt
+            self.name, report, self.columns, grouped=grouped, fmt=fmt
         )
 
 
 def tabulate_report(
-        name: str,
-        report: Union[ReportDict, ReportPackageDict],
-        columns: List[str],
-        grouped: bool = True,
-        fmt: str = "grid"
+    name: str,
+    report: Union[ReportDict, ReportPackageDict],
+    columns: List[str],
+    grouped: bool = True,
+    fmt: str = "grid",
 ) -> str:
     """
 
@@ -504,5 +492,4 @@ def column_split(columns: List[str]) -> List[str]:
     -------
     splitted : List[str]
     """
-    return [column.replace('_', '\n') for column in columns]
-
+    return [column.replace("_", "\n") for column in columns]
