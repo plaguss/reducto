@@ -8,17 +8,23 @@ author = "Agustín Piqueres"
 author-email = "agustin.piqueres@gmail.com"
 home-page = "https://github.com/plaguss/reducto"
 requires-python=">=3.8"
-classifiers = [ "License :: OSI Approved :: MIT License",]
+license = "MIT"
+classifiers = [
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.8"
+]
 description-file = "README.md"
 
 [tool.flit.metadata.requires-extra]
-test = [
-    "pytest==6.2.3",
-    "pytest-cov==2.11.1",
-    "mypy==0.910"
-]
-doc = ["sphinx"]
+test = ["pytest==6.2.3", "pytest-cov==2.11.1"]
+doc = ["sphinx", "sphinx-rtd-theme"]
+dev = ["black", "mypy"]
 tabulate = ["tabulate==0.8.9"]
+
+[tool.flit.metadata.urls]
+Documentation = "https://reducto.readthedocs.io"
+Repository = "https://github.com/plaguss/reducto"
 
 [tool.flit.scripts]
 reducto = "reducto:main"
