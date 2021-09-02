@@ -266,9 +266,9 @@ class Package:
         averages: List[int] = []
         for function_list in self.functions:
             if len(function_list) == 0:
-                avg_func_length = 0
+                avg_func_length: int = 0
             else:
-                avg_func_length: int = round(
+                avg_func_length = round(
                     statistics.mean([f.source_lines for f in function_list])
                 )
             averages.append(avg_func_length)
