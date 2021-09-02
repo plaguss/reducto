@@ -1,7 +1,7 @@
 """Module containing code to control python package crawling. """
 
 import statistics
-from typing import Iterator, Optional, List
+from typing import Iterable, Optional, List
 from pathlib import Path
 
 import reducto.src as src
@@ -109,7 +109,7 @@ class Package:
         Inspired by trailrunner.Trailrunner.walk.
         """
 
-        def walk(path: Path) -> Iterator[Optional[src.SourceFile]]:
+        def walk(path: Path) -> Iterable[src.SourceFile]:
             for child in path.iterdir():
 
                 try:
@@ -137,7 +137,7 @@ class Package:
         # FIXME: Check when no files are found
         if self._source_files is None:
             self._walk()
-        return self._source_files
+        return self._source_files  # type: ignore[return-value]
 
     @property
     def lines(self) -> List[int]:
