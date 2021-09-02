@@ -46,7 +46,7 @@ class Item:
         -------
         node : ast.AST
         """
-        return self._node
+        return self._node  # type: ignore[return-value]
 
     @node.setter
     def node(self, node_: ast.AST) -> None:
@@ -262,11 +262,11 @@ def get_docstring_lines(node: Union[ast.Module, ast.FunctionDef, ast.AST]) -> in
         4
 
     """
-    docs: str = ast.get_docstring(node)
+    docs = ast.get_docstring(node)
 
     try:
-        docstrings: int = len(docs.split("\n"))
+        docstrings = len(docs.split("\n"))  # type: ignore[union-attr]
     except AttributeError:  # When there are no docstrings, returns None.
-        docstrings: int = 0
+        docstrings = 0
 
     return docstrings
