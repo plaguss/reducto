@@ -121,7 +121,7 @@ class SourceFile:
     def lines(self) -> List[str]:
         """Contains the lines of the file as initially parsed with tokenize module."""
         if self._lines is None:
-            self._lines: List[str] = self._read_file_by_lines()
+            self._lines = self._read_file_by_lines()
         return self._lines
 
     @property
@@ -180,7 +180,7 @@ class SourceFile:
         """
         if self._comment_lines_positions is None:
             self._comment_blank_lines_positions()
-        return self._comment_lines_positions
+        return self._comment_lines_positions  # type: ignore[return-value]
 
     @property
     def blank_lines(self) -> int:
@@ -211,7 +211,7 @@ class SourceFile:
         """
         if self._blank_lines_positions is None:
             self._comment_blank_lines_positions()  # pragma: no cover, call to a tested method.
-        return self._blank_lines_positions
+        return self._blank_lines_positions  # type: ignore[return-value]
 
     def _comment_blank_lines_positions(self) -> None:
         """Grabs the blank lines and comments.
@@ -233,7 +233,7 @@ class SourceFile:
                 self._comment_lines_positions.append(idx)
                 self._comment_lines += 1
             if token_is_blank_line(tok):
-                idx: int = tok.start[0]  # Get the line number.
+                idx = tok.start[0]  # Get the line number.
                 self._blank_lines_positions.append(idx)
                 self._blank_lines += 1
 
@@ -431,7 +431,7 @@ class SourceVisitor(ast.NodeVisitor):
     def __repr__(self) -> str:
         return type(self).__name__
 
-    def visit_FunctionDef(self, node: ast.FunctionDef):
+    def visit_FunctionDef(self, node):
         """Visits the FunctionDef nodes.
 
         Creates and stores the corresponding item, along with the
@@ -450,6 +450,10 @@ class SourceVisitor(ast.NodeVisitor):
         See Also
         --------
         reducto.items.FunctionDef
+
+        Notes
+        -----
+        Typing the argument raises mypy error.
         """
         func_def = it.FunctionDef(node.name, start=node.lineno, end=node.end_lineno)
         func_def.node = node
