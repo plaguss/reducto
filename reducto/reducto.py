@@ -152,7 +152,7 @@ class Reducto:
         return reporter.report(
             fmt=self.args.format,  # type: ignore[union-attr]
             is_package=True,
-            percentage=self.args.percentage  # type: ignore[union-attr]
+            percentage=self.args.percentage,  # type: ignore[union-attr]
         )
 
     def _report_package(self, target: pathlib.Path) -> rp.PackageReportType:
