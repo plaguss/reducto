@@ -196,7 +196,7 @@ class Reducto:
         return report
 
     def _write_report(
-        self, report: Union[rp.ReportDict, rp.ReportPackageDict, str]
+        self, report: Union[rp.ReportDict, rp.PackageReportType]
     ) -> None:  # pragma: no cover, proxy to json dump
         """Writes the report to a json file.
 
@@ -227,6 +227,8 @@ class Reducto:
         argv : Optional[List[str]]
             Arguments passed from the terminal.
         """
+        # Union[Dict[str, Dict[str, Union[str, int]]], Union[str, Dict[str, Dict[str, int]], Dict[str, Dict[str, Dict[str, int]]]]]
+        # Union[Dict[str, Dict[str, Union[str, int]]], Dict[str, Dict[str, Dict[str, Union[str, int]]]]]
         self._parse_args(argv)
         report: Union[rp.ReportDict, rp.PackageReportType] = self.report()
         if self.args.output is not None:  # type: ignore[union-attr]  # pragma: no cover
