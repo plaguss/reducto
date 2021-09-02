@@ -7,6 +7,12 @@ Changelog
 
 Initial release.
 
+0.3.1
+-----
+
+- Add noxfile.py
+- Update typing to pass mypy checks
+
 0.3.0
 -----
 
