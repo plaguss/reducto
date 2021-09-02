@@ -150,10 +150,12 @@ class Reducto:
         src_file: src.SourceFile = src.SourceFile(target)
         reporter: rp.SourceReport = src_file.report()
         return reporter.report(
-            fmt=self.args.format, is_package=True, percentage=self.args.percentage
+            fmt=self.args.format,  # type: ignore[union-attr]
+            is_package=True,
+            percentage=self.args.percentage  # type: ignore[union-attr]
         )
 
-    def _report_package(self, target: pathlib.Path) -> rp.ReportPackageDict:
+    def _report_package(self, target: pathlib.Path) -> rp.PackageReportType:
         """Create a report of a python package.
 
         Parameters
@@ -169,12 +171,12 @@ class Reducto:
         package: pkg.Package = pkg.Package(target)
         reporter: rp.PackageReport = package.report()
         return reporter.report(
-            fmt=self.args.format,
-            grouped=self.args.grouped,
-            percentage=self.args.percentage,
+            fmt=self.args.format,  # type: ignore[union-attr]
+            grouped=self.args.grouped,  # type: ignore[union-attr]
+            percentage=self.args.percentage,  # type: ignore[union-attr]
         )
 
-    def report(self) -> Union[rp.ReportDict, rp.ReportPackageDict]:
+    def report(self) -> Union[rp.ReportDict, rp.PackageReportType]:
         """Detects whether the input target is a file or a directory.
 
         Calls the corresponding method depending on the target.
@@ -183,10 +185,10 @@ class Reducto:
         --------
         run
         """
-        target: pathlib.Path = self.args.target
+        target: pathlib.Path = self.args.target  # type: ignore[union-attr]
         if target.is_file():
             report: Union[
-                rp.ReportDict, rp.ReportPackageDict
+                rp.ReportDict, rp.PackageReportType
             ] = self._report_source_file(target)
         else:
             report = self._report_package(target)
@@ -203,7 +205,7 @@ class Reducto:
         report : Union[rp.ReportDict, rp.ReportPackageDict]
             Contains the resulting report.
         """
-        output_file = self.args.output
+        output_file = self.args.output  # type: ignore[union-attr]
         if isinstance(report, dict):
             with open(output_file, "w") as f:
                 json.dump(report, f, indent=4)
@@ -226,11 +228,12 @@ class Reducto:
             Arguments passed from the terminal.
         """
         self._parse_args(argv)
-        report = self.report()
-        if self.args.output is not None:  # pragma: no cover
+        report: Union[rp.ReportDict, rp.PackageReportType] = self.report()
+        if self.args.output is not None:  # type: ignore[union-attr]  # pragma: no cover
             # Write file if output is given.
             self._write_report(report)
-        elif self.args.format == rp.ReportFormat.JSON:  # pretty print dict result
+        elif self.args.format == rp.ReportFormat.JSON:  # type: ignore[union-attr]
+            # pretty print dict result
             pprint.pprint(report)
         else:  # tabulate results are expected to be printed with print.
             print(report)

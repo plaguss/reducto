@@ -21,6 +21,11 @@ import os
 ReportDict = Dict[str, Dict[str, int]]
 ReportPackageDict = Dict[str, ReportDict]
 Reporting = Union[ReportDict, ReportPackageDict]
+PackageReportType = Union[
+    str,
+    Dict[str, Dict[str, int]],
+    Dict[str, Dict[str, Dict[str, int]]]
+]
 
 
 class ReportFormat(Enum):
@@ -269,9 +274,7 @@ class PackageReport:
         fmt: ReportFormat = ReportFormat.JSON,
         grouped: bool = False,
         percentage: bool = False,
-    ) -> List[List[str | int]] | Dict[str, Dict[str, int]] | Dict[
-        str, Dict[str, Dict[str, int]]
-    ]:
+    ) -> PackageReportType:
         """Report method for a package.
 
         Generates the report for a Package made of Source files.
