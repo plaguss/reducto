@@ -28,10 +28,6 @@ if TYPE_CHECKING:
 import os
 
 
-# ReportDict = Union[Dict[str, Dict[str, Union[str, int]]], str]
-# ReportPackageDict = Dict[str, ReportDict]
-# Reporting = Union[ReportDict, ReportPackageDict]
-
 # The values in GroupedReportType may be either str or int.
 # Due to mypy failure they are left to Any to avoid complains.
 GroupedReportType = Dict[str, Any]
