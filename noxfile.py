@@ -17,17 +17,4 @@ def lint(session):
     install_flit_dev_deps(session)
     session.run("black", "--check", "reducto")
     session.run("mypy", "reducto")
-    # session.run('cd ${PWD}/docs && make html')
-    # session.run(
-    #     "sphinx-build",
-    #     "-nW",
-    #     "-q",
-    #     "-b",
-    #     "html",
-    #     "-b",
-    #     "linkcheck",
-    #     "-d",
-    #     "docs/_build/doctrees",
-    #     "docs",
-    #     "docs/_build/html",
-    # )
+    session.run("make", "documentation")
