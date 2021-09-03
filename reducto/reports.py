@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import pathlib
-from typing import Dict, Union, List, Iterable
+from typing import Dict, Union, List, cast, Any
 from enum import Enum
 import statistics
 
@@ -15,7 +15,7 @@ except ModuleNotFoundError:  # pragma: no cover, check for library installation
     warnings.warn(
         "tabulate package is not installed and may raise errors if the format is called."
     )
-    tabulate = None
+    tabulate = None  # type: ignore[assignment]
 
 
 # This is done to avoid circular imports.
@@ -28,12 +28,16 @@ if TYPE_CHECKING:
 import os
 
 
-ReportDict = Dict[str, Dict[str, Union[str, int]]]
+ReportDict = Union[Dict[str, Dict[str, Union[str, int]]], str]
 ReportPackageDict = Dict[str, ReportDict]
 Reporting = Union[ReportDict, ReportPackageDict]
-PackageReportType = Union[
-    str, Dict[str, Dict[str, int]], Dict[str, Dict[str, Dict[str, int]]]
-]
+
+# The values in GroupedReportType may be either str or int.
+# Due to mypy failure they are left to Any to avoid complains.
+GroupedReportType = Dict[str, Any]
+UnGroupedReportType = Dict[str, GroupedReportType]
+SourceReportType = Union[str, UnGroupedReportType]
+PackageReportType = Union[str, GroupedReportType, UnGroupedReportType]
 
 
 class ReportFormat(Enum):
@@ -126,7 +130,7 @@ class SourceReport:
         fmt: ReportFormat = ReportFormat.JSON,
         is_package: bool = False,
         percentage: bool = False,
-    ) -> ReportDict:
+    ) -> SourceReportType:
         """Report of a source file.
 
         Parameters
@@ -161,7 +165,7 @@ class SourceReport:
 
         return report_
 
-    def _as_dict(self, percentage: bool = False) -> ReportDict:
+    def _as_dict(self, percentage: bool = False) -> SourceReportType:
         """Report of a file with a dict format.
 
         The reporting is a dict with the source file name as a key,
@@ -199,7 +203,7 @@ class SourceReport:
             blank_lines = str(round(blank_lines / lines * 100)) + "%"  # type: ignore[assignment]
             source_lines = str(round(source_lines / lines * 100)) + "%"  # type: ignore[assignment]
 
-        data: Dict[str, int] = {
+        data: Dict[str, Union[int, str]] = {
             "lines": lines,
             "number_of_functions": len(self.source_file.functions),
             "average_function_length": round(avg_func_length),
@@ -310,12 +314,14 @@ class PackageReport:
             When a report format is not defined
         """
         if grouped:
-            report: ReportDict = self._report_grouped(percentage=percentage)
+            report: Union[
+                GroupedReportType, UnGroupedReportType
+            ] = self._report_grouped(percentage=percentage)
         else:
             report = self._report_ungrouped(percentage=percentage)
 
         if fmt == ReportFormat.JSON:
-            pass
+            pass  # Returns the reports untouched
         elif fmt in set(fmt_ for fmt_ in ReportFormat):
             return self._table(report, fmt=str(fmt), grouped=grouped)
         else:  # Other formats may modify the report here
@@ -323,7 +329,7 @@ class PackageReport:
 
         return report
 
-    def _report_grouped(self, percentage: bool = False) -> ReportDict:
+    def _report_grouped(self, percentage: bool = False) -> GroupedReportType:
         """Obtain the reporting information grouped for the whole package.
 
         Parameters
@@ -336,7 +342,7 @@ class PackageReport:
         report : ReportDict
             Dict ordered as: {package_name: {source_file_report}}.
         """
-        report_ungrouped: ReportPackageDict = self._report_ungrouped()
+        report_ungrouped: UnGroupedReportType = self._report_ungrouped()
         package_lines: int = len(self.package)
 
         lines: int = 0
@@ -348,15 +354,15 @@ class PackageReport:
         source_lines: Union[int, str] = 0
 
         for reporting in report_ungrouped[self.package.name].values():
-            lines += reporting["lines"]
-            number_of_functions += reporting["number_of_functions"]
+            lines += cast(int, reporting["lines"])
+            number_of_functions += cast(int, reporting["number_of_functions"])
             # Weight for the average function length across the whole package.
-            weight: float = reporting["lines"] / package_lines
-            average_function_length += reporting["average_function_length"] * weight  # type: ignore[assignment]
-            docstring_lines += reporting["docstring_lines"]  # type: ignore[operator]
-            comment_lines += reporting["comment_lines"]  # type: ignore[operator]
-            blank_lines += reporting["blank_lines"]  # type: ignore[operator]
-            source_lines += reporting["source_lines"]  # type: ignore[operator]
+            weight: float = cast(int, reporting["lines"]) / package_lines
+            average_function_length += reporting["average_function_length"] * weight
+            docstring_lines += reporting["docstring_lines"]
+            comment_lines += reporting["comment_lines"]
+            blank_lines += reporting["blank_lines"]
+            source_lines += reporting["source_lines"]
 
         if percentage:
             docstring_lines = str(round(docstring_lines / lines * 100)) + "%"  # type: ignore[operator]
@@ -377,7 +383,7 @@ class PackageReport:
 
         return {self.package.name: report_grouped}
 
-    def _report_ungrouped(self, percentage: bool = False) -> ReportPackageDict:
+    def _report_ungrouped(self, percentage: bool = False) -> UnGroupedReportType:
         """Obtain the reporting information per source file.
 
         Parameters
@@ -398,11 +404,11 @@ class PackageReport:
                 }
             }
         """
-        report: ReportDict = {}
+        report: GroupedReportType = {}
         for file in self.package.source_files:
             report[self._get_relname(str(file))] = SourceReport(file).report(
                 fmt=ReportFormat.JSON, percentage=percentage
-            )[file.name]
+            )[file.name]  # type: ignore[index]
 
         return {self.package.name: report}
 
@@ -432,7 +438,7 @@ class PackageReport:
 
     def _table(
         self,
-        report: Union[ReportDict, ReportPackageDict],
+        report: Union[GroupedReportType, UnGroupedReportType],
         fmt: str = "grid",
         grouped: bool = True,
     ) -> str:  # pragma: no cover, proxy
@@ -444,44 +450,51 @@ class PackageReport:
 
 def tabulate_report(
     name: str,
-    report: Union[ReportDict, ReportPackageDict],
+    report: Union[GroupedReportType, UnGroupedReportType],
     columns: List[str],
     grouped: bool = True,
     fmt: str = "grid",
 ) -> str:
-    """
+    """Generates a table report using tabulate.
 
     Parameters
     ----------
-    name
-    report
-    columns
-    grouped
-    fmt
+    name : str
+        Name of the module contained internally.
+    report : Union[GroupedReportType, UnGroupedReportType]
+        Json report obtained internally from SourceReport or PackageReport.
+    columns : List[str]
+        Column names.
+    grouped : bool
+        Whether to create a table with the modules colapsed or not.
+    fmt : str
+        Format of the table. Passed to tabulate.
 
     Returns
     -------
-
+    table : str
+        str representation of the table.
     """
     headers: List[str] = []
     table: List[List[Union[str, int]]] = []
-    inner: Union[Dict[str, int], Dict[str, Dict[str, int]]] = report[name]
     if grouped:
+        inner_col: Dict[str, Union[str, int]] = report[name]
         headers.extend(column_split(columns))
         headers.insert(0, "package")
         row: List[Union[str, int]] = [name]
-        row.extend([inner[col] for col in columns])
+        row.extend([inner_col[col] for col in columns])
         table.append(row)
 
     else:
+        inner_filename_col: Dict[str, Dict[str, Union[str, int]]] = report[name]
         columns = columns.copy()
         columns.remove("source_files")
         headers.extend(column_split(columns))
         headers.insert(0, "filename")
         rows: List[List[Union[str, int]]] = []
-        for filename in inner:
+        for filename in inner_filename_col:
             row = [filename]
-            row.extend([inner[filename][col] for col in columns])
+            row.extend([inner_filename_col[filename][col] for col in columns])
             rows.append(row)
         table.extend(rows)
 
