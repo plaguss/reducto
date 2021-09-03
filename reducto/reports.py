@@ -3,10 +3,20 @@
 from __future__ import annotations
 
 import pathlib
-from typing import Dict, Union, List
+from typing import Dict, Union, List, Iterable
 from enum import Enum
 import statistics
-from tabulate import tabulate
+
+try:
+    from tabulate import tabulate
+except ModuleNotFoundError:  # pragma: no cover, check for library installation
+    import warnings
+
+    warnings.warn(
+        "tabulate package is not installed and may raise errors if the format is called."
+    )
+    tabulate = None
+
 
 # This is done to avoid circular imports.
 from typing import TYPE_CHECKING
@@ -18,13 +28,11 @@ if TYPE_CHECKING:
 import os
 
 
-ReportDict = Dict[str, Dict[str, int]]
+ReportDict = Dict[str, Dict[str, Union[str, int]]]
 ReportPackageDict = Dict[str, ReportDict]
 Reporting = Union[ReportDict, ReportPackageDict]
 PackageReportType = Union[
-    str,
-    Dict[str, Dict[str, int]],
-    Dict[str, Dict[str, Dict[str, int]]]
+    str, Dict[str, Dict[str, int]], Dict[str, Dict[str, Dict[str, int]]]
 ]
 
 
@@ -173,10 +181,10 @@ class SourceReport:
         """
         # Check whether any function was found
         if len(self.source_file.functions) == 0:
-            avg_func_length = 0
+            avg_func_length: int = 0
         else:
-            avg_func_length: int = statistics.mean(
-                [f.source_lines for f in self.source_file.functions]
+            avg_func_length = round(
+                statistics.mean([f.source_lines for f in self.source_file.functions])
             )
 
         docstring_lines = self.source_file.total_docstrings
@@ -186,10 +194,10 @@ class SourceReport:
         lines = len(self.source_file)
 
         if percentage:
-            docstring_lines = str(round(docstring_lines / lines * 100)) + "%"
-            comment_lines = str(round(comment_lines / lines * 100)) + "%"
-            blank_lines = str(round(blank_lines / lines * 100)) + "%"
-            source_lines = str(round(source_lines / lines * 100)) + "%"
+            docstring_lines = str(round(docstring_lines / lines * 100)) + "%"  # type: ignore[assignment]
+            comment_lines = str(round(comment_lines / lines * 100)) + "%"  # type: ignore[assignment]
+            blank_lines = str(round(blank_lines / lines * 100)) + "%"  # type: ignore[assignment]
+            source_lines = str(round(source_lines / lines * 100)) + "%"  # type: ignore[assignment]
 
         data: Dict[str, int] = {
             "lines": lines,
@@ -304,7 +312,7 @@ class PackageReport:
         if grouped:
             report: ReportDict = self._report_grouped(percentage=percentage)
         else:
-            report: ReportPackageDict = self._report_ungrouped(percentage=percentage)
+            report = self._report_ungrouped(percentage=percentage)
 
         if fmt == ReportFormat.JSON:
             pass
@@ -344,19 +352,19 @@ class PackageReport:
             number_of_functions += reporting["number_of_functions"]
             # Weight for the average function length across the whole package.
             weight: float = reporting["lines"] / package_lines
-            average_function_length += reporting["average_function_length"] * weight
-            docstring_lines += reporting["docstring_lines"]
-            comment_lines += reporting["comment_lines"]
-            blank_lines += reporting["blank_lines"]
-            source_lines += reporting["source_lines"]
+            average_function_length += reporting["average_function_length"] * weight  # type: ignore[assignment]
+            docstring_lines += reporting["docstring_lines"]  # type: ignore[operator]
+            comment_lines += reporting["comment_lines"]  # type: ignore[operator]
+            blank_lines += reporting["blank_lines"]  # type: ignore[operator]
+            source_lines += reporting["source_lines"]  # type: ignore[operator]
 
         if percentage:
-            docstring_lines = str(round(docstring_lines / lines * 100)) + "%"
-            comment_lines = str(round(comment_lines / lines * 100)) + "%"
-            blank_lines = str(round(blank_lines / lines * 100)) + "%"
-            source_lines = str(round(source_lines / lines * 100)) + "%"
+            docstring_lines = str(round(docstring_lines / lines * 100)) + "%"  # type: ignore[operator]
+            comment_lines = str(round(comment_lines / lines * 100)) + "%"  # type: ignore[operator]
+            blank_lines = str(round(blank_lines / lines * 100)) + "%"  # type: ignore[operator]
+            source_lines = str(round(source_lines / lines * 100)) + "%"  # type: ignore[operator]
 
-        report_grouped: Dict[str, int] = {
+        report_grouped: Dict[str, Union[int, str]] = {
             "lines": lines,
             "number_of_functions": number_of_functions,
             "average_function_length": round(average_function_length),
@@ -455,14 +463,13 @@ def tabulate_report(
     -------
 
     """
-    name: str = name
     headers: List[str] = []
     table: List[List[Union[str, int]]] = []
-    inner = report[name]
+    inner: Union[Dict[str, int], Dict[str, Dict[str, int]]] = report[name]
     if grouped:
         headers.extend(column_split(columns))
         headers.insert(0, "package")
-        row = [name]
+        row: List[Union[str, int]] = [name]
         row.extend([inner[col] for col in columns])
         table.append(row)
 
