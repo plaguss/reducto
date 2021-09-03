@@ -28,9 +28,9 @@ if TYPE_CHECKING:
 import os
 
 
-ReportDict = Union[Dict[str, Dict[str, Union[str, int]]], str]
-ReportPackageDict = Dict[str, ReportDict]
-Reporting = Union[ReportDict, ReportPackageDict]
+# ReportDict = Union[Dict[str, Dict[str, Union[str, int]]], str]
+# ReportPackageDict = Dict[str, ReportDict]
+# Reporting = Union[ReportDict, ReportPackageDict]
 
 # The values in GroupedReportType may be either str or int.
 # Due to mypy failure they are left to Any to avoid complains.
@@ -165,7 +165,7 @@ class SourceReport:
 
         return report_
 
-    def _as_dict(self, percentage: bool = False) -> SourceReportType:
+    def _as_dict(self, percentage: bool = False) -> GroupedReportType:
         """Report of a file with a dict format.
 
         The reporting is a dict with the source file name as a key,
@@ -216,7 +216,7 @@ class SourceReport:
         return {self.source_file.name: data}
 
     def _table(
-        self, report: Union[ReportDict, ReportPackageDict], fmt: str = "grid"
+        self, report: GroupedReportType, fmt: str = "grid"
     ) -> str:  # pragma: no cover, proxy
         """Creates the report from tabulate. Proxy method for tabulate_report"""
         columns: List[str] = [
@@ -408,7 +408,9 @@ class PackageReport:
         for file in self.package.source_files:
             report[self._get_relname(str(file))] = SourceReport(file).report(
                 fmt=ReportFormat.JSON, percentage=percentage
-            )[file.name]  # type: ignore[index]
+            )[
+                file.name
+            ]  # type: ignore[index]
 
         return {self.package.name: report}
 

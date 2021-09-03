@@ -134,7 +134,7 @@ class Reducto:
             help="Report the number of lines as percentage.",
         )
 
-    def _report_source_file(self, target: pathlib.Path) -> rp.ReportDict:
+    def _report_source_file(self, target: pathlib.Path) -> rp.SourceReportType:
         """Create a report of a single source file.
 
         Parameters
@@ -176,7 +176,7 @@ class Reducto:
             percentage=self.args.percentage,  # type: ignore[union-attr]
         )
 
-    def report(self) -> Union[rp.ReportDict, rp.PackageReportType]:
+    def report(self) -> Union[rp.SourceReportType, rp.PackageReportType]:
         """Detects whether the input target is a file or a directory.
 
         Calls the corresponding method depending on the target.
@@ -188,7 +188,7 @@ class Reducto:
         target: pathlib.Path = self.args.target  # type: ignore[union-attr]
         if target.is_file():
             report: Union[
-                rp.ReportDict, rp.PackageReportType
+                rp.SourceReportType, rp.PackageReportType
             ] = self._report_source_file(target)
         else:
             report = self._report_package(target)
@@ -196,7 +196,7 @@ class Reducto:
         return report
 
     def _write_report(
-        self, report: Union[rp.ReportDict, rp.PackageReportType]
+        self, report: Union[rp.SourceReportType, rp.PackageReportType]
     ) -> None:  # pragma: no cover, proxy to json dump
         """Writes the report to a json file.
 
@@ -227,10 +227,8 @@ class Reducto:
         argv : Optional[List[str]]
             Arguments passed from the terminal.
         """
-        # Union[Dict[str, Dict[str, Union[str, int]]], Union[str, Dict[str, Dict[str, int]], Dict[str, Dict[str, Dict[str, int]]]]]
-        # Union[Dict[str, Dict[str, Union[str, int]]], Dict[str, Dict[str, Dict[str, Union[str, int]]]]]
         self._parse_args(argv)
-        report: Union[rp.ReportDict, rp.PackageReportType] = self.report()
+        report: Union[rp.SourceReportType, rp.PackageReportType] = self.report()
         if self.args.output is not None:  # type: ignore[union-attr]  # pragma: no cover
             # Write file if output is given.
             self._write_report(report)
