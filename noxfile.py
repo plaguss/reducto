@@ -16,7 +16,7 @@ def tests(session):
 def lint(session):
     install_flit_dev_deps(session)
     session.run("black", "--check", "reducto")
-    # session.run("mypy", "--ignore-missing-imports", "--strict", "reducto")
+    session.run("mypy", "reducto")
     # session.run('cd ${PWD}/docs && make html')
     # session.run(
     #     "sphinx-build",
