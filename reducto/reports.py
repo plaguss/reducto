@@ -409,8 +409,8 @@ class PackageReport:
             report[self._get_relname(str(file))] = SourceReport(file).report(
                 fmt=ReportFormat.JSON, percentage=percentage
             )[
-                file.name
-            ]  # type: ignore[index]
+                file.name  # type: ignore[index]
+            ]
 
         return {self.package.name: report}
 
