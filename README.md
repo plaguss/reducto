@@ -15,10 +15,10 @@ _python_ source code.
 
 ### Development status
 
-[![ci workflow](https://github.com/plaguss/reducto/actions/workflows/ci.yml/badge.svg)
+![ci workflow](https://github.com/plaguss/reducto/actions/workflows/ci.yml/badge.svg)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![codecov](https://codecov.io/gh/plaguss/reducto/branch/main/graph/badge.svg?token=AVKH6TS7G7)](https://codecov.io/gh/plaguss/reducto)
-
+[![Documentation Status](https://readthedocs.org/projects/reducto/badge/?version=latest)](https://reducto.readthedocs.io/en/latest/?badge=latest)
 
 ### Installation
 
@@ -103,7 +103,7 @@ optional arguments:
 
 ### Documentation
 
-**[Read the documentation on ReadTheDocs!](https://reducto.readthedocs.io/en/stable)**
+**[Read the documentation on ReadTheDocs!](https://reducto.readthedocs.io/en/latest/)**
 
 ### License
 
