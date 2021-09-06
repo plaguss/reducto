@@ -1,6 +1,15 @@
 Changelog
 =========
 
+1.0.1
+-----
+
+- Doc updates.
+    - README: Badge for readthedocs.
+    - README: Corrected direction to ReadTheDocs site.
+    - docs/command_line_interface.rst: added -p/--percentage.
+    - docs/index.rst: added examples of the different options.
+
 
 1.0.0
 -----
