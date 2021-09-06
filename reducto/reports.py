@@ -477,7 +477,7 @@ def tabulate_report(
     table: List[List[Union[str, int]]] = []
     if grouped:
         inner_col: Dict[str, Union[str, int]] = report[name]
-        headers.extend(column_split(columns))
+        headers.extend(column_split(columns, fmt=fmt))
         headers.insert(0, "package")
         row: List[Union[str, int]] = [name]
         row.extend([inner_col[col] for col in columns])
@@ -487,7 +487,7 @@ def tabulate_report(
         inner_filename_col: Dict[str, Dict[str, Union[str, int]]] = report[name]
         columns = columns.copy()
         columns.remove("source_files")
-        headers.extend(column_split(columns))
+        headers.extend(column_split(columns, fmt=fmt))
         headers.insert(0, "filename")
         rows: List[List[Union[str, int]]] = []
         for filename in inner_filename_col:
@@ -499,17 +499,25 @@ def tabulate_report(
     return tabulate(table, headers=headers, tablefmt=fmt)
 
 
-def column_split(columns: List[str]) -> List[str]:
+def column_split(columns: List[str], fmt: str = "rst") -> List[str]:
     r"""Splits the columns to avoid longer formats for tabulate.
 
-    Replaces every `_` by `\n`
+    Replaces every `_` by `\n`.
+
+    Currently an error in tabulate when there are present \n characters makes
+    the tables to be parsed wrongly. In the case of github, the columns are not
+    split.
 
     Parameters
     ----------
     columns : List[str]
+    fmt : str
+        Format of the table. Information used on tabulate.
 
     Returns
     -------
-    splitted : List[str]
+    split : List[str]
     """
+    if fmt == "github":
+        return columns
     return [column.replace("_", "\n") for column in columns]
