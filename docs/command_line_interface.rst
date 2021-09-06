@@ -27,11 +27,12 @@ Arguments and Options
 
 .. option::  -v, --version
 
-   TBD: Show the version in use.
+   Prints the version of the current program installed.
 
 .. option:: -f, --format <format>
 
-   Format for the reports. Currently only *json* is available.
+   Format for the reports. If *tabulate* is installed, the formats include *json* and
+   those allowed for tabulate, i.e. *github*, *rst*, *simple*, *grid*...
 
 .. option:: --grouped, --ungrouped
 
@@ -61,6 +62,11 @@ Arguments and Options
         ...
    }
 
+.. option:: -p, --percentage
+
+   Report the number of lines as percentage (keep in mind if the results are written
+   to a json file, when reporting as percentage, the numbers are parsed as strings to
+   be properly printed).
 
 .. option:: -o, --output <OUTPUT_FILE>
 
