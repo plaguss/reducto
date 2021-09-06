@@ -20,16 +20,19 @@ class TestReducto:
         report = app._report_source_file(source_file_one_function)
         assert isinstance(report, dict)
 
+    @pytest.mark.skipif(rd.rp.tabulate is None, reason='Tabulate is not installed.')
     def test_report_source_file_report_tabulate(self, app, source_file_one_function):
         app._parse_args(['--format', 'plain'])
         report = app._report_source_file(source_file_one_function)
         assert isinstance(report, str)
 
+    @pytest.mark.skipif(rd.rp.tabulate is None, reason='Tabulate is not installed.')
     def test_report_package_report_json(self, app, sample_package):
         app._parse_args(['--format', 'json'])
         report = app._report_package(sample_package)
         assert isinstance(report, dict)
 
+    @pytest.mark.skipif(rd.rp.tabulate is None, reason='Tabulate is not installed.')
     def test_report_package_report_tabulate(self, app, sample_package):
         app._parse_args(['--format', 'plain'])
         report = app._report_package(sample_package)
@@ -45,6 +48,7 @@ class TestReducto:
         report = app.report()
         assert isinstance(report, dict)
 
+    @pytest.mark.skipif(rd.rp.tabulate is None, reason='Tabulate is not installed.')
     def test_run(self, app, sample_package):
         app.run([str(sample_package), '--format', 'json'])
         app.run([str(sample_package), '--format', 'plain'])

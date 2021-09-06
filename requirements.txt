@@ -1,3 +1,0 @@
-pytest==6.2.3
-pytest-cov==2.11.1
-flit==3.2.0

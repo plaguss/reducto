@@ -163,6 +163,7 @@ class TestPackageReport:
     def test_columns(self, reporter):
         assert len(reporter.columns) == 8
 
+    @pytest.mark.skipif(rp.tabulate is None, reason='Tabulate is not installed.')
     def test_table_grouped(self, reporter):
         report = {
             "reducto": {
@@ -191,6 +192,7 @@ class TestPackageReport:
             ])
             assert table == expected
 
+    @pytest.mark.skipif(rp.tabulate is None, reason='Tabulate is not installed.')
     def test_table_ungrouped(self, reporter):
         report = {'reducto': {'reducto/__init__.py': {'average_function_length': 0,
                                      'blank_lines': 2,
@@ -270,6 +272,7 @@ class TestPackageReport:
             ])
             assert table == expected
 
+    @pytest.mark.skipif(rp.tabulate is None, reason='Tabulate is not installed.')
     def test_report_table(self, reporter):
         # Test in this point is only done for a str and one of the column names in
         # the table.
