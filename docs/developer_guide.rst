@@ -7,7 +7,7 @@ Developer Guide
 ===============
 
 Here resides the documentation for the reducto modules.
-This may be interesting if you are curious of how it works reducto
+This may be interesting if you are curious about how reducto works
 under the hoods.
 
 cli
@@ -41,6 +41,9 @@ There are two classes, SourceReport for single files, and
 PackageReport to deal with a whole package.
 
 .. automodule:: reducto.reports
+
+.. autoclass:: reducto.reports.ReportFormat
+   :members:
 
 .. autoexception:: reducto.reports.ReportFormatError
 
