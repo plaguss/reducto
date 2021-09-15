@@ -11,10 +11,8 @@ reducto - Python source code features in a command
 
    command_line_interface
    changelog
+   developer_guide
 
-Quickstart
-----------
-Hands on example
 
 Installation
 ------------
@@ -26,9 +24,9 @@ environment.
 
    $ pip install reducto
 
-reducto requires version 3.8 at least.
+reducto requires python version 3.8 at least.
 
-The extras include `tabulate <https://pypi.org/project/tabulate/>`_ to properly parse
+The extras include `tabulate <https://pypi.org/project/tabulate/>`_ to properly print
 the tables.
 
 .. code-block::
@@ -171,7 +169,7 @@ About the title
 ---------------
 I'm a Harry Potter fan and the name can be cast as a spell.
 
-Its a simple command line interface that reduces the content
+It's a simple command line interface that reduces the content
 of the python source code to a bunch of simple measures.
 
-It must be a name which didn't exist on PyPI, so... reducto it is.
+It had to be a name which didn't exist on PyPI, so... reducto it is.
