@@ -16,9 +16,11 @@ class Reducto:
     """Class defining the package application.
 
     This class represents the reducto application.
-    Its made of an argparse.ArgumentParser.
-    The different arguments are defined as private methods to be
-    called on initialization.
+
+    Abstracts the application to be used as a command line interface by means of
+    argparse.ArgumentParser.
+
+    The different arguments for the app are defined as private methods of this class.
     """
 
     def __init__(self) -> None:  # pragma: no cover, redirects methods
