@@ -6,10 +6,10 @@
 Reducto Command Line Interface
 ==============================
 
-The code is expected to be executed from the terminal, using
+The code is expected to be executed from the terminal, using the
 *reducto* command. Only the *target* argument is mandatory (otherwise
 it will try to execute on the current working directory, and raise
-an error if is not a python package).
+an error if it's not a python package or source code file).
 
 
 Arguments and Options
@@ -71,7 +71,7 @@ Arguments and Options
 .. option:: -o, --output <OUTPUT_FILE>
 
    Full path for the report to be written. Defaults to
-   the current working directory, and the file named would be named
+   the current working directory, and the file would be named
    reducto_report.json
 
 .. option:: -h, --help
