@@ -4,14 +4,13 @@
 _python_ source code.
 
 - Count the number of lines in a project (_.py files only_)
-- Number of lines.
 - Number of functions/methods.
 - Average function length.
 - Docstring lines.
 - Comment lines.
 - Blank lines.
-- Source files.
-- Source lines.
+- Source files (number of .py files).
+- Source lines (number of lines corresponding to python code, total number of lines minus docstrings, comments and blank lines).
 
 ### Development status
 
