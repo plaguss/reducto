@@ -136,7 +136,6 @@ class SourceReport:
         is_package : bool
             Bool to determine if a SourceFile is the single entry point for an app.
             Defaults to False.
-            It is used to
         percentage : bool
             Whether to report the lines as percentage or not. Defaults to False
 
