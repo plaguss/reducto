@@ -1,5 +1,5 @@
-"""Reduce a package as a set of basic source code statistics. """
+"""Python source code stats in a command. """
 
 from reducto.cli import main
 
-__version__ = "1.0.2"
+__version__ = "1.0.3"
