@@ -1,6 +1,12 @@
 Changelog
 =========
 
+1.0.3
+-----
+
+- fix __init__.py package description updated.
+
+
 1.0.2
 -----
 
