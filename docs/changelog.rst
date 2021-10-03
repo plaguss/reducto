@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.0.2
+-----
+
+- Doc updates
+    - README reference to top_pypi_source_code_stats.
+    - Spelling errors corrected on .rst docs.
+
 1.0.1
 -----
 
