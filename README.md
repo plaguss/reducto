@@ -12,6 +12,12 @@ _python_ source code.
 - Source files (number of .py files).
 - Source lines (number of lines corresponding to python code, total number of lines minus docstrings, comments and blank lines).
 
+*For the average package the code should be fast enough. The average time is of 0.5 seconds against
+top pypi packages by number of downloads.*
+
+A simple analysis run top of the 4000 top pypi packages at the following repository: 
+[top_pypi_source_code_stats](https://github.com/plaguss/top_pypi_source_code_stats).
+
 ### Development status
 
 ![ci workflow](https://github.com/plaguss/reducto/actions/workflows/ci.yml/badge.svg)
@@ -102,7 +108,7 @@ optional arguments:
 
 ### Documentation
 
-**[Read the documentation on ReadTheDocs!](https://reducto.readthedocs.io/en/latest/)**
+Read the documentation on [ReadTheDocs](https://reducto.readthedocs.io/en/latest/).
 
 ### License
 
