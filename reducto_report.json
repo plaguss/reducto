@@ -1,0 +1,12 @@
+{
+    "reducto": {
+        "lines": 1974,
+        "number_of_functions": 108,
+        "average_function_length": 6,
+        "docstring_lines": "41%",
+        "comment_lines": "1%",
+        "blank_lines": "11%",
+        "source_files": 7,
+        "source_lines": "48%"
+    }
+}
